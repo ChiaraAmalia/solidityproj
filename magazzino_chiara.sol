@@ -3,7 +3,6 @@
 pragma solidity >=0.7.0 <0.9.0;
 pragma abicoder v2;
 
-
 /**
  * @title Magazzino delle materie prime
  * @dev Gestione del magazzino delle materie prime
@@ -13,6 +12,8 @@ pragma abicoder v2;
 
     uint256 numMateriePrime;
     uint256 numProdotti;
+
+    //mapping(address => bool) approvals;
 
     //attributi materia prima
     struct MateriaPrima {
@@ -58,9 +59,9 @@ pragma abicoder v2;
     mapping(string => MateriaPrima) elencoMateriePrime; //contiene le materie prime
     mapping(string => MagazzinoTrasformatore) magazzinoTrasformatore; //contiene le materie prime presenti nel magazzino del trasformatore
     mapping(string => ProdottoFinito) elencoProdotti; //contiene i prodotti che vengono inseriti dal trasformatore
-    mapping(string => MagazzinoConsumatore) magazzinoConsumatore; //contiene i prodotto acquistati dal consumatore
+    mapping(string => MagazzinoConsumatore) magazzinoConsumatore; //contiene i prodotti acquistati dal consumatore
 
-    mapping(uint256 => MateriaPrima) nomiMateriePrime; 
+    mapping(uint256 => MateriaPrima) nomiMateriePrime;  //tipologia di materia prima
     mapping(uint256 => ProdottoFinito) nomiProdottiFiniti;
 
     constructor(address _produttore, address _trasformatore, address _consumatore) {
@@ -230,7 +231,7 @@ pragma abicoder v2;
         return result;
     }
 
-    //funzione che mi consente di vedere i lotti della materia prima
+    //funzione che mi consente di vedere i lotti di un determinato materia prima
     function vediLottiMateriaPrima(string memory _nomeMateriaPrima)  public view returns (string[] memory){
         string[] memory result = new string[](numMateriePrime);      
         uint j = 0;
@@ -286,5 +287,12 @@ pragma abicoder v2;
             value /= 10;
         }
         return string(buffer);
+    }
+
+    // Funzione utilizzata per stampare un prodotto acquistato
+    function StampaProdotti(string memory _LottoProdotto) public view returns(MagazzinoConsumatore memory){
+        require(msg.sender == Consumatore);
+        require(elencoProdotti[_LottoProdotto].contenuto);
+        return magazzinoConsumatore[_LottoProdotto];
     }
  }
