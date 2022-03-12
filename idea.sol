@@ -1,11 +1,13 @@
 //
 contract Magazzino {
 
-
+    address Produttore; //colui che produce le materie prime
+    address Trasformatore; //colui che trasforma le materie prime in prodotti finiti
+    address Consumatore; //colui che acquisterà il prodotto finito
 
     struct LottoMateria{
-        //id lotto => id della mappa;
-        uint256 MateriaPrima; //id della materia prima che questo lotto appartiene
+        string nomeId;// => id della mappa;
+        uint256 materiaPrima; //id della materia prima che questo lotto appartiene
         uint256 footprintMateriaPrima; //foot print per kg di questo lotto
         uint quantitaLotto;
         bool contenuto;
@@ -16,8 +18,9 @@ contract Magazzino {
         string nomeMateriaPrima;
         address indirizzoProduttore;
         uint256 quantitaMagazzino; //quantita' totale di tutti i lotti
-        bool contenuto;
         uint[] lottoMaterie; //id dei lotto materie
+        bool contenuto;
+        
     }
 
     uint256 numMateriePrime;
@@ -35,6 +38,7 @@ contract Magazzino {
     mapping(uint256 => MateriaPrima) nomiMateriePrime;  //Prodotto
     mapping(string => LottoMateria) elencoMateriePrime; //i Lotti di materie
 
+    event StampaMateriaPrima(string lottoMateriaPrima, string nomeMateriaPrima, address indirizzoProduttore, uint256 quantitaMagazzino, uint256 footprintMateriaPrima);
     //funzione che consente l'inserimento di materie prime da parte del produttore
     function aggiungiMateriaPrima(string memory _nomeMateriaPrima, uint256 _quantitaMagazzino, uint256 _footprintMateriaPrima, uint256 _tipoMateriaPrima) public {
         require(msg.sender == Produttore,"solo il produttore puo' produrre la materia prima.");
@@ -46,30 +50,27 @@ contract Magazzino {
         if(_tipoMateriaPrima ==0){//inserire lotto di una materia prima.
             
             numMateriePrime ++;
-            id = numeroMateriePrime;
+            id = numMateriePrime;
             nomiMateriePrime[id]=MateriaPrima({
-                id: id,
-                MateriaPrima: string(abi.encodePacked(_nomeMateriaPrima, toString(numMateriePrime))),
+                //MateriaPrima: string(abi.encodePacked(_nomeMateriaPrima, toString(numMateriePrime))),
                 nomeMateriaPrima: _nomeMateriaPrima,
                 indirizzoProduttore: Produttore,
                 quantitaMagazzino: _quantitaMagazzino,
-                footprintMateriaPrima: _footprintMateriaPrima,
-                contenuto: true
+                contenuto: true,
+                lottoMaterie: new uint[](0)
             });
         }
         else{
             id = _tipoMateriaPrima;
             nomiMateriePrime[id].quantitaMagazzino += _quantitaMagazzino;
-            nomiMateriePrime[id]._footprintMateriaPrima += _footprintMateriaPrima;
         }
         
         numLotto++;
-        elencoMateriePrime[string(abi.encodePacked(_nomeMateriaPrima, toString(numLotto)))] = MateriaPrima({
-            id: numLotto,
-            MateriaPrima: id,
-            indirizzoProduttore: Produttore,
-            quantitaLotto: _quantitaMagazzino,
+        elencoMateriePrime[string(abi.encodePacked(_nomeMateriaPrima, toString(numLotto)))] = LottoMateria({
+            nomeId: string(abi.encodePacked(_nomeMateriaPrima, toString(numLotto))),
+            materiaPrima: id,
             footprintMateriaPrima: _footprintMateriaPrima,
+            quantitaLotto: _quantitaMagazzino,
             contenuto: true
         });
         nomiMateriePrime[id].lottoMaterie.push(numLotto);
@@ -95,7 +96,8 @@ contract Magazzino {
 
         for(uint i=0; i< numMateriePrime; i++){
             for(uint k=0;k<nomiMateriePrime[i].lottoMaterie.length;k++){
-                result.push(string (abi.encodePacked(nomiMateriePrime[i].nomeMateriaPrima,nomiMateriePrime[i].lottoMaterie[k])));
+                result[j] = (string (abi.encodePacked(nomiMateriePrime[i].nomeMateriaPrima,nomiMateriePrime[i].lottoMaterie[k])));
+                j++;
             }
         }
         return result;
@@ -103,8 +105,29 @@ contract Magazzino {
 
     function VediMateriaPrimaDaUnLotto(string memory lottoMateria) public view returns(MateriaPrima memory materia) {
         require(elencoMateriePrime[lottoMateria].contenuto,"il lotto non esiste");
-        require(nomiMateriePrime[elencoMateriePrime[lottoMateria].MateriaPrima],"la materia prima non esiste");
-        return nomiMateriePrime[elencoMateriePrime[lottoMateria].MateriaPrima];
+        require(nomiMateriePrime[elencoMateriePrime[lottoMateria].materiaPrima].contenuto,"la materia prima non esiste");
+        return nomiMateriePrime[elencoMateriePrime[lottoMateria].materiaPrima];
+    }
+
+    function toString(uint256 value) internal pure returns (string memory) {
+        
+        if(value == 0) {
+            return "0";
+        }
+
+        uint256 temp = value;
+        uint256 digits;
+        while(temp !=0) {
+            digits++;
+            temp /= 10;
+        }
+        bytes memory buffer = new bytes(digits);
+        while(value != 0) {
+            digits -= 1;
+            buffer[digits] = bytes1(uint8(48 + uint256(value % 10)));
+            value /= 10;
+        }
+        return string(buffer);
     }
 
 }
