@@ -64,7 +64,7 @@ contract Magazzino {
         }
         
         numLotto++;
-        elencoMateriePrime[string(abi.encodePacked(_nomeMateriaPrima, toString(numLotto)))]=MateriaPrima({
+        elencoMateriePrime[string(abi.encodePacked(_nomeMateriaPrima, toString(numLotto)))] = MateriaPrima({
             id: numLotto,
             MateriaPrima: id,
             indirizzoProduttore: Produttore,
@@ -74,9 +74,6 @@ contract Magazzino {
         });
         nomiMateriePrime[id].lottoMaterie.push(numLotto);
 
-        
-
-        
         emit StampaMateriaPrima(string(abi.encodePacked(_nomeMateriaPrima, toString(numMateriePrime))), _nomeMateriaPrima, msg.sender, _quantitaMagazzino, _footprintMateriaPrima);
     }
 
@@ -107,7 +104,7 @@ contract Magazzino {
     function VediMateriaPrimaDaUnLotto(string memory lottoMateria) public view returns(MateriaPrima memory materia) {
         require(elencoMateriePrime[lottoMateria].contenuto,"il lotto non esiste");
         require(nomiMateriePrime[elencoMateriePrime[lottoMateria].MateriaPrima],"la materia prima non esiste");
-        returns nomiMateriePrime[elencoMateriePrime[lottoMateria].MateriaPrima];
+        return nomiMateriePrime[elencoMateriePrime[lottoMateria].MateriaPrima];
     }
 
 }
