@@ -98,7 +98,7 @@ contract Magazzino {
 
         for(uint i=0; i< numMateriePrime; i++){
             for(uint k=0;k<nomiMateriePrime[i].lottoMaterie.length;k++){
-                result.push(string (abi.encodePacked(nomiMateriePrime[i].nomeMateriaPrima,<nomiMateriePrime[i].lottoMaterie[k])));
+                result.push(string (abi.encodePacked(nomiMateriePrime[i].nomeMateriaPrima,nomiMateriePrime[i].lottoMaterie[k])));
             }
         }
         return result;
