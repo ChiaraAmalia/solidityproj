@@ -31,6 +31,7 @@ pragma abicoder v2;
         address indirizzoTrasformatore;
         string lottoMateriaPrima;
         uint256 quantitaMagazzino;
+        bool contenuto;
     }
 
     //attributi magazzino del consumatore
@@ -38,6 +39,7 @@ pragma abicoder v2;
         address indirizzoConsumatore;
         string lottoProdotto;
         uint256 quantitaMagazzino;
+        bool contenuto;
     }
 
     //attributi prodotto finito
@@ -114,13 +116,20 @@ pragma abicoder v2;
         require(msg.sender == Trasformatore,"solo il trasformatore puo' aquistare la materia prima.");
         require(_quantitaMagazzino > 0,"la quantita' deve essere maggiore di 0.");
         require(elencoMateriePrime[_lottoMateriaPrima].contenuto,"la materia prima e' inesistente");
-        require(elencoMateriePrime[_lottoMateriaPrima].quantitaMagazzino >= _quantitaMagazzino,"la scorta non sufficente.");
+        require(elencoMateriePrime[_lottoMateriaPrima].quantitaMagazzino >= _quantitaMagazzino,"scorta non sufficente.");
 
-        magazzinoTrasformatore[_lottoMateriaPrima] = MagazzinoTrasformatore({
-            lottoMateriaPrima: _lottoMateriaPrima,
-            quantitaMagazzino: _quantitaMagazzino,
-            indirizzoTrasformatore: Trasformatore
-        });
+        if(magazzinoTrasformatore[_lottoMateriaPrima].contenuto){
+            magazzinoTrasformatore[_lottoMateriaPrima].quantitaMagazzino += _quantitaMagazzino;
+        }
+        else{
+            magazzinoTrasformatore[_lottoMateriaPrima] = MagazzinoTrasformatore({
+                lottoMateriaPrima: _lottoMateriaPrima,
+                quantitaMagazzino: _quantitaMagazzino,
+                indirizzoTrasformatore: Trasformatore,
+                contenuto: true
+            });
+        }
+
 
         elencoMateriePrime[_lottoMateriaPrima].quantitaMagazzino -= _quantitaMagazzino;
 
@@ -185,11 +194,17 @@ pragma abicoder v2;
         require(elencoProdotti[_lottoProdotto].contenuto);
         require(elencoProdotti[_lottoProdotto].quantitaProdotta >= _quantitaMagazzino);
 
-        magazzinoConsumatore[_lottoProdotto] = MagazzinoConsumatore({
-            lottoProdotto: _lottoProdotto,
-            quantitaMagazzino: _quantitaMagazzino,
-            indirizzoConsumatore: Consumatore
-        });
+        if(magazzinoConsumatore[_lottoProdotto].contenuto) {
+            magazzinoConsumatore[_lottoProdotto].quantitaMagazzino += _quantitaMagazzino;
+        }
+        else {
+            magazzinoConsumatore[_lottoProdotto] = MagazzinoConsumatore({
+                lottoProdotto: _lottoProdotto,
+                quantitaMagazzino: _quantitaMagazzino,
+                indirizzoConsumatore: Consumatore,
+                contenuto: true
+            });
+        }
 
         elencoProdotti[_lottoProdotto].quantitaProdotta -= _quantitaMagazzino;
 
@@ -257,6 +272,7 @@ pragma abicoder v2;
         return result;
     }
 
+
     function numeroMateriePrime() view public returns (uint256){
         return numMateriePrime;
     }
@@ -289,10 +305,31 @@ pragma abicoder v2;
         return string(buffer);
     }
 
-    // Funzione utilizzata per stampare un prodotto acquistato
-    function StampaProdotti(string memory _LottoProdotto) public view returns(MagazzinoConsumatore memory){
+    // Funzione utilizzata per stampare le informazioni di un prodotto
+    function StampaInforProdTrasf(string memory _lottoProdotto) public view returns(ProdottoFinito memory){
         require(msg.sender == Consumatore);
-        require(elencoProdotti[_LottoProdotto].contenuto);
-        return magazzinoConsumatore[_LottoProdotto];
+        require(elencoProdotti[_lottoProdotto].contenuto);
+        return elencoProdotti[_lottoProdotto];
+    }
+
+    // Funzione utilizzata per stampare le informazioni di una materia prima
+    function StampaInforMatPrProd(string memory _lottoMateriaPrima) public view returns(MateriaPrima memory){
+        require(msg.sender == Trasformatore);
+        require(elencoMateriePrime[_lottoMateriaPrima].contenuto);
+        return elencoMateriePrime[_lottoMateriaPrima];
+    }
+
+    // Funzione utilizzata per stampare le informazioni di una materia prima acquistata dal trasformatore
+    function StampaMatPrAcq(string memory _lottoMateriaPrima) public view returns(MagazzinoTrasformatore memory){
+        require(msg.sender == Trasformatore);
+        require(magazzinoTrasformatore[_lottoMateriaPrima].contenuto);
+        return magazzinoTrasformatore[_lottoMateriaPrima];
+    }
+
+    // Funzione utilizzata per stampare le informazioni di un prodotto acquistato dal consumatore
+    function StampaInforProdCons(string memory _lottoProdotto) public view returns(MagazzinoConsumatore memory){
+        require(msg.sender == Consumatore);
+        require(magazzinoConsumatore[_lottoProdotto].contenuto);
+        return magazzinoConsumatore[_lottoProdotto];
     }
  }
