@@ -29,12 +29,16 @@ def window_trasformatore():
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
         if event == "acquista":
-            mat_prim = ['acqua', 'olio', 'latte']
+            #mat_prim = contract.tutti_MP_lotti()
+            print(contract.tutti_MP_lotti())
+            mat_prim=['a','b']
             col_sin=[[sg.Text('Seleziona una materia prima',background_color="#1d8c3b")],
                 [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)],
                 [sg.Text('Quantità:', background_color="#1d8c3b"),sg.In(size=(10, 1), enable_events=True,background_color="#8bd9a0",key='-IN-')],
                 [sg.Text('',background_color="#1d8c3b",key='-Alert-')]]
             col_des=[[sg.Text('Caratteristiche:',background_color="#1d8c3b")],
+                     [sg.Text('Nome      :',background_color="#1d8c3b"),sg.Text('',background_color="#1d8c3b",key='-Nome-')],
+                     [sg.Text('FootPrint :', background_color="#1d8c3b"), sg.Text('', background_color="#1d8c3b", key='-FootPrint-')],
                 [sg.Button("Acquista", button_color="#013810", key="ACQUISTA")]]
             laytot=[[sg.Column(col_sin, element_justification='c',background_color="#1d8c3b"),sg.VSeperator(),sg.Column(col_des, element_justification='c',background_color="#1d8c3b")]]
             win = sg.Window("Acquista Materia Prima",laytot, modal=True,
@@ -51,6 +55,10 @@ def window_trasformatore():
 
                 if values['-IN-'].isdigit():
                     win.Element('-Alert-').update("")
+
+                #if event == '-LIST-' and len(values['_LIST_']):
+                    #win.Element('-Nome-').update(contract.info_MP_prod(values['-LIST-']).nomeMateriaPrima)
+                    #win.Element('-FootPrint-').update(contract.info_MP_prod(values['-LIST-']).footprintMateriaPrima)
             win.close()
     window.close()
 
@@ -61,7 +69,6 @@ def window_produttore():
         ],
         [
             sg.Button("Inserisci Materia Prima", button_color="#013810", key="addMP"),
-            sg.Button("Vedi magazzino", button_color="#013810", key="magMP"),
         ],
     ]
     layout = [

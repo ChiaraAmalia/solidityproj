@@ -45,7 +45,7 @@ MagazzinoProdotti = w3.eth.contract(abi=abi, bytecode=bytecode)
 prod=Web3.toChecksumAddress(w3.eth.accounts[0])
 trasf=Web3.toChecksumAddress(Web3(web3.HTTPProvider("http://127.0.0.1:22001")).eth.accounts[0])
 consum=Web3.toChecksumAddress(Web3(web3.HTTPProvider("http://127.0.0.1:22002")).eth.accounts[0])
-tx_hash = MagazzinoProdotti.constructor(trasf, prod, consum).transact({'from': prod})
+tx_hash = MagazzinoProdotti.constructor(prod, trasf, consum).transact({'from': prod})
 
 # Wait for the transaction to be mined, and get the transaction receipt
 tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
@@ -69,31 +69,45 @@ def acquista_Prod(lottoP,quantP):
     magazzino.functions.acquistaProdotto(lottoP,quantP).transact({'from': consum})
 
 def footprint_Prod(lottoP):
-    magazzino.functions.vediFootprintProdottoFinito(lottoP)
+    return magazzino.functions.vediFootprintProdottoFinito(lottoP).call()
 
 def lotti_Prod(nomeP):
-    magazzino.functions.vediLottiProdotto(nomeP)
+    return magazzino.functions.vediLottiProdotto(nomeP).call()
 
 def tutti_Prod_lotti():
-    magazzino.functions.vediTuttiLottiProdotti()
+    return magazzino.functions.vediTuttiLottiProdotti().call()
 
 def lotti_MP(nomeMP):
-    magazzino.functions.vediLottiMateriaPrima(nomeMP)
+    return magazzino.functions.vediLottiMateriaPrima(nomeMP).call()
 
 def tutti_MP_lotti():
-    magazzino.functions.vediTuttiLottiMateriePrime()
+    return magazzino.functions.vediTuttiLottiMateriePrime().call()
+
+def lotti_MP_pers(ind):
+    return magazzino.functions.vediTuttiLottiMateriePrime().call()
 
 def info_Prod_trasf(lottoP):
-    magazzino.functions.StampaInforProdTrasf(lottoP)
+    return magazzino.functions.StampaInforProdTrasf(lottoP).call()
 
 def info_MP_prod(lottoMP):
-    magazzino.functions.StampaInforMatPrProd(lottoMP)
+    return magazzino.functions.StampaInforMatPrProd(lottoMP).call()
 
 def info_MP_acq(lottoMP):
-    magazzino.functions.StampaMatPrAcq(lottoMP)
+    return magazzino.functions.StampaMatPrAcq(lottoMP).call()
 
 def info_Prod_acq(lottoP):
-    magazzino.functions.StampaInforProdCons(lottoP)
+    return magazzino.functions.StampaInforProdCons(lottoP).call()
+
+def handle_event(event):
+    receipt = w3.eth.waitForTransactionReceipt(event['transactionHash'])
+    print(result[0]['args'])
+
+def log_loop(event_filter, poll_interval):
+    while True:
+        for event in event_filter.get_new_entries():
+            handle_event(event)
+            time.sleep(poll_interval)
+
 
 
 
