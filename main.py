@@ -61,6 +61,7 @@ def window_produttore():
         ],
         [
             sg.Button("Inserisci Materia Prima", button_color="#013810", key="addMP"),
+            sg.Button("Vedi magazzino", button_color="#013810", key="magMP"),
         ],
     ]
     layout = [
@@ -75,10 +76,7 @@ def window_produttore():
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
         if event == "addMP":
-            ele=contract.elenco_MP()
             win=sg.Window("Aggiungi Materia Prima",[
-                [sg.Combo(ele, size=(20,2),readonly=True)],
-                [sg.Text(contract.log_loop(contract.block_filter, 2))],
                 [sg.Text("Inserisci nome:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOMEMP",background_color="#8bd9a0")],
                 [sg.Text("Inserisci quantità: ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="QUANTMP", background_color="#8bd9a0")],
                 [sg.Text("Inserisci footprint: ",background_color="#1d8c3b"), sg.In(size=(30, 1), enable_events=True, key="FPMP", background_color="#8bd9a0")],
