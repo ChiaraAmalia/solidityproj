@@ -62,7 +62,7 @@ def window_trasformatore():
                 [sg.Button("Acquista", button_color="#013810", key="ACQUISTA")]]
             laytot=[[sg.Column(col_sin, element_justification='c',background_color="#1d8c3b"),sg.VSeperator(),sg.Column(col_des, element_justification='c',background_color="#1d8c3b")]]
             win = sg.Window("Acquista Materia Prima",laytot, modal=True,
-                            background_color="#1d8c3b", icon=r'D:\FootPrint\foot.ico')
+                            background_color="#1d8c3b", icon=impronta)
             while True:
                 event, values = win.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
@@ -116,7 +116,7 @@ def window_produttore():
                 [sg.Text("Inserisci nome:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOMEMP",background_color="#8bd9a0")],
                 [sg.Text("Inserisci quantità: ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="QUANTMP", background_color="#8bd9a0")],
                 [sg.Text("Inserisci footprint: ",background_color="#1d8c3b"), sg.In(size=(30, 1), enable_events=True, key="FPMP", background_color="#8bd9a0")],
-                [sg.Button("inserisci",button_color="#013810", key="INSERISCI")]],modal=True,background_color="#1d8c3b",icon=r'D:\FootPrint\foot.ico')
+                [sg.Button("inserisci",button_color="#013810", key="INSERISCI")]],modal=True,background_color="#1d8c3b",icon=impronta)
             while True:
                 event, values = win.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
