@@ -55,45 +55,46 @@ magazzino = w3.eth.contract(
     abi=abi
 )
 
+current_user = '0x00000000000000000000000000000'
 
 def inserisci_MP(nomeMP,quantMP,footprint):
-    magazzino.functions.aggiungiMateriaPrima(nomeMP, quantMP, footprint).transact({'from': prod})
+    magazzino.functions.aggiungiMateriaPrima(nomeMP, quantMP, footprint).transact({'from': current_user})
 
 def acquista_MP(lottoMP,quantMP):
-    magazzino.functions.acquistaMateriaPrima(lottoMP,quantMP).transact({'from': trasf})
+    magazzino.functions.acquistaMateriaPrima(lottoMP,quantMP).transact({'from': current_user})
 
 def inserisci_Prod(nomeP,listaLottiMP,listaQuantMP,quantP,footprint):
-    magazzino.functions.aggiungiProdotto(nomeP,listaLottiMP,listaQuantMP, quantP, footprint).transact({'from': trasf})
+    magazzino.functions.aggiungiProdotto(nomeP,listaLottiMP,listaQuantMP, quantP, footprint).transact({'from': current_user})
 
 def acquista_Prod(lottoP,quantP):
-    magazzino.functions.acquistaProdotto(lottoP,quantP).transact({'from': consum})
+    magazzino.functions.acquistaProdotto(lottoP,quantP).transact({'from': current_user})
 
 def footprint_Prod(lottoP):
-    return magazzino.functions.vediFootprintProdottoFinito(lottoP).call()
+    return magazzino.functions.vediFootprintProdottoFinito(lottoP).call({'from': current_user})
 
 def lotti_Prod(nomeP):
-    return magazzino.functions.vediLottiProdotto(nomeP).call()
+    return magazzino.functions.vediLottiProdotto(nomeP).call({'from': current_user})
 
 def tutti_Prod_lotti():
-    return magazzino.functions.vediTuttiLottiProdotti().call()
+    return magazzino.functions.vediTuttiLottiProdotti().call({'from': current_user})
 
 def lotti_MP(nomeMP):
-    return magazzino.functions.vediLottiMateriaPrima(nomeMP).call()
+    return magazzino.functions.vediLottiMateriaPrima(nomeMP).call({'from': current_user})
 
 def tutti_MP_lotti():
-    return magazzino.functions.vediTuttiLottiMateriePrime().call()
+    return magazzino.functions.vediTuttiLottiMateriePrime().call({'from': current_user})
 
 def info_Prod_trasf(lottoP):
-    return magazzino.functions.StampaInforProdTrasf(lottoP).call()
+    return magazzino.functions.StampaInforProdTrasf(lottoP).call({'from': current_user})
 
 def info_MP_prod(lottoMP):
-    return magazzino.functions.StampaInforMatPrProd(lottoMP).call()
+    return magazzino.functions.StampaInforMatPrProd(lottoMP).call({'from': current_user})
 
 def info_MP_acq(lottoMP):
-    return magazzino.functions.StampaMatPrAcq(lottoMP).call()
+    return magazzino.functions.StampaMatPrAcq(lottoMP).call({'from': current_user})
 
 def info_Prod_acq(lottoP):
-    return magazzino.functions.StampaInforProdCons(lottoP).call()
+    return magazzino.functions.StampaInforProdCons(lottoP).call({'from': current_user})
 
 def handle_event(event):
     receipt = w3.eth.waitForTransactionReceipt(event['transactionHash'])

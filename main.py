@@ -1,3 +1,4 @@
+from pickle import FALSE
 import PySimpleGUI as sg
 import contract
 import os
@@ -6,6 +7,24 @@ import os
 path = os.path.abspath(os.path.dirname(__file__)) #Salva nella variabile path il percorso globale della cartella in cui si trova il file .py in esecuzione
 os.chdir(path)  # Cambio della cartella attuale nella cartella in cui si trova il file .py
 impronta = os.path.join(path,'impronta.ico') #viene preso il file impronta.ico dalla cartella in cui si trovale il file .py in esecuzione
+nexttoggle = True #Toggle della finestra "Login" per disattivare/attivare dopo login/logout
+file_list_column = [
+    [
+        sg.Text("Inserisci indirizzo di portafoglio:",background_color="#1d8c3b"),
+        sg.In(size=(58, 1), enable_events=True, key="PORTAFOGLIO",background_color="#8bd9a0"),
+    ],
+    [
+        sg.Button("Entra",button_color="#013810",key="entra",bind_return_key=True)
+    ],
+]
+# ----- Full layout -----
+layout = [
+    [
+        sg.Column(file_list_column,background_color="#1d8c3b"),
+    ]
+]
+windowLogin = sg.Window("Accedi al FootPrint Calculator", layout,background_color="#1d8c3b",icon=impronta)
+
 
 def window_trasformatore():
     file_list_column = [
@@ -27,6 +46,7 @@ def window_trasformatore():
     while True:
         event, values = window.read()
         if event == "Exit" or event == sg.WIN_CLOSED:
+            toggle_login()
             break
         if event == "acquista":
             mat_prim = contract.tutti_MP_lotti()
@@ -87,7 +107,9 @@ def window_produttore():
     choice = None
     while True:
         event, values = window.read()
+        
         if event == "Exit" or event == sg.WIN_CLOSED:
+            toggle_login()
             break
         if event == "addMP":
             win=sg.Window("Aggiungi Materia Prima",[
@@ -127,44 +149,38 @@ def window_consumatore():
     while True:
         event, values = window.read()
         if event == "Exit" or event == sg.WIN_CLOSED:
+            toggle_login()
             break
 
     window.close()
 
+
+def toggle_login():
+    global nexttoggle
+    windowLogin['entra'].update(disabled=nexttoggle)
+    windowLogin['PORTAFOGLIO'].update(disabled=nexttoggle)
+    nexttoggle = not nexttoggle
+    print(nexttoggle)
+
 if __name__ == '__main__':
-    file_list_column = [
-        [
-            sg.Text("Inserisci indirizzo di portafoglio:",background_color="#1d8c3b"),
-            sg.In(size=(58, 1), enable_events=True, key="PORTAFOGLIO",background_color="#8bd9a0"),
-
-        ],
-        [
-            sg.Button("Entra",button_color="#013810",key="entra",bind_return_key=True)
-        ],
-    ]
-
-
-    # ----- Full layout -----
-    layout = [
-        [
-            sg.Column(file_list_column,background_color="#1d8c3b"),
-        ]
-    ]
-
-    window = sg.Window("Accedi al FootPrint Calculator", layout,background_color="#1d8c3b",icon=impronta)
 
     # Run the Event Loop
     while True:
-        event, values = window.read()
+        event, values = windowLogin.read()
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
-        if event == "entra" and values['PORTAFOGLIO'] == '0xcA843569e3427144cEad5e4d5999a3D0cCF92B8e':
-            window_trasformatore()
-        if event == "entra" and values['PORTAFOGLIO'] == '0xed9d02e382b34818e88B88a309c7fe71E65f419d':
-            window_produttore()
-        if event == "entra" and values['PORTAFOGLIO'] == '0x0fBDc686b912d7722dc86510934589E0AAf3b55A':
-            window_consumatore()
+        if event == "entra":
+            contract.current_user = values['PORTAFOGLIO']
+            toggle_login()
+            if values['PORTAFOGLIO'] == '0xcA843569e3427144cEad5e4d5999a3D0cCF92B8e':
+                window_trasformatore()
+            if values['PORTAFOGLIO'] == '0xed9d02e382b34818e88B88a309c7fe71E65f419d':
+                window_produttore()
+            if values['PORTAFOGLIO'] == '0x0fBDc686b912d7722dc86510934589E0AAf3b55A':
+                window_consumatore()
+            
+        print(values['PORTAFOGLIO'])
         # Folder name was filled in, make a list of files in the folder
 
 
-    window.close()
+    windowLogin.close()
