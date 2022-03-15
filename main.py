@@ -35,8 +35,10 @@ def window_trasformatore():
                 [sg.Text('Quantità:', background_color="#1d8c3b"),sg.In(size=(10, 1), enable_events=True,background_color="#8bd9a0",key='-IN-')],
                 [sg.Text('',background_color="#1d8c3b",key='-Alert-')]]
             col_des=[[sg.Text('Caratteristiche:',background_color="#1d8c3b")],
-                     [sg.Text('Nome      :',background_color="#1d8c3b"),sg.Text('',background_color="#1d8c3b",key='-Nome-')],
-                     [sg.Text('FootPrint :', background_color="#1d8c3b"), sg.Text('', background_color="#1d8c3b", key='-FootPrint-')],
+                     [sg.Text('Nome      :',background_color="#1d8c3b")],
+                     [sg.Text('',background_color="#1d8c3b",key='-Nome-')],
+                     [sg.Text('FootPrint :', background_color="#1d8c3b")],
+                     [sg.Text('', background_color="#1d8c3b", key='-FootPrint-')],
                 [sg.Button("Acquista", button_color="#013810", key="ACQUISTA")]]
             laytot=[[sg.Column(col_sin, element_justification='c',background_color="#1d8c3b"),sg.VSeperator(),sg.Column(col_des, element_justification='c',background_color="#1d8c3b")]]
             win = sg.Window("Acquista Materia Prima",laytot, modal=True,

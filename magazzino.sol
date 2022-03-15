@@ -223,7 +223,7 @@ pragma abicoder v2;
 
     //funzione che ci consente di vedere i lotti del prodotto
     function vediLottiProdotto(string memory _nomeProdotto) public view returns (string[] memory){
-        require(msg.sender == Consumatore);
+        //require(msg.sender == Consumatore);
         string[] memory result=new string[](numProdotti);
         uint j = 0;
 
@@ -238,7 +238,7 @@ pragma abicoder v2;
 
     //funzione che mi consente di vedere tutti i lotti dei prodotti
     function vediTuttiLottiProdotti() public view returns (string[] memory) {
-        require(msg.sender == Consumatore);
+        //require(msg.sender == Consumatore);
         string[] memory result=new string[](numProdotti);
         uint j = 0;
 
@@ -251,7 +251,7 @@ pragma abicoder v2;
 
     //funzione che mi consente di vedere i lotti di un determinato materia prima
     function vediLottiMateriaPrima(string memory _nomeMateriaPrima)  public view returns (string[] memory){
-        require(msg.sender == Trasformatore);
+        //require(msg.sender == Trasformatore);
         string[] memory result = new string[](numMateriePrime);      
         uint j = 0;
 
@@ -312,7 +312,7 @@ pragma abicoder v2;
 
     // Funzione utilizzata per stampare le informazioni di un prodotto inserito dal trasformatore
     function StampaInforProdTrasf(string memory _lottoProdotto) public view returns(ProdottoFinito memory){
-        require(msg.sender == Consumatore);
+        //require(msg.sender == Consumatore);
         require(elencoProdotti[_lottoProdotto].contenuto);
         return elencoProdotti[_lottoProdotto];
     }
@@ -326,14 +326,14 @@ pragma abicoder v2;
 
     // Funzione utilizzata per stampare le informazioni di una materia prima acquistata dal trasformatore
     function StampaMatPrAcq(string memory _lottoMateriaPrima) public view returns(MagazzinoTrasformatore memory){
-        require(msg.sender == Trasformatore);
+        //require(msg.sender == Trasformatore);
         require(magazzinoTrasformatore[_lottoMateriaPrima].contenuto);
         return magazzinoTrasformatore[_lottoMateriaPrima];
     }
 
     // Funzione utilizzata per stampare le informazioni di un prodotto acquistato dal consumatore
     function StampaInforProdCons(string memory _lottoProdotto) public view returns(MagazzinoConsumatore memory){
-        require(msg.sender == Consumatore);
+        //require(msg.sender == Consumatore);
         require(magazzinoConsumatore[_lottoProdotto].contenuto);
         return magazzinoConsumatore[_lottoProdotto];
     }
