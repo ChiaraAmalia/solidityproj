@@ -1,5 +1,7 @@
 import PySimpleGUI as sg
+import contract
 import os
+
 
 path = os.path.abspath(os.path.dirname(__file__)) #Salva nella variabile path il percorso globale della cartella in cui si trova il file .py in esecuzione
 os.chdir(path)  # Cambio della cartella attuale nella cartella in cui si trova il file .py
@@ -26,7 +28,30 @@ def window_trasformatore():
         event, values = window.read()
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
+        if event == "acquista":
+            mat_prim = ['acqua', 'olio', 'latte']
+            col_sin=[[sg.Text('Seleziona una materia prima',background_color="#1d8c3b")],
+                [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)],
+                [sg.Text('Quantità:', background_color="#1d8c3b"),sg.Input(enable_events=True,key='-IN-')],
+                [sg.Text('',background_color="#1d8c3b",key='-Alert-')]]
+            col_des=[[sg.Text('Caratteristiche:',background_color="#1d8c3b")],
+                [sg.Button("Acquista", button_color="#013810", key="ACQUISTA")]]
+            laytot=[[sg.Column(col_sin, element_justification='c',background_color="#1d8c3b"),sg.VSeperator(),sg.Column(col_des, element_justification='c',background_color="#1d8c3b")]]
+            win = sg.Window("Acquista Materia Prima",laytot, modal=True,
+                            background_color="#1d8c3b", icon=r'D:\FootPrint\foot.ico')
+            while True:
+                event, values = win.read()
+                if event == "Exit" or event == sg.WIN_CLOSED:
+                    break
+                if not values['-IN-'].isdigit():
+                    win.Element('-Alert-').update("non è un numero")
 
+                if values['-IN-']=="":
+                    win.Element('-Alert-').update("")
+
+                if values['-IN-'].isdigit():
+                    win.Element('-Alert-').update("")
+            win.close()
     window.close()
 
 def window_produttore():
@@ -43,13 +68,29 @@ def window_produttore():
             sg.Column(file_list_column, background_color="#1d8c3b"),
         ]
     ]
-    window = sg.Window("Produttore", layout, modal=True,background_color="#1d8c3b", icon = impronta)
+    window = sg.Window("Produttore", layout,background_color="#1d8c3b", icon = impronta)
     choice = None
     while True:
         event, values = window.read()
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
-
+        if event == "addMP":
+            ele=contract.elenco_MP()
+            win=sg.Window("Aggiungi Materia Prima",[
+                [sg.Combo(ele, size=(20,2),readonly=True)],
+                [sg.Text(contract.log_loop(contract.block_filter, 2))],
+                [sg.Text("Inserisci nome:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOMEMP",background_color="#8bd9a0")],
+                [sg.Text("Inserisci quantità: ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="QUANTMP", background_color="#8bd9a0")],
+                [sg.Text("Inserisci footprint: ",background_color="#1d8c3b"), sg.In(size=(30, 1), enable_events=True, key="FPMP", background_color="#8bd9a0")],
+                [sg.Button("inserisci",button_color="#013810", key="INSERISCI")]],modal=True,background_color="#1d8c3b",icon=r'D:\FootPrint\foot.ico')
+            while True:
+                event, values = win.read()
+                if event == "Exit" or event == sg.WIN_CLOSED:
+                    break
+                if event == "INSERISCI":
+                    contract.inserisci_MP(values['NOMEMP'],int(values['QUANTMP']),int(values['FPMP']))
+                    contract.elenco_MP()
+            win.close()
     window.close()
 
 def window_consumatore():
@@ -83,7 +124,7 @@ if __name__ == '__main__':
 
         ],
         [
-            sg.Button("Entra",button_color="#013810",key="entra")
+            sg.Button("Entra",button_color="#013810",key="entra",bind_return_key=True)
         ],
     ]
 

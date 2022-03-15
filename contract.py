@@ -1,6 +1,8 @@
+import time
 from unittest import result
 
 import os
+from eth_utils import to_dict
 import web3
 from web3 import Web3
 from solcx import compile_source, install_solc
@@ -53,6 +55,7 @@ magazzino = w3.eth.contract(
     abi=abi
 )
 
+
 def inserisci_MP(nomeMP,quantMP,footprint):
     magazzino.functions.aggiungiMP(nomeMP, quantMP, footprint).transact({'from': prod})
 
@@ -74,23 +77,9 @@ def elenco_Prod_nome(nome):
         elencoPROD.append(magazzino.functions.vediProdNome(nome,i).call())
     print(elencoPROD)
     print(TotProd)
-#print(magazzino.functions.prova().call())
-
-nomeMP = input("Inserisci il nome della materia prima: ")
-quantMP = int(input("Inserisci la quantità della materia prima: "))
-fpMP = int(input("Inserisci il footprint della materia prima: "))
 
 
 
-magazzino.functions.aggiungiMP(nomeMP,quantMP,fpMP).transact({'from': prod})
-magazzino.functions.aggiungiMP(nomeMP,quantMP,fpMP).transact({'from': prod})
-magazzino.functions.aggiungiMP(nomeMP,quantMP,fpMP).transact({'from': prod})
-magazzino.functions.aggiungiMP(nomeMP,quantMP,fpMP).transact({'from': prod})
-
-
-#print(str(magazzino.functions.vediMPNome(nomeMP).call()))
-
-elenco_MP_nome(nomeMP)
 
 
 
