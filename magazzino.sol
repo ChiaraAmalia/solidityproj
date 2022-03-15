@@ -58,13 +58,13 @@ pragma abicoder v2;
     address Trasformatore; //colui che trasforma le materie prime in prodotti finiti
     address Consumatore; //colui che acquisterà il prodotto finito
 
-    mapping(string => MateriaPrima) elencoMateriePrime; //contiene le materie prime
+    mapping(string => MateriaPrima) elencoMateriePrime; //contiene le materie prime inserite dal produttore
     mapping(string => MagazzinoTrasformatore) magazzinoTrasformatore; //contiene le materie prime presenti nel magazzino del trasformatore
     mapping(string => ProdottoFinito) elencoProdotti; //contiene i prodotti che vengono inseriti dal trasformatore
     mapping(string => MagazzinoConsumatore) magazzinoConsumatore; //contiene i prodotti acquistati dal consumatore
 
-    mapping(uint256 => MateriaPrima) nomiMateriePrime;  //tipologia di materia prima
-    mapping(uint256 => ProdottoFinito) nomiProdottiFiniti;
+    mapping(uint256 => MateriaPrima) nomiMateriePrime; //contiene le materie prime inserite dal produttore
+    mapping(uint256 => ProdottoFinito) nomiProdottiFiniti; //contiene i prodotti finiti inseriti dal trasformatore
 
     constructor(address _produttore, address _trasformatore, address _consumatore) {
         Produttore = _produttore;
@@ -213,6 +213,7 @@ pragma abicoder v2;
 
     //funzione che ci consente di vedere il footprint di un dato prodotto finito
     function vediFootprintProdottoFinito(string memory _lottoProdotto) public view returns (string memory) {
+        require(msg.sender == Consumatore);
         if(elencoProdotti[_lottoProdotto].contenuto){
             uint256 fp = elencoProdotti[_lottoProdotto].footprintTrasformazione;
             return string(abi.encodePacked(string(abi.encodePacked(string(abi.encodePacked("Il footprint di: ", _lottoProdotto)), "e' pari a: ")),toString(fp)));
@@ -222,6 +223,7 @@ pragma abicoder v2;
 
     //funzione che ci consente di vedere i lotti del prodotto
     function vediLottiProdotto(string memory _nomeProdotto) public view returns (string[] memory){
+        require(msg.sender == Consumatore);
         string[] memory result=new string[](numProdotti);
         uint j = 0;
 
@@ -236,6 +238,7 @@ pragma abicoder v2;
 
     //funzione che mi consente di vedere tutti i lotti dei prodotti
     function vediTuttiLottiProdotti() public view returns (string[] memory) {
+        require(msg.sender == Consumatore);
         string[] memory result=new string[](numProdotti);
         uint j = 0;
 
@@ -248,6 +251,7 @@ pragma abicoder v2;
 
     //funzione che mi consente di vedere i lotti di un determinato materia prima
     function vediLottiMateriaPrima(string memory _nomeMateriaPrima)  public view returns (string[] memory){
+        require(msg.sender == Trasformatore);
         string[] memory result = new string[](numMateriePrime);      
         uint j = 0;
 
@@ -262,6 +266,7 @@ pragma abicoder v2;
 
     //funzione che mi consente di vedere tutti i lotti delle materie prime
     function vediTuttiLottiMateriePrime() public view returns (string[] memory){
+        require(msg.sender == Trasformatore);
         string[] memory result= new string[](numMateriePrime);
         uint j = 0;
 
@@ -305,14 +310,14 @@ pragma abicoder v2;
         return string(buffer);
     }
 
-    // Funzione utilizzata per stampare le informazioni di un prodotto
+    // Funzione utilizzata per stampare le informazioni di un prodotto inserito dal trasformatore
     function StampaInforProdTrasf(string memory _lottoProdotto) public view returns(ProdottoFinito memory){
         require(msg.sender == Consumatore);
         require(elencoProdotti[_lottoProdotto].contenuto);
         return elencoProdotti[_lottoProdotto];
     }
 
-    // Funzione utilizzata per stampare le informazioni di una materia prima
+    // Funzione utilizzata per stampare le informazioni di una materia prima inserita da un produttore
     function StampaInforMatPrProd(string memory _lottoMateriaPrima) public view returns(MateriaPrima memory){
         require(msg.sender == Trasformatore);
         require(elencoMateriePrime[_lottoMateriaPrima].contenuto);
