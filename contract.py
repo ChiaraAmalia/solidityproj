@@ -83,9 +83,6 @@ def lotti_MP(nomeMP):
 def tutti_MP_lotti():
     return magazzino.functions.vediTuttiLottiMateriePrime().call()
 
-def lotti_MP_pers(ind):
-    return magazzino.functions.vediTuttiLottiMateriePrime().call()
-
 def info_Prod_trasf(lottoP):
     return magazzino.functions.StampaInforProdTrasf(lottoP).call()
 
