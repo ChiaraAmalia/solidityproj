@@ -32,7 +32,7 @@ def window_trasformatore():
             mat_prim = ['acqua', 'olio', 'latte']
             col_sin=[[sg.Text('Seleziona una materia prima',background_color="#1d8c3b")],
                 [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)],
-                [sg.Text('Quantità:', background_color="#1d8c3b"),sg.Input(enable_events=True,key='-IN-')],
+                [sg.Text('Quantità:', background_color="#1d8c3b"),sg.In(size=(10, 1), enable_events=True,background_color="#8bd9a0",key='-IN-')],
                 [sg.Text('',background_color="#1d8c3b",key='-Alert-')]]
             col_des=[[sg.Text('Caratteristiche:',background_color="#1d8c3b")],
                 [sg.Button("Acquista", button_color="#013810", key="ACQUISTA")]]
@@ -89,7 +89,6 @@ def window_produttore():
                     break
                 if event == "INSERISCI":
                     contract.inserisci_MP(values['NOMEMP'],int(values['QUANTMP']),int(values['FPMP']))
-                    contract.elenco_MP()
             win.close()
     window.close()
 

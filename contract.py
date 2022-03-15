@@ -57,26 +57,43 @@ magazzino = w3.eth.contract(
 
 
 def inserisci_MP(nomeMP,quantMP,footprint):
-    magazzino.functions.aggiungiMP(nomeMP, quantMP, footprint).transact({'from': prod})
+    magazzino.functions.aggiungiMateriaPrima(nomeMP, quantMP, footprint).transact({'from': prod})
 
-def elenco_MP_nome(nome):
-    elencoMAT=[]
-    TotMP = int(magazzino.functions.numeroMatPrim().call())
-    for i in range(TotMP):
-        elencoMAT.append(magazzino.functions.vediMPNome(nome,i).call())
-    print(elencoMAT)
-    print(TotMP)
+def acquista_MP(lottoMP,quantMP):
+    magazzino.functions.acquistaMateriaPrima(lottoMP,quantMP).transact({'from': trasf})
 
-def inserisci_Prod(nomeP,quantP,footprint):
-    magazzino.functions.aggiungiProd(nomeP, quantP, footprint).transact({'from': trasf})
+def inserisci_Prod(nomeP,listaLottiMP,listaQuantMP,quantP,footprint):
+    magazzino.functions.aggiungiProdotto(nomeP,listaLottiMP,listaQuantMP, quantP, footprint).transact({'from': trasf})
 
-def elenco_Prod_nome(nome):
-    elencoPROD=[]
-    TotProd = int(magazzino.functions.numeroProd().call())
-    for i in range(TotProd):
-        elencoPROD.append(magazzino.functions.vediProdNome(nome,i).call())
-    print(elencoPROD)
-    print(TotProd)
+def acquista_Prod(lottoP,quantP):
+    magazzino.functions.acquistaProdotto(lottoP,quantP).transact({'from': consum})
+
+def footprint_Prod(lottoP):
+    magazzino.functions.vediFootprintProdottoFinito(lottoP)
+
+def lotti_Prod(nomeP):
+    magazzino.functions.vediLottiProdotto(nomeP)
+
+def tutti_Prod_lotti():
+    magazzino.functions.vediTuttiLottiProdotti()
+
+def lotti_MP(nomeMP):
+    magazzino.functions.vediLottiMateriaPrima(nomeMP)
+
+def tutti_MP_lotti():
+    magazzino.functions.vediTuttiLottiMateriePrime()
+
+def info_Prod_trasf(lottoP):
+    magazzino.functions.StampaInforProdTrasf(lottoP)
+
+def info_MP_prod(lottoMP):
+    magazzino.functions.StampaInforMatPrProd(lottoMP)
+
+def info_MP_acq(lottoMP):
+    magazzino.functions.StampaMatPrAcq(lottoMP)
+
+def info_Prod_acq(lottoP):
+    magazzino.functions.StampaInforProdCons(lottoP)
 
 
 
