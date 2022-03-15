@@ -267,7 +267,7 @@ pragma abicoder v2;
     //funzione che mi consente di vedere tutti i lotti delle materie prime
     function vediTuttiLottiMateriePrime() public view returns (string[] memory){
         
-        require(msg.sender == Produttore, "solo il produttore puo' vedere tutti i lotti delle materie prime inserite dal produttore.");
+        require(msg.sender == Trasformatore, "solo il Trasformatore puo' vedere tutti i lotti delle materie prime inserite dal produttore.");
         require(numMateriePrime>0,"non hai materie prime.");
         string[] memory result= new string[](numMateriePrime);
         uint j = 0;
