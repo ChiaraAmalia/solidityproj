@@ -61,7 +61,10 @@ def inserisci_MP(nomeMP,quantMP,footprint):
     magazzino.functions.aggiungiMateriaPrima(nomeMP, quantMP, footprint).transact({'from': current_user})
 
 def acquista_MP(lottoMP,quantMP):
-    magazzino.functions.acquistaMateriaPrima(lottoMP,quantMP).transact({'from': current_user})
+    print(current_user)
+    tx_hash = magazzino.functions.acquistaMateriaPrima(lottoMP,quantMP).transact({'from': current_user})
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt['status'])
 
 def inserisci_Prod(nomeP,listaLottiMP,listaQuantMP,quantP,footprint):
     magazzino.functions.aggiungiProdotto(nomeP,listaLottiMP,listaQuantMP, quantP, footprint).transact({'from': current_user})

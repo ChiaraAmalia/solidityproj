@@ -50,6 +50,7 @@ def window_trasformatore():
             break
         if event == "acquista":
             mat_prim = contract.tutti_MP_lotti()
+
             col_sin=[[sg.Text('Seleziona una materia prima',background_color="#1d8c3b")],
                 [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)],
                 [sg.Text('Quantità:', background_color="#1d8c3b"),sg.In(size=(10, 1), enable_events=True,background_color="#8bd9a0",key='-IN-')],
@@ -59,7 +60,7 @@ def window_trasformatore():
                      [sg.Text('',background_color="#1d8c3b",key='-Nome-')],
                      [sg.Text('FootPrint:', background_color="#1d8c3b")],
                      [sg.Text('', background_color="#1d8c3b", key='-FootPrint-')],
-                [sg.Button("Acquista", button_color="#013810", key="ACQUISTA")]]
+                [sg.Button("Acquista", button_color="#013810", key='ACQUISTA')]]
             laytot=[[sg.Column(col_sin, element_justification='c',background_color="#1d8c3b"),sg.VSeperator(),sg.Column(col_des, element_justification='c',background_color="#1d8c3b")]]
             win = sg.Window("Acquista Materia Prima",laytot, modal=True,
                             background_color="#1d8c3b", icon=impronta)
@@ -79,12 +80,9 @@ def window_trasformatore():
                 if event == '-LIST-' and len(values['-LIST-']):
                     win.Element('-Nome-').update(contract.info_MP_prod(mat_prim[win.Element('-LIST-').Widget.curselection()[0]])[2])
                     win.Element('-FootPrint-').update(contract.info_MP_prod(mat_prim[win.Element('-LIST-').Widget.curselection()[0]])[5])
-
-            while True:
-                event, values = win.read()
-                if event == "Exit" or event == sg.WIN_CLOSED:
-                    break
+    
                 if event == "ACQUISTA" and values['-IN-'].isdigit():
+                    print("acquista selezionata")
                     contract.acquista_MP(mat_prim[win.Element('-LIST-').Widget.curselection()[0]],int(values['-IN-']))
             win.close()
     window.close()
@@ -160,7 +158,6 @@ def toggle_login():
     windowLogin['entra'].update(disabled=nexttoggle)
     windowLogin['PORTAFOGLIO'].update(disabled=nexttoggle)
     nexttoggle = not nexttoggle
-    print(nexttoggle)
 
 if __name__ == '__main__':
 
