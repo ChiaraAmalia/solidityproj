@@ -138,9 +138,9 @@ pragma abicoder v2;
 
     //funzione che permette l'inserimento di prodotti finiti da parte del trasformatore
     function aggiungiProdotto(string memory _nomeProdotto, string[] memory _lottiMateriePrime, uint256[] memory _quantMatPrUtil, uint256 _quantitaMagazzino, uint256 _footprintProdottoFinito) public payable {
-        require(msg.sender == Trasformatore);
-        require(_quantitaMagazzino > 0);
-        require(_footprintProdottoFinito > 0);
+        require(msg.sender == Trasformatore, "solo il trasformatore puo' aggiungere un prodotto.");
+        require(_quantitaMagazzino > 0, "la quantita' prodotta deve essere un valore positivo e diverso da zero.");
+        require(_footprintProdottoFinito > 0, "il footprint del prodotto deve essere un valore positivo e diverso da zero.");
         uint arrayLength = _lottiMateriePrime.length;
 
         for (uint i=0; i<arrayLength;i++){
@@ -189,10 +189,10 @@ pragma abicoder v2;
 
     //funzione che permette al consumatore di acquistare un prodotto finito
     function acquistaProdotto(string memory _lottoProdotto, uint256 _quantitaMagazzino) public payable {
-        require(msg.sender == Consumatore);
-        require(_quantitaMagazzino > 0);
-        require(elencoProdotti[_lottoProdotto].contenuto);
-        require(elencoProdotti[_lottoProdotto].quantitaProdotta >= _quantitaMagazzino);
+        require(msg.sender == Consumatore, "solo il consumatore puo' acquistare un prodotto.");
+        require(_quantitaMagazzino > 0, "la qauntita' acquistata deve essere un valore positivo diverso da zero.");
+        require(elencoProdotti[_lottoProdotto].contenuto, "il lotto inserito e' insesistente.");
+        require(elencoProdotti[_lottoProdotto].quantitaProdotta >= _quantitaMagazzino, "la quantita' inserita e' piu' grande della quantita' disponibile.");
 
         if(magazzinoConsumatore[_lottoProdotto].contenuto) {
             magazzinoConsumatore[_lottoProdotto].quantitaMagazzino += _quantitaMagazzino;
@@ -213,17 +213,17 @@ pragma abicoder v2;
 
     //funzione che ci consente di vedere il footprint di un dato prodotto finito
     function vediFootprintProdottoFinito(string memory _lottoProdotto) public view returns (string memory) {
-        require(msg.sender == Consumatore);
+        require(msg.sender == Consumatore, "solo il consumatore puo' vedere il footprint del prodotto finito.");
         if(elencoProdotti[_lottoProdotto].contenuto){
             uint256 fp = elencoProdotti[_lottoProdotto].footprintTrasformazione;
-            return string(abi.encodePacked(string(abi.encodePacked(string(abi.encodePacked("Il footprint di: ", _lottoProdotto)), "e' pari a: ")),toString(fp)));
+            return string(abi.encodePacked(string(abi.encodePacked(string(abi.encodePacked("Il footprint di: ", _lottoProdotto)), " e' pari a: ")),toString(fp)));
         }
-        else return "tale prodotto non e' presente in magazzino";
+        else return "tale prodotto non e' presente in magazzino.";
     }
 
     //funzione che ci consente di vedere i lotti del prodotto
     function vediLottiProdotto(string memory _nomeProdotto) public view returns (string[] memory){
-        require(msg.sender == Consumatore);
+        require(msg.sender == Consumatore, "solo il consumatore puo' vedere tutti i lotti associati ad un prodotto.");
         string[] memory result=new string[](numProdotti);
         uint j = 0;
 
@@ -238,7 +238,7 @@ pragma abicoder v2;
 
     //funzione che mi consente di vedere tutti i lotti dei prodotti
     function vediTuttiLottiProdotti() public view returns (string[] memory) {
-        require(msg.sender == Consumatore);
+        require(msg.sender == Consumatore, "solo il consumatore puo' vedere tutti i lotti dei prodotti inseriti dal trasformatore.");
         string[] memory result=new string[](numProdotti);
         uint j = 0;
 
@@ -251,7 +251,7 @@ pragma abicoder v2;
 
     //funzione che mi consente di vedere i lotti di un determinato materia prima
     function vediLottiMateriaPrima(string memory _nomeMateriaPrima)  public view returns (string[] memory){
-        require(msg.sender == Trasformatore);
+        require(msg.sender == Trasformatore, "solo il trasformatore puo' vedere tutti i lotti associati ad una materia prima,");
         string[] memory result = new string[](numMateriePrime);      
         uint j = 0;
 
@@ -266,7 +266,7 @@ pragma abicoder v2;
 
     //funzione che mi consente di vedere tutti i lotti delle materie prime
     function vediTuttiLottiMateriePrime() public view returns (string[] memory){
-        require(msg.sender == Trasformatore);
+        require(msg.sender == Trasformatore, "solo il trasformatore puo' vedere tutti i lotti delle materie prime inserite dal produttore.");
         string[] memory result= new string[](numMateriePrime);
         uint j = 0;
 
@@ -312,29 +312,29 @@ pragma abicoder v2;
 
     // Funzione utilizzata per stampare le informazioni di un prodotto inserito dal trasformatore
     function StampaInforProdTrasf(string memory _lottoProdotto) public view returns(ProdottoFinito memory){
-        require(msg.sender == Consumatore);
-        require(elencoProdotti[_lottoProdotto].contenuto);
+        require(msg.sender == Consumatore, "solo il consumatore puo' vedere le informazioni relative ad un lotto di un prodotto inserito dal trasformatore.");
+        require(elencoProdotti[_lottoProdotto].contenuto, "il lotto inserito e' inesistente.");
         return elencoProdotti[_lottoProdotto];
     }
 
     // Funzione utilizzata per stampare le informazioni di una materia prima inserita da un produttore
     function StampaInforMatPrProd(string memory _lottoMateriaPrima) public view returns(MateriaPrima memory){
-        require(msg.sender == Trasformatore);
-        require(elencoMateriePrime[_lottoMateriaPrima].contenuto);
+        require(msg.sender == Trasformatore, "solo il trasformatore puo' vedere le informazioni relative ad un lotto di una materia prima inserito dal produttore.");
+        require(elencoMateriePrime[_lottoMateriaPrima].contenuto, "il lotto inserito e' inesistente.");
         return elencoMateriePrime[_lottoMateriaPrima];
     }
 
     // Funzione utilizzata per stampare le informazioni di una materia prima acquistata dal trasformatore
     function StampaMatPrAcq(string memory _lottoMateriaPrima) public view returns(MagazzinoTrasformatore memory){
-        require(msg.sender == Trasformatore);
-        require(magazzinoTrasformatore[_lottoMateriaPrima].contenuto);
+        require(msg.sender == Trasformatore, "solo il trasformatore puo' vedere le informazioni relative ad un lotto di una materia prima acquistato dal trasformatore.");
+        require(magazzinoTrasformatore[_lottoMateriaPrima].contenuto, "il lotto inserito e' inesistente.");
         return magazzinoTrasformatore[_lottoMateriaPrima];
     }
 
     // Funzione utilizzata per stampare le informazioni di un prodotto acquistato dal consumatore
     function StampaInforProdCons(string memory _lottoProdotto) public view returns(MagazzinoConsumatore memory){
-        require(msg.sender == Consumatore);
-        require(magazzinoConsumatore[_lottoProdotto].contenuto);
+        require(msg.sender == Consumatore, "solo il consumatore puo' vedere le informazioni relative ad un lotto di un prodotto acquistato dal consumatore.");
+        require(magazzinoConsumatore[_lottoProdotto].contenuto, "il lotto inserito e' inesistente.");
         return magazzinoConsumatore[_lottoProdotto];
     }
  }
