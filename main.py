@@ -2,7 +2,6 @@ from pickle import FALSE
 import PySimpleGUI as sg
 import contract
 import os
-#ciao mondo: simone
 
 path = os.path.abspath(os.path.dirname(__file__)) #Salva nella variabile path il percorso globale della cartella in cui si trova il file .py in esecuzione
 os.chdir(path)  # Cambio della cartella attuale nella cartella in cui si trova il file .py
