@@ -35,9 +35,9 @@ def window_trasformatore():
                 [sg.Text('Quantità:', background_color="#1d8c3b"),sg.In(size=(10, 1), enable_events=True,background_color="#8bd9a0",key='-IN-')],
                 [sg.Text('',background_color="#1d8c3b",key='-Alert-')]]
             col_des=[[sg.Text('Caratteristiche:',background_color="#1d8c3b")],
-                     [sg.Text('Nome      :',background_color="#1d8c3b")],
+                     [sg.Text('Nome:',background_color="#1d8c3b")],
                      [sg.Text('',background_color="#1d8c3b",key='-Nome-')],
-                     [sg.Text('FootPrint :', background_color="#1d8c3b")],
+                     [sg.Text('FootPrint:', background_color="#1d8c3b")],
                      [sg.Text('', background_color="#1d8c3b", key='-FootPrint-')],
                 [sg.Button("Acquista", button_color="#013810", key="ACQUISTA")]]
             laytot=[[sg.Column(col_sin, element_justification='c',background_color="#1d8c3b"),sg.VSeperator(),sg.Column(col_des, element_justification='c',background_color="#1d8c3b")]]
@@ -56,10 +56,16 @@ def window_trasformatore():
                 if values['-IN-'].isdigit():
                     win.Element('-Alert-').update("")
 
-
                 if event == '-LIST-' and len(values['-LIST-']):
                     win.Element('-Nome-').update(contract.info_MP_prod(mat_prim[win.Element('-LIST-').Widget.curselection()[0]])[2])
                     win.Element('-FootPrint-').update(contract.info_MP_prod(mat_prim[win.Element('-LIST-').Widget.curselection()[0]])[5])
+
+            while True:
+                event, values = win.read()
+                if event == "Exit" or event == sg.WIN_CLOSED:
+                    break
+                if event == "ACQUISTA" and values['-IN-'].isdigit():
+                    contract.acquista_MP(mat_prim[win.Element('-LIST-').Widget.curselection()[0]],int(values['-IN-']))
             win.close()
     window.close()
 
