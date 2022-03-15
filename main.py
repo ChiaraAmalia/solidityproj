@@ -99,8 +99,12 @@ def window_produttore():
                 event, values = win.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
-                if event == "INSERISCI":
+                if event == "INSERISCI" and not values['NOMEMP']=='' and values['QUANTMP'].isdigit() and values['FPMP'].isdigit():
                     contract.inserisci_MP(values['NOMEMP'],int(values['QUANTMP']),int(values['FPMP']))
+                    win.Element('NOMEMP').update('')
+                    win.Element('QUANTMP').update('')
+                    win.Element('FPMP').update('')
+                    sg.Popup('Materia Inserita Correttamente', keep_on_top=True,background_color="#1d8c3b",icon = impronta)
             win.close()
     window.close()
 
