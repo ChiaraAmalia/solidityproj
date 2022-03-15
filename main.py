@@ -29,9 +29,7 @@ def window_trasformatore():
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
         if event == "acquista":
-            #mat_prim = contract.tutti_MP_lotti()
-            #print(contract.tutti_MP_lotti())
-            mat_prim=['a','b']
+            mat_prim = contract.tutti_MP_lotti()
             col_sin=[[sg.Text('Seleziona una materia prima',background_color="#1d8c3b")],
                 [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)],
                 [sg.Text('Quantità:', background_color="#1d8c3b"),sg.In(size=(10, 1), enable_events=True,background_color="#8bd9a0",key='-IN-')],
@@ -56,13 +54,10 @@ def window_trasformatore():
                 if values['-IN-'].isdigit():
                     win.Element('-Alert-').update("")
 
-                if event == '-LIST-' and len(values['-LIST-']):
-                    win.Element('-Nome-').update(values['-LIST-'])
-                    win.Element('-FootPrint-').update(values['-LIST-'])
 
-                #if event == '-LIST-' and len(values['_LIST_']):
-                    #win.Element('-Nome-').update(contract.info_MP_prod(values['-LIST-']).nomeMateriaPrima)
-                    #win.Element('-FootPrint-').update(contract.info_MP_prod(values['-LIST-']).footprintMateriaPrima)
+                if event == '-LIST-' and len(values['-LIST-']):
+                    win.Element('-Nome-').update(contract.info_MP_prod(mat_prim[win.Element('-LIST-').Widget.curselection()[0]])[2])
+                    win.Element('-FootPrint-').update(contract.info_MP_prod(mat_prim[win.Element('-LIST-').Widget.curselection()[0]])[5])
             win.close()
     window.close()
 
@@ -152,13 +147,10 @@ if __name__ == '__main__':
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
         if event == "entra" and values['PORTAFOGLIO'] == '0xcA843569e3427144cEad5e4d5999a3D0cCF92B8e':
-            window.close()
             window_trasformatore()
         if event == "entra" and values['PORTAFOGLIO'] == '0xed9d02e382b34818e88B88a309c7fe71E65f419d':
-            window.close()
             window_produttore()
         if event == "entra" and values['PORTAFOGLIO'] == '0x0fBDc686b912d7722dc86510934589E0AAf3b55A':
-            window.close()
             window_consumatore()
         # Folder name was filled in, make a list of files in the folder
 

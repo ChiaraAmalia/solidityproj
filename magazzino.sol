@@ -266,7 +266,7 @@ pragma abicoder v2;
 
     //funzione che mi consente di vedere tutti i lotti delle materie prime
     function vediTuttiLottiMateriePrime() public view returns (string[] memory){
-        require(msg.sender == Trasformatore);
+        //require(msg.sender == Trasformatore);
         string[] memory result= new string[](numMateriePrime);
         uint j = 0;
 
@@ -319,7 +319,7 @@ pragma abicoder v2;
 
     // Funzione utilizzata per stampare le informazioni di una materia prima inserita da un produttore
     function StampaInforMatPrProd(string memory _lottoMateriaPrima) public view returns(MateriaPrima memory){
-        require(msg.sender == Trasformatore);
+        //require(msg.sender == Trasformatore);
         require(elencoMateriePrime[_lottoMateriaPrima].contenuto);
         return elencoMateriePrime[_lottoMateriaPrima];
     }
