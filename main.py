@@ -30,7 +30,7 @@ def window_trasformatore():
             break
         if event == "acquista":
             #mat_prim = contract.tutti_MP_lotti()
-            print(contract.tutti_MP_lotti())
+            #print(contract.tutti_MP_lotti())
             mat_prim=['a','b']
             col_sin=[[sg.Text('Seleziona una materia prima',background_color="#1d8c3b")],
                 [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)],
@@ -55,6 +55,10 @@ def window_trasformatore():
 
                 if values['-IN-'].isdigit():
                     win.Element('-Alert-').update("")
+
+                if event == '-LIST-' and len(values['-LIST-']):
+                    win.Element('-Nome-').update(values['-LIST-'])
+                    win.Element('-FootPrint-').update(values['-LIST-'])
 
                 #if event == '-LIST-' and len(values['_LIST_']):
                     #win.Element('-Nome-').update(contract.info_MP_prod(values['-LIST-']).nomeMateriaPrima)
