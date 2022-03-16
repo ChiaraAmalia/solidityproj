@@ -2,7 +2,6 @@ import time
 from unittest import result
 
 import os
-from eth_utils import to_dict
 import web3
 from web3 import Web3
 from solcx import compile_source, install_solc
@@ -31,10 +30,13 @@ bytecode = contract_interface['bin']
 # prende l'abi
 abi = contract_interface['abi']
 
+
 # crea un istanza di web3.py
 w3 = Web3(web3.HTTPProvider("http://127.0.0.1:22000"))
 w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 print(Web3.toChecksumAddress(w3.eth.accounts[0])+" è il produttore")
+#oko=w3.eth.account.create()
+#print(oko)
 print(Web3.toChecksumAddress(Web3(web3.HTTPProvider("http://127.0.0.1:22001")).eth.accounts[0])+" è il trasformatore")
 print(Web3.toChecksumAddress(Web3(web3.HTTPProvider("http://127.0.0.1:22002")).eth.accounts[0])+" è il consumatore")
 
