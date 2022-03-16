@@ -31,7 +31,11 @@ def window_trasformatore():
             sg.Text("Finestra per il trasformatore:", key="finestra_trasformatore", background_color="#1d8c3b"),
         ],
         [
+            sg.Button("Vedi Tutte Materie Prime", button_color="#013810", key="tutteMP"),
+            sg.Button("Vedi Lotti Materia Prima", button_color="#013810", key="lottiMP"),
+            sg.Button("Vedi Informazioni Materia Prima", button_color="#013810", key="infoMP"),
             sg.Button("Acquista Materia Prima", button_color="#013810", key="acquista"),
+            sg.Button("Dettagli Materia Prima Acquistata", button_color="#013810", key="dettagliMP"),
             sg.Button("Aggiungi Prodotto Finito", button_color="#013810", key="aggProd"),
         ],
     ]
@@ -47,6 +51,24 @@ def window_trasformatore():
         if event == "Exit" or event == sg.WIN_CLOSED:
             toggle_login()
             break
+        if event == "tutteMP":
+            mat_prim = contract.tutti_MP_lotti()
+            file_list_column = [
+                [sg.Text('Lotti Materie Prime',background_color="#1d8c3b")],
+                [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)]
+            ]
+            laytot = [
+                [
+                    sg.Column(file_list_column, background_color="#1d8c3b")
+                ]
+            ]
+            win = sg.Window("Tutti Lotti Materie Prime",laytot, modal=True,
+                background_color="#1d8c3b", icon=impronta)
+            while True:
+                event, values = win.read()
+                if event == "Exit" or event == sg.WIN_CLOSED:
+                    break
+            win.close()
         if event == "acquista":
             mat_prim = contract.tutti_MP_lotti()
 
