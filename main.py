@@ -109,30 +109,34 @@ def window_trasformatore():
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
                 if event == "INF" and not values['LOTTOMP']=='':
-                    
-                    file_list_column = [
-                        [sg.Text('Caratteristiche:',background_color="#1d8c3b")],
-                        [sg.Text('Nome:',background_color="#1d8c3b")],
-                        [sg.Text(contract.info_MP_prod(values['LOTTOMP'])[2],background_color="#1d8c3b",key='-Nome-')],
-                        [sg.Text('IndirizzoProduttore:', background_color="#1d8c3b")],
-                        [sg.Text(contract.info_MP_prod(values['LOTTOMP'])[3], background_color="#1d8c3b", key='-IndirizzoProduttore-')],
-                        [sg.Text('Quantità disponibile:', background_color="#1d8c3b")],
-                        [sg.Text(contract.info_MP_prod(values['LOTTOMP'])[4], background_color="#1d8c3b", key='-Quantita-')],
-                        [sg.Text('FootPrint:', background_color="#1d8c3b")],
-                        [sg.Text(contract.info_MP_prod(values['LOTTOMP'])[5], background_color="#1d8c3b", key='-FootPrint-')]
-                    ]
-                
-                    laytot = [
-                        [
-                            sg.Column(file_list_column, background_color="#1d8c3b")
+                    try:
+                        contract.info_MP_prod(values['LOTTOMP'])
+                    except exceptions.SolidityError as error:
+                        sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=impronta)
+                    else:
+                        file_list_column = [
+                            [sg.Text('Caratteristiche:',background_color="#1d8c3b")],
+                            [sg.Text('Nome:',background_color="#1d8c3b")],
+                            [sg.Text(contract.info_MP_prod(values['LOTTOMP'])[2],background_color="#1d8c3b",key='-Nome-')],
+                            [sg.Text('IndirizzoProduttore:', background_color="#1d8c3b")],
+                            [sg.Text(contract.info_MP_prod(values['LOTTOMP'])[3], background_color="#1d8c3b", key='-IndirizzoProduttore-')],
+                            [sg.Text('Quantità disponibile:', background_color="#1d8c3b")],
+                            [sg.Text(contract.info_MP_prod(values['LOTTOMP'])[4], background_color="#1d8c3b", key='-Quantita-')],
+                            [sg.Text('FootPrint:', background_color="#1d8c3b")],
+                            [sg.Text(contract.info_MP_prod(values['LOTTOMP'])[5], background_color="#1d8c3b", key='-FootPrint-')]
                         ]
-                    ]
-                    wind = sg.Window("Informazioni Materia Prima",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
-                    while True:
-                        event, values = wind.read()
-                        if event == "Exit" or event == sg.WIN_CLOSED:
-                            break
-                    wind.close()
+
+                        laytot = [
+                            [
+                                sg.Column(file_list_column, background_color="#1d8c3b")
+                            ]
+                        ]
+                        wind = sg.Window("Informazioni Materia Prima",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
+                        while True:
+                            event, values = wind.read()
+                            if event == "Exit" or event == sg.WIN_CLOSED:
+                                break
+                        wind.close()
             win.close()
         if event == "acquista":
             try:
@@ -185,28 +189,32 @@ def window_trasformatore():
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
                 if event == "INF" and not values['LOTTOMP']=='':
-                    
-                    file_list_column = [
-                        [sg.Text('Caratteristiche:',background_color="#1d8c3b")],
-                        [sg.Text('Nome:',background_color="#1d8c3b")],
-                        [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[2],background_color="#1d8c3b",key='-Nome-')],
-                        [sg.Text('Quantità disponibile:', background_color="#1d8c3b")],
-                        [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[4], background_color="#1d8c3b", key='-Quantita-')],
-                        [sg.Text('FootPrint:', background_color="#1d8c3b")],
-                        [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[5], background_color="#1d8c3b", key='-FootPrint-')]
-                    ]
-                
-                    laytot = [
-                        [
-                            sg.Column(file_list_column, background_color="#1d8c3b")
+                    try:
+                        contract.info_MP_acq(values['LOTTOMP'])
+                    except exceptions.SolidityError as error:
+                            sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=impronta)
+                    else:
+                        file_list_column = [
+                            [sg.Text('Caratteristiche:',background_color="#1d8c3b")],
+                            [sg.Text('Nome:',background_color="#1d8c3b")],
+                            [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[2],background_color="#1d8c3b",key='-Nome-')],
+                            [sg.Text('Quantità disponibile:', background_color="#1d8c3b")],
+                            [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[4], background_color="#1d8c3b", key='-Quantita-')],
+                            [sg.Text('FootPrint:', background_color="#1d8c3b")],
+                            [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[5], background_color="#1d8c3b", key='-FootPrint-')]
                         ]
-                    ]
-                    wind = sg.Window("Informazioni Materia Prima Acquistata",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
-                    while True:
-                        event, values = wind.read()
-                        if event == "Exit" or event == sg.WIN_CLOSED:
-                            break
-                    wind.close()
+
+                        laytot = [
+                            [
+                                sg.Column(file_list_column, background_color="#1d8c3b")
+                            ]
+                        ]
+                        wind = sg.Window("Informazioni Materia Prima Acquistata",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
+                        while True:
+                            event, values = wind.read()
+                            if event == "Exit" or event == sg.WIN_CLOSED:
+                                break
+                        wind.close()
             win.close()
     window.close()
 
