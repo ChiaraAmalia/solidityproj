@@ -243,11 +243,16 @@ def window_produttore():
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
                 if event == "INSERISCI" and not values['NOMEMP']=='' and values['QUANTMP'].isdigit() and values['FPMP'].isdigit():
-                    contract.inserisci_MP(values['NOMEMP'],int(values['QUANTMP']),int(values['FPMP']))
+                    try:
+                        contract.inserisci_MP(values['NOMEMP'],int(values['QUANTMP']),int(values['FPMP']))
+                    except exceptions.SolidityError as error:
+                        sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=impronta)
+                    else:
+                        sg.Popup('Materia Inserita Correttamente', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
                     win.Element('NOMEMP').update('')
                     win.Element('QUANTMP').update('')
                     win.Element('FPMP').update('')
-                    sg.Popup('Materia Inserita Correttamente', keep_on_top=True,background_color="#1d8c3b",icon = impronta)
+
             win.close()
     window.close()
 
