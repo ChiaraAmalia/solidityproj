@@ -304,9 +304,5 @@ if __name__ == '__main__':
             elif values['PORTAFOGLIO'] == contract.consum:
                 window_consumatore()
             else: sg.Popup('Non hai inserito un indirizzo valido', keep_on_top=True,background_color="#1d8c3b",icon = impronta), toggle_login()
-            
-        print(values['PORTAFOGLIO'])
-        # Folder name was filled in, make a list of files in the folder
-
 
     windowLogin.close()
