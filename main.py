@@ -69,6 +69,31 @@ def window_trasformatore():
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
             win.close()
+        if event == "lottiMP":
+            win=sg.Window("Inserisci Nome Materia Prima",[[sg.Text("Inserisci nome:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOMEMP",background_color="#8bd9a0")],
+                                                          [sg.Button("Vedi Lotti",button_color="#013810", key="LOTTI")]],modal=True,background_color="#1d8c3b",icon=impronta)
+            while True:
+                event, values = win.read()
+                if event == "Exit" or event == sg.WIN_CLOSED:
+                    break
+                if event == "LOTTI" and not values['NOMEMP']=='':
+                    mat_prim = contract.lotti_MP(values['NOMEMP'])
+                    file_list_column = [
+                        [sg.Text('Lotti Materia Prima',background_color="#1d8c3b")],
+                        [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)]
+                    ]
+                    laytot = [
+                        [
+                            sg.Column(file_list_column, background_color="#1d8c3b")
+                        ]
+                    ]
+                    wind = sg.Window("Tutti Lotti Materia Prima",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
+                    while True:
+                        event, values = wind.read()
+                        if event == "Exit" or event == sg.WIN_CLOSED:
+                            break
+                    wind.close()
+            win.close()
         if event == "acquista":
             mat_prim = contract.tutti_MP_lotti()
 
