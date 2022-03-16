@@ -248,11 +248,11 @@ if __name__ == '__main__':
         if event == "entra":
             contract.current_user = values['PORTAFOGLIO']
             toggle_login()
-            if values['PORTAFOGLIO'] == '0xcA843569e3427144cEad5e4d5999a3D0cCF92B8e':
+            if values['PORTAFOGLIO'] == contract.trasf:
                 window_trasformatore()
-            if values['PORTAFOGLIO'] == '0xed9d02e382b34818e88B88a309c7fe71E65f419d':
+            if values['PORTAFOGLIO'] == contract.prod:
                 window_produttore()
-            if values['PORTAFOGLIO'] == '0x0fBDc686b912d7722dc86510934589E0AAf3b55A':
+            if values['PORTAFOGLIO'] == contract.consum:
                 window_consumatore()
             
         print(values['PORTAFOGLIO'])
