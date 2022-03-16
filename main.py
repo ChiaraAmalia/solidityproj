@@ -52,23 +52,26 @@ def window_trasformatore():
             toggle_login()
             break
         if event == "tutteMP":
-            mat_prim = contract.tutti_MP_lotti()
-            file_list_column = [
-                [sg.Text('Lotti Materie Prime',background_color="#1d8c3b")],
-                [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)]
-            ]
-            laytot = [
-                [
-                    sg.Column(file_list_column, background_color="#1d8c3b")
+            try:
+                mat_prim = contract.tutti_MP_lotti()
+                file_list_column = [
+                    [sg.Text('Lotti Materie Prime',background_color="#1d8c3b")],
+                    [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)]
                 ]
-            ]
-            win = sg.Window("Tutti Lotti Materie Prime",laytot, modal=True,
-                background_color="#1d8c3b", icon=impronta)
-            while True:
-                event, values = win.read()
-                if event == "Exit" or event == sg.WIN_CLOSED:
-                    break
-            win.close()
+                laytot = [
+                    [
+                        sg.Column(file_list_column, background_color="#1d8c3b")
+                    ]
+                ]
+                win = sg.Window("Tutti Lotti Materie Prime",laytot, modal=True,
+                    background_color="#1d8c3b", icon=impronta)
+                while True:
+                    event, values = win.read()
+                    if event == "Exit" or event == sg.WIN_CLOSED:
+                        break
+                win.close()
+            except:
+                sg.Popup('C\'è stato un errore',keep_on_top=True,background_color="#1d8c3b",icon=impronta)
         if event == "lottiMP":
             win=sg.Window("Inserisci Nome Materia Prima",[[sg.Text("Inserisci nome:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOMEMP",background_color="#8bd9a0")],
                                                           [sg.Button("Vedi Lotti",button_color="#013810", key="LOTTI")]],modal=True,background_color="#1d8c3b",icon=impronta)
@@ -161,8 +164,11 @@ def window_trasformatore():
                     win.Element('-FootPrint-').update(contract.info_MP_prod(mat_prim[win.Element('-LIST-').Widget.curselection()[0]])[5])
     
                 if event == "ACQUISTA" and values['-IN-'].isdigit():
-                    print("acquista selezionata")
-                    contract.acquista_MP(mat_prim[win.Element('-LIST-').Widget.curselection()[0]],int(values['-IN-']))
+                    try:
+                        contract.acquista_MP(mat_prim[win.Element('-LIST-').Widget.curselection()[0]],int(values['-IN-']))
+                        sg.Popup('Acquisto Completato', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
+                    except:
+                        sg.Popup('C\'è stato un problema', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
             win.close()
         if event == "dettagliMP":
             win=sg.Window("Inserisci Lotto Materia Prima Acquistata",[[sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOMP",background_color="#8bd9a0")],
