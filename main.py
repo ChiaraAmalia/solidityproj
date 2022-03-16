@@ -2,6 +2,7 @@ from pickle import FALSE
 import PySimpleGUI as sg
 import contract
 import os
+from web3 import exceptions
 
 path = os.path.abspath(os.path.dirname(__file__)) #Salva nella variabile path il percorso globale della cartella in cui si trova il file .py in esecuzione
 os.chdir(path)  # Cambio della cartella attuale nella cartella in cui si trova il file .py
@@ -70,8 +71,8 @@ def window_trasformatore():
                     if event == "Exit" or event == sg.WIN_CLOSED:
                         break
                 win.close()
-            except:
-                sg.Popup('C\'è stato un errore',keep_on_top=True,background_color="#1d8c3b",icon=impronta)
+            except exceptions.SolidityError as error:
+                sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=impronta)
         if event == "lottiMP":
             win=sg.Window("Inserisci Nome Materia Prima",[[sg.Text("Inserisci nome:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOMEMP",background_color="#8bd9a0")],
                                                           [sg.Button("Vedi Lotti",button_color="#013810", key="LOTTI")]],modal=True,background_color="#1d8c3b",icon=impronta)
@@ -167,8 +168,8 @@ def window_trasformatore():
                     try:
                         contract.acquista_MP(mat_prim[win.Element('-LIST-').Widget.curselection()[0]],int(values['-IN-']))
                         sg.Popup('Acquisto Completato', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
-                    except:
-                        sg.Popup('C\'è stato un problema', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
+                    except exceptions.SolidityError as error:
+                        sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=impronta)
             win.close()
         if event == "dettagliMP":
             win=sg.Window("Inserisci Lotto Materia Prima Acquistata",[[sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOMP",background_color="#8bd9a0")],
@@ -287,10 +288,11 @@ if __name__ == '__main__':
             toggle_login()
             if values['PORTAFOGLIO'] == contract.trasf:
                 window_trasformatore()
-            if values['PORTAFOGLIO'] == contract.prod:
+            elif values['PORTAFOGLIO'] == contract.prod:
                 window_produttore()
-            if values['PORTAFOGLIO'] == contract.consum:
+            elif values['PORTAFOGLIO'] == contract.consum:
                 window_consumatore()
+            else: sg.Popup('Non hai inserito un indirizzo valido', keep_on_top=True,background_color="#1d8c3b",icon = impronta), toggle_login()
             
         print(values['PORTAFOGLIO'])
         # Folder name was filled in, make a list of files in the folder
