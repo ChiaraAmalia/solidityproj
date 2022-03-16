@@ -95,7 +95,7 @@ def window_trasformatore():
                     wind.close()
             win.close()
         if event == "infoMP":
-            win=sg.Window("Inserisci Nome Materia Prima",[[sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOMP",background_color="#8bd9a0")],
+            win=sg.Window("Inserisci Lotto Materia Prima",[[sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOMP",background_color="#8bd9a0")],
                                                           [sg.Button("Vedi informazioni",button_color="#013810", key="INF")]],modal=True,background_color="#1d8c3b",icon=impronta)
             while True:
                 event, values = win.read()
@@ -163,6 +163,37 @@ def window_trasformatore():
                 if event == "ACQUISTA" and values['-IN-'].isdigit():
                     print("acquista selezionata")
                     contract.acquista_MP(mat_prim[win.Element('-LIST-').Widget.curselection()[0]],int(values['-IN-']))
+            win.close()
+        if event == "dettagliMP":
+            win=sg.Window("Inserisci Lotto Materia Prima Acquistata",[[sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOMP",background_color="#8bd9a0")],
+                                                           [sg.Button("Vedi informazioni",button_color="#013810", key="INF")]],modal=True,background_color="#1d8c3b",icon=impronta)
+            while True:
+                event, values = win.read()
+                if event == "Exit" or event == sg.WIN_CLOSED:
+                    break
+                if event == "INF" and not values['LOTTOMP']=='':
+                    
+                    file_list_column = [
+                        [sg.Text('Caratteristiche:',background_color="#1d8c3b")],
+                        [sg.Text('Nome:',background_color="#1d8c3b")],
+                        [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[2],background_color="#1d8c3b",key='-Nome-')],
+                        [sg.Text('Quantità disponibile:', background_color="#1d8c3b")],
+                        [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[4], background_color="#1d8c3b", key='-Quantita-')],
+                        [sg.Text('FootPrint:', background_color="#1d8c3b")],
+                        [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[5], background_color="#1d8c3b", key='-FootPrint-')]
+                    ]
+                
+                    laytot = [
+                        [
+                            sg.Column(file_list_column, background_color="#1d8c3b")
+                        ]
+                    ]
+                    wind = sg.Window("Informazioni Materia Prima Acquistata",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
+                    while True:
+                        event, values = wind.read()
+                        if event == "Exit" or event == sg.WIN_CLOSED:
+                            break
+                    wind.close()
             win.close()
     window.close()
 
