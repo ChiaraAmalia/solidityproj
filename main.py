@@ -299,12 +299,17 @@ def window_trasformatore():
                         
                         array_lotti = values['LOTTIMP']
                         array_lotti = array_lotti.split(",")
-                        array_lotti = numpy.asarray(array_lotti)
+                        #array_lotti = numpy.asarray(array_lotti)
                         array_quant = values['QMP']
                         array_quant = array_quant.split(",")
-                        array_quant = numpy.asarray(array_quant)
-                        print(array_lotti)
-                        print(array_quant)
+                        for i in range(0,len(array_quant)):
+                            array_quant[i] = int(array_quant[i])
+                        #array_quant = numpy.asarray(array_quant)
+                        print(type(array_lotti[0]))
+                        print(type(array_quant[0]))
+
+                        print(array_lotti[0])
+                        print(array_quant[0])
                         print(type(array_lotti))
                         print(type(array_quant))
 
