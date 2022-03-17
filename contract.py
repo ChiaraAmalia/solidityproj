@@ -35,28 +35,31 @@ abi = contract_interface['abi']
 w3 = Web3(web3.HTTPProvider("http://127.0.0.1:22000"))
 w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
-accountProd = w3.eth.account.create()
-accountTrasf = w3.eth.account.create()
-accountCons = w3.eth.account.create()
+#accountProd = w3.eth.account.create()
+#accountTrasf = w3.eth.account.create()
+#accountCons = w3.eth.account.create()
 
-print(Web3.toChecksumAddress(w3.eth.accounts[0])+" è l'amministratore del nodo")
-print(Web3.toChecksumAddress(accountProd.address)+" è il produttore")
-print(Web3.toChecksumAddress(accountTrasf.address)+" è il trasformatore")
-print(Web3.toChecksumAddress(accountCons.address)+" è il consumatore")
-#print(Web3.toChecksumAddress(w3.eth.accounts[1])+" è il trasformatore")
-#print(Web3.toChecksumAddress(w3.eth.accounts[2])+" è il consumatore")
+#print(Web3.toChecksumAddress(w3.eth.accounts[0])+" è l'amministratore del nodo")
+#print(Web3.toChecksumAddress(accountProd.address)+" è il produttore")
+#print(Web3.toChecksumAddress(accountTrasf.address)+" è il trasformatore")
+#print(Web3.toChecksumAddress(accountCons.address)+" è il consumatore")
+print(Web3.toChecksumAddress(w3.eth.accounts[0])+" è il produttore")
+print(Web3.toChecksumAddress(w3.eth.accounts[1])+" è il trasformatore")
+print(Web3.toChecksumAddress(w3.eth.accounts[2])+" è il consumatore")
 
 
 MagazzinoProdotti = w3.eth.contract(abi=abi, bytecode=bytecode)
 
 # Invia la transazione che fa il deploy del contratto
-admin=Web3.toChecksumAddress(w3.eth.accounts[0])
-prod=Web3.toChecksumAddress(accountProd.address)
-trasf=Web3.toChecksumAddress(accountTrasf.address)
-consum=Web3.toChecksumAddress(accountCons.address)
-#trasf=Web3.toChecksumAddress(w3.eth.accounts[1])
-#consum=Web3.toChecksumAddress(w3.eth.accounts[2])
-tx_hash = MagazzinoProdotti.constructor(prod, trasf, consum).transact({'from': admin})
+#admin=Web3.toChecksumAddress(w3.eth.accounts[0])
+#prod=Web3.toChecksumAddress(accountProd.address)
+#trasf=Web3.toChecksumAddress(accountTrasf.address)
+#consum=Web3.toChecksumAddress(accountCons.address)
+prod=Web3.toChecksumAddress(w3.eth.accounts[0])
+trasf=Web3.toChecksumAddress(w3.eth.accounts[1])
+consum=Web3.toChecksumAddress(w3.eth.accounts[2])
+#tx_hash = MagazzinoProdotti.constructor(prod, trasf, consum).transact({'from': admin})
+tx_hash = MagazzinoProdotti.constructor(prod, trasf, consum).transact({'from': prod})
 
 # Wait for the transaction to be mined, and get the transaction receipt
 tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)

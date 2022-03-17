@@ -1,5 +1,6 @@
 from pickle import FALSE
 import PySimpleGUI as sg
+from numpy import array
 
 import contract
 import os
