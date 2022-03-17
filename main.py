@@ -71,7 +71,7 @@ def window_produttore():
                     win.Element('FPMP').update('')
 
             win.close()
-    window.close()
+    window.close() 
 
 
 def window_trasformatore():
