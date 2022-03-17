@@ -303,12 +303,12 @@ def window_consumatore():
             sg.Text("Finestra per il consumatore:", key="finestra_consumatore", background_color="#1d8c3b"),
         ],
         [
-            sg.Button("Vedi tutti i Prodotti", button_color="#013810", key="vediFP"),
-            sg.Button("Vedi Lotti Prodotto", button_color="#013810", key="vediFP"),
+            sg.Button("Vedi tutti i Prodotti", button_color="#013810", key="vediP"),
+            sg.Button("Vedi Lotti Prodotto", button_color="#013810", key="vediLP"),
             sg.Button("Vedi FootPrint Lotto Prodotto", button_color="#013810", key="vediFP"),
-            sg.Button("Vedi Informazioni Prodotto", button_color="#013810", key="vediFP"),
-            sg.Button("Acquista Prodotto", button_color="#013810", key="vediFP"),
-            sg.Button("Vedi informazioni Prodotto acquistato", button_color="#013810", key="vediFP")
+            sg.Button("Vedi Informazioni Prodotto", button_color="#013810", key="infoP"),
+            sg.Button("Acquista Prodotto", button_color="#013810", key="acqP"),
+            sg.Button("Vedi informazioni Prodotto acquistato", button_color="#013810", key="infoAP")
         ],
     ]
     layout = [
@@ -323,6 +323,27 @@ def window_consumatore():
         if event == "Exit" or event == sg.WIN_CLOSED:
             toggle_login()
             break
+        if event == "vediP":
+            try:
+                mat_prim = contract.tutti_Prod_lotti()
+                file_list_column = [
+                    [sg.Text('Lotti Prodotti',background_color="#1d8c3b")],
+                    [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)]
+                ]
+                laytot = [
+                    [
+                        sg.Column(file_list_column, background_color="#1d8c3b")
+                    ]
+                ]
+                win = sg.Window("Tutti Lotti Prodotti",laytot, modal=True,
+                    background_color="#1d8c3b", icon=impronta)
+                while True:
+                    event, values = win.read()
+                    if event == "Exit" or event == sg.WIN_CLOSED:
+                        break
+                win.close()
+            except exceptions.SolidityError as error:
+                sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=impronta)    
 
     window.close()
 
