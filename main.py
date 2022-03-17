@@ -290,28 +290,13 @@ def window_trasformatore():
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
                 if event == "INS":
-                    try:
-                        #array_lotti = []
-                        #array_quant = []
-                        #array_lotti.append(values['LOTTIMP']).
-                        #array_lotti.
-                        #array_quant.append(values['QMP'])
-                        
+                    try:                        
                         array_lotti = values['LOTTIMP']
                         array_lotti = array_lotti.split(",")
-                        #array_lotti = numpy.asarray(array_lotti)
                         array_quant = values['QMP']
                         array_quant = array_quant.split(",")
                         for i in range(0,len(array_quant)):
                             array_quant[i] = int(array_quant[i])
-                        #array_quant = numpy.asarray(array_quant)
-                        print(type(array_lotti[0]))
-                        print(type(array_quant[0]))
-
-                        print(array_lotti[0])
-                        print(array_quant[0])
-                        print(type(array_lotti))
-                        print(type(array_quant))
 
                         contract.inserisci_Prod(values['NOME'],array_lotti,array_quant,int(values['QP']),int(values['FOOTP']))
                         sg.Popup('Inserimento Prodotto Completato', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
