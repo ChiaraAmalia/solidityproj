@@ -290,7 +290,13 @@ def window_trasformatore():
                     break
                 if event == "INS":
                     try:
-                        contract.inserisci_Prod(values['NOME'],array(values['LOTTIMP']),array(values['QMP']),int(values['QP']),int(values['FOOTP']))
+                        array_lotti = []
+                        array_quant = []
+                        array_lotti.append(values['LOTTIMP'])
+                        array_quant.append(values['QMP'])
+                        print(array_lotti)
+                        print(array_quant)
+                        contract.inserisci_Prod(values['NOME'],array_lotti,array_quant,int(values['QP']),int(values['FOOTP']))
                         sg.Popup('Inserimento Prodotto Completato', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
                     except exceptions.SolidityError as error:
                         sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=impronta)
