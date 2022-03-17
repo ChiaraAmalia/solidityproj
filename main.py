@@ -140,7 +140,7 @@ def window_trasformatore():
             win.close()
         if event == "acquista":
             try:
-                    mat_prim = contract.tutti_MP_lotti()
+                mat_prim = contract.tutti_MP_lotti()
             except exceptions.SolidityError as error:
                 sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=impronta)
             else:
@@ -190,6 +190,10 @@ def window_trasformatore():
                     break
                 if event == "INF" and not values['LOTTOMP']=='':
                     try:
+                        contract.info_MP_acq(values['LOTTOMP'])
+                    except exceptions.SolidityError as error:
+                            sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=impronta)
+                    else:
                         file_list_column = [
                             [sg.Text('Caratteristiche:',background_color="#1d8c3b")],
                             [sg.Text('Lotto:',background_color="#1d8c3b")],
@@ -209,8 +213,6 @@ def window_trasformatore():
                             if event == "Exit" or event == sg.WIN_CLOSED:
                                 break
                         wind.close()
-                    except exceptions.SolidityError as error:
-                            sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=impronta)
             win.close()
             if event == "aggProd":
                 win=sg.Window("Inserisci Nuovo Prodotto",[
