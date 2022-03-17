@@ -27,6 +27,52 @@ layout = [
 ]
 windowLogin = sg.Window("Accedi al FootPrint Calculator", layout,background_color="#1d8c3b",icon=impronta)
 
+def window_produttore():
+    file_list_column = [
+        [
+            sg.Text("Finestra per il produttore:", key="finestra_produttore", background_color="#1d8c3b"),
+        ],
+        [
+            sg.Button("Inserisci Materia Prima", button_color="#013810", key="addMP"),
+        ],
+    ]
+    layout = [
+        [
+            sg.Column(file_list_column, background_color="#1d8c3b"),
+        ]
+    ]
+    window = sg.Window("Produttore", layout,background_color="#1d8c3b", icon = impronta)
+    choice = None
+    while True:
+        event, values = window.read()
+        
+        if event == "Exit" or event == sg.WIN_CLOSED:
+            toggle_login()
+            break
+        if event == "addMP":
+            win=sg.Window("Aggiungi Materia Prima",[
+                [sg.Text("Inserisci nome:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOMEMP",background_color="#8bd9a0")],
+                [sg.Text("Inserisci quantità: ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="QUANTMP", background_color="#8bd9a0")],
+                [sg.Text("Inserisci footprint: ",background_color="#1d8c3b"), sg.In(size=(30, 1), enable_events=True, key="FPMP", background_color="#8bd9a0")],
+                [sg.Button("inserisci",button_color="#013810", key="INSERISCI")]],modal=True,background_color="#1d8c3b",icon=impronta)
+            while True:
+                event, values = win.read()
+                if event == "Exit" or event == sg.WIN_CLOSED:
+                    break
+                if event == "INSERISCI" and not values['NOMEMP']=='' and values['QUANTMP'].isdigit() and values['FPMP'].isdigit():
+                    try:
+                        contract.inserisci_MP(values['NOMEMP'],int(values['QUANTMP']),int(values['FPMP']))
+                    except exceptions.SolidityError as error:
+                        sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=impronta)
+                    else:
+                        sg.Popup('Materia Inserita Correttamente', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
+                    win.Element('NOMEMP').update('')
+                    win.Element('QUANTMP').update('')
+                    win.Element('FPMP').update('')
+
+            win.close()
+    window.close()
+
 
 def window_trasformatore():
     file_list_column = [
@@ -34,7 +80,7 @@ def window_trasformatore():
             sg.Text("Finestra per il trasformatore:", key="finestra_trasformatore", background_color="#1d8c3b"),
         ],
         [
-            sg.Button("Vedi Tutte Materie Prime", button_color="#013810", key="tutteMP"),
+            sg.Button("Vedi Tutte le Materie Prime", button_color="#013810", key="tutteMP"),
             sg.Button("Vedi Lotti Materia Prima", button_color="#013810", key="lottiMP"),
             sg.Button("Vedi Informazioni Materia Prima", button_color="#013810", key="infoMP"),
             sg.Button("Acquista Materia Prima", button_color="#013810", key="acquista"),
@@ -151,10 +197,12 @@ def window_trasformatore():
                     [sg.Text('Quantità:', background_color="#1d8c3b"),sg.In(size=(10, 1), enable_events=True,background_color="#8bd9a0",key='-IN-')],
                     [sg.Text('',background_color="#1d8c3b",key='-Alert-')]]
                 col_des=[[sg.Text('Caratteristiche:',background_color="#1d8c3b")],
-                         [sg.Text('Nome:',background_color="#1d8c3b")],
-                         [sg.Text('',background_color="#1d8c3b",key='-Nome-')],
-                         [sg.Text('FootPrint:', background_color="#1d8c3b")],
-                         [sg.Text('', background_color="#1d8c3b", key='-FootPrint-')],
+                        [sg.Text('Nome:',background_color="#1d8c3b")],
+                        [sg.Text('',background_color="#1d8c3b",key='-Nome-')],
+                        [sg.Text('Quantità disponibile:',background_color="#1d8c3b")],
+                        [sg.Text('',background_color="#1d8c3b",key='-QuantDisp-')],
+                        [sg.Text('FootPrint:', background_color="#1d8c3b")],
+                        [sg.Text('', background_color="#1d8c3b", key='-FootPrint-')],
                     [sg.Button("Acquista", button_color="#013810", key='ACQUISTA')]]
                 laytot=[
                         [sg.Column(col_sin, element_justification='c',background_color="#1d8c3b"),sg.VSeperator(),sg.Column(col_des, element_justification='c',background_color="#1d8c3b")]
@@ -176,6 +224,7 @@ def window_trasformatore():
 
                     if event == '-LIST-' and len(values['-LIST-']):
                         win.Element('-Nome-').update(contract.info_MP_prod(mat_prim[win.Element('-LIST-').Widget.curselection()[0]])[2])
+                        win.Element('-QuantDisp-').update(contract.info_MP_prod(mat_prim[win.Element('-LIST-').Widget.curselection()[0]])[4])
                         win.Element('-FootPrint-').update(contract.info_MP_prod(mat_prim[win.Element('-LIST-').Widget.curselection()[0]])[5])
 
                     if event == "ACQUISTA" and values['-IN-'].isdigit():
@@ -186,8 +235,9 @@ def window_trasformatore():
                             sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=impronta)
                 win.close()
         if event == "dettagliMP":
-            win=sg.Window("Inserisci Lotto Materia Prima Acquistata",[[sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOMP",background_color="#8bd9a0")],
-                                                           [sg.Button("Vedi informazioni",button_color="#013810", key="INF")]],modal=True,background_color="#1d8c3b",icon=impronta)
+            win=sg.Window("Inserisci Lotto Materia Prima Acquistata",[
+                [sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOMP",background_color="#8bd9a0")],
+                [sg.Button("Vedi informazioni",button_color="#013810", key="INF")]],modal=True,background_color="#1d8c3b",icon=impronta)
             while True:
                 event, values = win.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
@@ -247,59 +297,18 @@ def window_trasformatore():
             win.close()
     window.close()
 
-def window_produttore():
-    file_list_column = [
-        [
-            sg.Text("Finestra per il produttore:", key="finestra_produttore", background_color="#1d8c3b"),
-        ],
-        [
-            sg.Button("Inserisci Materia Prima", button_color="#013810", key="addMP"),
-        ],
-    ]
-    layout = [
-        [
-            sg.Column(file_list_column, background_color="#1d8c3b"),
-        ]
-    ]
-    window = sg.Window("Produttore", layout,background_color="#1d8c3b", icon = impronta)
-    choice = None
-    while True:
-        event, values = window.read()
-        
-        if event == "Exit" or event == sg.WIN_CLOSED:
-            toggle_login()
-            break
-        if event == "addMP":
-            win=sg.Window("Aggiungi Materia Prima",[
-                [sg.Text("Inserisci nome:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOMEMP",background_color="#8bd9a0")],
-                [sg.Text("Inserisci quantità: ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="QUANTMP", background_color="#8bd9a0")],
-                [sg.Text("Inserisci footprint: ",background_color="#1d8c3b"), sg.In(size=(30, 1), enable_events=True, key="FPMP", background_color="#8bd9a0")],
-                [sg.Button("inserisci",button_color="#013810", key="INSERISCI")]],modal=True,background_color="#1d8c3b",icon=impronta)
-            while True:
-                event, values = win.read()
-                if event == "Exit" or event == sg.WIN_CLOSED:
-                    break
-                if event == "INSERISCI" and not values['NOMEMP']=='' and values['QUANTMP'].isdigit() and values['FPMP'].isdigit():
-                    try:
-                        contract.inserisci_MP(values['NOMEMP'],int(values['QUANTMP']),int(values['FPMP']))
-                    except exceptions.SolidityError as error:
-                        sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=impronta)
-                    else:
-                        sg.Popup('Materia Inserita Correttamente', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
-                    win.Element('NOMEMP').update('')
-                    win.Element('QUANTMP').update('')
-                    win.Element('FPMP').update('')
-
-            win.close()
-    window.close()
-
 def window_consumatore():
     file_list_column = [
         [
             sg.Text("Finestra per il consumatore:", key="finestra_consumatore", background_color="#1d8c3b"),
         ],
         [
-            sg.Button("Vedi footprint Prodotto", button_color="#013810", key="vediFP")
+            sg.Button("Vedi tutti i Prodotti", button_color="#013810", key="vediFP"),
+            sg.Button("Vedi Lotti Prodotto", button_color="#013810", key="vediFP"),
+            sg.Button("Vedi FootPrint Lotto Prodotto", button_color="#013810", key="vediFP"),
+            sg.Button("Vedi Informazioni Prodotto", button_color="#013810", key="vediFP"),
+            sg.Button("Acquista Prodotto", button_color="#013810", key="vediFP"),
+            sg.Button("Vedi informazioni Prodotto acquistato", button_color="#013810", key="vediFP")
         ],
     ]
     layout = [
