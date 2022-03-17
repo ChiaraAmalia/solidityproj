@@ -190,18 +190,12 @@ def window_trasformatore():
                     break
                 if event == "INF" and not values['LOTTOMP']=='':
                     try:
-                        contract.info_MP_acq(values['LOTTOMP'])
-                    except exceptions.SolidityError as error:
-                            sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=impronta)
-                    else:
                         file_list_column = [
                             [sg.Text('Caratteristiche:',background_color="#1d8c3b")],
-                            [sg.Text('Nome:',background_color="#1d8c3b")],
-                            [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[2],background_color="#1d8c3b",key='-Nome-')],
+                            [sg.Text('Lotto:',background_color="#1d8c3b")],
+                            [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[1],background_color="#1d8c3b",key='-Nome-')],
                             [sg.Text('Quantità disponibile:', background_color="#1d8c3b")],
-                            [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[4], background_color="#1d8c3b", key='-Quantita-')],
-                            [sg.Text('FootPrint:', background_color="#1d8c3b")],
-                            [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[5], background_color="#1d8c3b", key='-FootPrint-')]
+                            [sg.Text(contract.info_MP_acq(values['LOTTOMP'])[2], background_color="#1d8c3b", key='-Quantita-')],
                         ]
 
                         laytot = [
@@ -215,7 +209,18 @@ def window_trasformatore():
                             if event == "Exit" or event == sg.WIN_CLOSED:
                                 break
                         wind.close()
+                    except exceptions.SolidityError as error:
+                            sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=impronta)
             win.close()
+            if event == "aggProd":
+                win=sg.Window("Inserisci Nuovo Prodotto",[
+                    [sg.Text("Nome Prodotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOME",background_color="#8bd9a0")],
+                    [sg.Text("Lotti Materie Prime:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTIMP",background_color="#8bd9a0")],
+                    [sg.Text("Quantità Materie Prime Utilizzate:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="QMP",background_color="#8bd9a0")],
+                    [sg.Text("Quantità Prodotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="QP",background_color="#8bd9a0")],
+                    [sg.Text("FootPrint Prodotto :    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="FOOTP",background_color="#8bd9a0")],
+                    [sg.Button("Inserisci Prodotto",button_color="#013810", key="INS")]],modal=True,background_color="#1d8c3b",icon=impronta)
+                win.close()
     window.close()
 
 def window_produttore():
