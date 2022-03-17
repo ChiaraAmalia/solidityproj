@@ -322,7 +322,7 @@ def window_consumatore():
         event, values = window.read()
         if event == "Exit" or event == sg.WIN_CLOSED:
             toggle_login()
-            break
+            break 
         if event == "vediP":
             try:
                 mat_prim = contract.tutti_Prod_lotti()
