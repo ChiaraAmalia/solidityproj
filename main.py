@@ -1,6 +1,7 @@
 from pickle import FALSE
 import PySimpleGUI as sg
 from numpy import array
+import numpy
 
 import contract
 import os
@@ -290,12 +291,23 @@ def window_trasformatore():
                     break
                 if event == "INS":
                     try:
-                        array_lotti = []
-                        array_quant = []
-                        array_lotti.append(values['LOTTIMP'])
-                        array_quant.append(values['QMP'])
+                        #array_lotti = []
+                        #array_quant = []
+                        #array_lotti.append(values['LOTTIMP']).
+                        #array_lotti.
+                        #array_quant.append(values['QMP'])
+                        
+                        array_lotti = values['LOTTIMP']
+                        array_lotti = array_lotti.split(",")
+                        array_lotti = numpy.asarray(array_lotti)
+                        array_quant = values['QMP']
+                        array_quant = array_quant.split(",")
+                        array_quant = numpy.asarray(array_quant)
                         print(array_lotti)
                         print(array_quant)
+                        print(type(array_lotti))
+                        print(type(array_quant))
+
                         contract.inserisci_Prod(values['NOME'],array_lotti,array_quant,int(values['QP']),int(values['FOOTP']))
                         sg.Popup('Inserimento Prodotto Completato', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
                     except exceptions.SolidityError as error:
