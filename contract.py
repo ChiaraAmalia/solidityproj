@@ -72,7 +72,9 @@ magazzino = w3.eth.contract(
 current_user = '0x00000000000000000000000000000'
 
 def inserisci_MP(nomeMP,quantMP,footprint):
-    magazzino.functions.aggiungiMateriaPrima(nomeMP, quantMP, footprint).transact({'from': current_user})
+    tx_hash = magazzino.functions.aggiungiMateriaPrima(nomeMP, quantMP, footprint).transact({'from': current_user})
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt['status'])
 
 def acquista_MP(lottoMP,quantMP):
     print(current_user)
