@@ -54,12 +54,22 @@ def window_produttore():
             win=sg.Window("Aggiungi Materia Prima",[
                 [sg.Text("Inserisci nome:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOMEMP",background_color="#8bd9a0")],
                 [sg.Text("Inserisci quantità: ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="QUANTMP", background_color="#8bd9a0")],
+                [sg.Text('',background_color="#1d8c3b",key='-Alert-')],
                 [sg.Text("Inserisci footprint: ",background_color="#1d8c3b"), sg.In(size=(30, 1), enable_events=True, key="FPMP", background_color="#8bd9a0")],
+                #[sg.Text('',background_color="#1d8c3b",key='-Alert-')],
                 [sg.Button("inserisci",button_color="#013810", key="INSERISCI")]],modal=True,background_color="#1d8c3b",icon=impronta)
             while True:
                 event, values = win.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
+                if not values['QUANTMP'].isdigit():
+                        win.Element('-Alert-').update("non è un numero")
+
+                if values['QUANTMP']=="":
+                        win.Element('-Alert-').update("")
+
+                if values['QUANTMP'].isdigit():
+                        win.Element('-Alert-').update("")
                 if event == "INSERISCI" and not values['NOMEMP']=='' and values['QUANTMP'].isdigit() and values['FPMP'].isdigit():
                     try:
                         contract.inserisci_MP(values['NOMEMP'],int(values['QUANTMP']),int(values['FPMP']))
