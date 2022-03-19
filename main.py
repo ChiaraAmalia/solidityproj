@@ -151,23 +151,25 @@ def window_trasformatore():
                 if event == "LOTTI" and not values['NOMEMP']=='':
                     try:
                         mat_prim = contract.lotti_MP(values['NOMEMP'])
-                        print(mat_prim)
                         if (mat_prim[0] != ''):
-                            file_list_column = [
-                                [sg.Text('Lotti Materia Prima',background_color="#1d8c3b")],
-                                [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)]
-                                ]
-                            laytot = [
-                                [
-                                    sg.Column(file_list_column, background_color="#1d8c3b")
-                                ]
-                                ]
-                            wind = sg.Window("Tutti Lotti Materia Prima",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
-                            while True:
-                                event, values = wind.read()
-                                if event == "Exit" or event == sg.WIN_CLOSED:
-                                    break
-                            wind.close()
+                            try:
+                                file_list_column = [
+                                    [sg.Text('Lotti Materia Prima',background_color="#1d8c3b")],
+                                    [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)]
+                                    ]
+                                laytot = [
+                                    [
+                                        sg.Column(file_list_column, background_color="#1d8c3b")
+                                    ]
+                                    ]
+                                wind = sg.Window("Tutti Lotti Materia Prima",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
+                                while True:
+                                    event, values = wind.read()
+                                    if event == "Exit" or event == sg.WIN_CLOSED:
+                                        break
+                                wind.close()
+                            except:
+                                sg.Popup('Tale materia prima è inesistente',keep_on_top=True,background_color="#1d8c3b",icon=impronta)   
                         if (mat_prim[0] == ''):
                             sg.Popup("Tale materia prima è inesistente",keep_on_top=True,background_color="#1d8c3b",icon=impronta)
                     except exceptions.SolidityError as error:

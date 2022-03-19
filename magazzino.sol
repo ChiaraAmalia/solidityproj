@@ -240,6 +240,7 @@ pragma abicoder v2;
     //funzione che mi consente di vedere tutti i lotti dei prodotti
     function vediTuttiLottiProdotti() public view returns (string[] memory) {
         require(msg.sender == Consumatore, "solo il consumatore puo' vedere tutti i lotti dei prodotti inseriti dal trasformatore.");
+        require(numProdotti>0,"Non sono presenti prodotti");
         string[] memory result=new string[](numProdotti);
         uint j = 0;
 
@@ -252,7 +253,7 @@ pragma abicoder v2;
 
     //funzione che mi consente di vedere i lotti di un determinato materia prima
     function vediLottiMateriaPrima(string memory _nomeMateriaPrima)  public view returns (string[] memory){
-        require(msg.sender == Trasformatore, "solo il trasformatore puo' vedere tutti i lotti associati ad una materia prima,");
+        require(msg.sender == Trasformatore, "solo il trasformatore puo' vedere tutti i lotti associati ad una materia prima");
         string[] memory result = new string[](numMateriePrime);      
         uint j = 0;
 
@@ -269,7 +270,7 @@ pragma abicoder v2;
     function vediTuttiLottiMateriePrime() public view returns (string[] memory){
         
         require(msg.sender == Trasformatore, "solo il Trasformatore puo' vedere tutti i lotti delle materie prime inserite dal produttore.");
-        require(numMateriePrime>0,"non hai materie prime.");
+        require(numMateriePrime>0,"Non sono presenti materie prime");
         string[] memory result= new string[](numMateriePrime);
         uint j = 0;
 
