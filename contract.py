@@ -84,35 +84,53 @@ def acquista_MP(lottoMP,quantMP):
 
 def inserisci_Prod(nomeP,listaLottiMP,listaQuantMP,quantP,footprint):
     magazzino.functions.aggiungiProdotto(nomeP,listaLottiMP,listaQuantMP, quantP, footprint).transact({'from': current_user})
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt['status'])
 
 def acquista_Prod(lottoP,quantP):
     magazzino.functions.acquistaProdotto(lottoP,quantP).transact({'from': current_user})
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt['status'])
 
 def footprint_Prod(lottoP):
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt['status'])
     return magazzino.functions.vediFootprintProdottoFinito(lottoP).call({'from': current_user})
 
 def lotti_Prod(nomeP):
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt['status'])
     return magazzino.functions.vediLottiProdotto(nomeP).call({'from': current_user})
 
 def tutti_Prod_lotti():
     return magazzino.functions.vediTuttiLottiProdotti().call({'from': current_user})
 
 def lotti_MP(nomeMP):
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt['status'])
     return magazzino.functions.vediLottiMateriaPrima(nomeMP).call({'from': current_user})
 
 def tutti_MP_lotti():
     return magazzino.functions.vediTuttiLottiMateriePrime().call({'from': current_user})
 
 def info_Prod_trasf(lottoP):
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt['status'])
     return magazzino.functions.StampaInforProdTrasf(lottoP).call({'from': current_user})
 
 def info_MP_prod(lottoMP):
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt['status'])
     return magazzino.functions.StampaInforMatPrProd(lottoMP).call({'from': current_user})
 
 def info_MP_acq(lottoMP):
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt['status'])
     return magazzino.functions.StampaMatPrAcq(lottoMP).call({'from': current_user})
 
 def info_Prod_acq(lottoP):
+    tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+    print(tx_receipt['status'])
     return magazzino.functions.StampaInforProdCons(lottoP).call({'from': current_user})
 
 def handle_event(event):
