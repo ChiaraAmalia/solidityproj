@@ -146,13 +146,18 @@ def window_trasformatore():
                                                           [sg.Button("Vedi Lotti",button_color="#013810", key="LOTTI")]],modal=True,background_color="#1d8c3b",icon=impronta)
             while True:
                 event, values = win.read()
+
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
+
+                if event == "LOTTI" and values['NOMEMP']=='':
+                    sg.Popup("Non hai inserito una materia prima",keep_on_top=True,background_color="#1d8c3b",icon=impronta)
+        
                 if event == "LOTTI" and not values['NOMEMP']=='':
                     try:
                         mat_prim = contract.lotti_MP(values['NOMEMP'])
-                        if (mat_prim[0] != ''):
-                            try:
+                        if (mat_prim != []):
+                            if(mat_prim[0] != ""):
                                 file_list_column = [
                                     [sg.Text('Lotti Materia Prima',background_color="#1d8c3b")],
                                     [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)]
@@ -168,10 +173,10 @@ def window_trasformatore():
                                     if event == "Exit" or event == sg.WIN_CLOSED:
                                         break
                                 wind.close()
-                            except:
-                                sg.Popup('Tale materia prima è inesistente',keep_on_top=True,background_color="#1d8c3b",icon=impronta)   
-                        if (mat_prim[0] == ''):
-                            sg.Popup("Tale materia prima è inesistente",keep_on_top=True,background_color="#1d8c3b",icon=impronta)
+                            if(mat_prim[0] == ""):
+                                sg.Popup('Tale materia prima è inesistente',keep_on_top=True,background_color="#1d8c3b",icon=impronta) 
+                        if (mat_prim == []):
+                            sg.Popup('Materia prima inesistente',keep_on_top=True,background_color="#1d8c3b",icon=impronta)   
                     except exceptions.SolidityError as error:
                         sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=impronta)
             win.close()
@@ -182,6 +187,8 @@ def window_trasformatore():
                 event, values = win.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
+                if event == "INF" and values['LOTTOMP']=='':
+                    sg.Popup("Non hai inserito una lotto",keep_on_top=True,background_color="#1d8c3b",icon=impronta)
                 if event == "INF" and not values['LOTTOMP']=='':
                     try:
                         contract.info_MP_prod(values['LOTTOMP'])
@@ -268,6 +275,8 @@ def window_trasformatore():
                 event, values = win.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
+                if event == "INF" and values['LOTTOMP']=='':
+                    sg.Popup("Non hai inserito un lotto",keep_on_top=True,background_color="#1d8c3b",icon=impronta)
                 if event == "INF" and not values['LOTTOMP']=='':
                     try:
                         contract.info_MP_acq(values['LOTTOMP'])
@@ -325,6 +334,12 @@ def window_trasformatore():
                         len_lotti = len(array_lotti)
                         len_quant = len(array_quant)
 
+                        if (len_lotti < len_quant): 
+                            sg.Popup('ad ogni lotto deve essere associata una sola quantità', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
+
+                        if (len_quant < len_lotti): 
+                            sg.Popup('ad ogni quantità deve essere associato un solo lotto', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
+
                         if (len_lotti == len_quant):
                         
                             res = all(ele.isdigit() for ele in array_quant)
@@ -334,12 +349,13 @@ def window_trasformatore():
 
                                 contract.inserisci_Prod(values['NOME'],array_lotti,array_quant,int(values['QP']),int(values['FOOTP']))
                                 sg.Popup('Inserimento Prodotto Completato', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
+                                win.Element('NOME').update('')
+                                win.Element('LOTTIMP').update('')
+                                win.Element('QMP').update('')
+                                win.Element('QP').update('')
+                                win.Element('FOOTP').update('')
                             if not res:
                                 sg.Popup('Non hai inserito delle quantità valide per le materie prime utilizzate', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
-                        if (len_lotti <= len_quant): 
-                            sg.Popup('ad ogni lotto deve essere associata una sola quantità', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
-                        if (len_quant <= len_lotti): 
-                            sg.Popup('ad ogni quantità deve essere associato un solo lotto', keep_on_top=True, background_color="#1d8c3b",icon=impronta)
                     except exceptions.SolidityError as error:
                         sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=impronta)
             win.close()
@@ -399,24 +415,34 @@ def window_consumatore():
                 event, values = win.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
+
+                if event == "LOTTI" and values['NOMEP']=='':
+                    sg.Popup("Non hai inserito un prodotto",keep_on_top=True,background_color="#1d8c3b",icon=impronta)
+
                 if event == "LOTTI" and not values['NOMEP']=='':
                     try:
-                        mat_prim = contract.lotti_Prod(values['NOMEP'])
-                        file_list_column = [
-                            [sg.Text('Lotti Prodotto',background_color="#1d8c3b")],
-                            [sg.Listbox(mat_prim, size=(20, 12), key='-LIST-', enable_events=True)]
-                            ]
-                        laytot = [
-                            [
-                                 sg.Column(file_list_column, background_color="#1d8c3b")
-                            ]
-                            ]
-                        wind = sg.Window("Tutti Lotti Prodotto",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
-                        while True:
-                            event, values = wind.read()
-                            if event == "Exit" or event == sg.WIN_CLOSED:
-                                break
-                        wind.close()
+                        prod = contract.lotti_Prod(values['NOMEP'])
+                        if (prod != []):
+                            if(prod[0] != ""):
+                                file_list_column = [
+                                    [sg.Text('Lotti Prodotto',background_color="#1d8c3b")],
+                                    [sg.Listbox(prod, size=(20, 12), key='-LIST-', enable_events=True)]
+                                    ]
+                                laytot = [
+                                    [
+                                        sg.Column(file_list_column, background_color="#1d8c3b")
+                                    ]
+                                    ]
+                                wind = sg.Window("Tutti Lotti Prodotto",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
+                                while True:
+                                    event, values = wind.read()
+                                    if event == "Exit" or event == sg.WIN_CLOSED:
+                                        break
+                                wind.close()
+                            if(prod[0] == ""):
+                                sg.Popup('Tale prodotto è inesistente',keep_on_top=True,background_color="#1d8c3b",icon=impronta) 
+                        if (prod == []):
+                            sg.Popup('Prodotto inesistente',keep_on_top=True,background_color="#1d8c3b",icon=impronta)   
                     except exceptions.SolidityError as error:
                         sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=impronta)
             win.close()
@@ -427,6 +453,8 @@ def window_consumatore():
                 event, values = win.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
+                if event == "FP" and values['LOTTOP']=='':
+                    sg.Popup("Non hai inserito un lotto",keep_on_top=True,background_color="#1d8c3b",icon=impronta)
                 if event == "FP" and not values['LOTTOP']=='':
                     try:
                         contract.footprint_Prod(values['LOTTOP'])
@@ -457,6 +485,8 @@ def window_consumatore():
                 event, values = win.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
+                if event == "INF" and values['LOTTOP']=='':
+                    sg.Popup("Non hai inserito un lotto",keep_on_top=True,background_color="#1d8c3b",icon=impronta)
                 if event == "INF" and not values['LOTTOP']=='':
                     try:
                         contract.info_Prod_trasf(values['LOTTOP'])
@@ -539,36 +569,38 @@ def window_consumatore():
             win=sg.Window("Inserisci Lotto Prodotto Acquistato",[
             [sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOP",background_color="#8bd9a0")],
             [sg.Button("Vedi informazioni",button_color="#013810", key="INF")]],modal=True,background_color="#1d8c3b",icon=impronta)
-        while True:
-            event, values = win.read()
-            if event == "Exit" or event == sg.WIN_CLOSED:
-                break
-            if event == "INF" and not values['LOTTOP']=='':
-                try:
-                    contract.info_Prod_acq(values['LOTTOP'])
-                except exceptions.SolidityError as error:
-                        sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=impronta)
-                else:
-                    file_list_column = [
-                        [sg.Text('Caratteristiche:',background_color="#1d8c3b")],
-                        [sg.Text('Lotto:',background_color="#1d8c3b")],
-                        [sg.Text(contract.info_Prod_acq(values['LOTTOP'])[1],background_color="#1d8c3b",key='-Nome-')],
-                        [sg.Text('Quantità disponibile:', background_color="#1d8c3b")],
-                        [sg.Text(contract.info_Prod_acq(values['LOTTOP'])[2], background_color="#1d8c3b", key='-Quantita-')],
-                    ]
-
-                    laytot = [
-                        [
-                            sg.Column(file_list_column, background_color="#1d8c3b")
+            while True:
+                event, values = win.read()
+                if event == "Exit" or event == sg.WIN_CLOSED:
+                    break
+                if event == "INF" and values['LOTTOP']=='':
+                    sg.Popup("Non hai inserito un lotto",keep_on_top=True,background_color="#1d8c3b",icon=impronta)
+                if event == "INF" and not values['LOTTOP']=='':
+                    try:
+                        contract.info_Prod_acq(values['LOTTOP'])
+                    except exceptions.SolidityError as error:
+                            sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=impronta)
+                    else:
+                        file_list_column = [
+                            [sg.Text('Caratteristiche:',background_color="#1d8c3b")],
+                            [sg.Text('Lotto:',background_color="#1d8c3b")],
+                            [sg.Text(contract.info_Prod_acq(values['LOTTOP'])[1],background_color="#1d8c3b",key='-Nome-')],
+                            [sg.Text('Quantità disponibile:', background_color="#1d8c3b")],
+                            [sg.Text(contract.info_Prod_acq(values['LOTTOP'])[2], background_color="#1d8c3b", key='-Quantita-')],
                         ]
-                    ]
-                    wind = sg.Window("Informazioni Prodotto Acquistato",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
-                    while True:
-                        event, values = wind.read()
-                        if event == "Exit" or event == sg.WIN_CLOSED:
-                            break
-                    wind.close()
-        win.close()                   
+
+                        laytot = [
+                            [
+                                sg.Column(file_list_column, background_color="#1d8c3b")
+                            ]
+                        ]
+                        wind = sg.Window("Informazioni Prodotto Acquistato",laytot, modal=True,background_color="#1d8c3b", icon=impronta)
+                        while True:
+                            event, values = wind.read()
+                            if event == "Exit" or event == sg.WIN_CLOSED:
+                                break
+                        wind.close()
+            win.close()                   
     window.close()
 
 

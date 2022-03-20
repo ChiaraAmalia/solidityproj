@@ -219,7 +219,7 @@ pragma abicoder v2;
             uint256 fp = elencoProdotti[_lottoProdotto].footprintTrasformazione;
             return string(abi.encodePacked(string(abi.encodePacked(string(abi.encodePacked("Il footprint di: ", _lottoProdotto)), " e' pari a: ")),toString(fp)));
         }
-        else return "tale prodotto non e' presente in magazzino.";
+        else return "Tale lotto non e' presente in magazzino";
     }
 
     //funzione che ci consente di vedere i lotti del prodotto
