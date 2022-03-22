@@ -2,8 +2,10 @@ import time
 from unittest import result
 
 import os
+
+import requests
 import web3
-from web3 import Web3
+from web3 import Web3, geth
 from solcx import compile_source, install_solc
 from web3.middleware import geth_poa_middleware
 
@@ -34,6 +36,7 @@ abi = contract_interface['abi']
 # crea un istanza di web3.py
 w3 = Web3(web3.HTTPProvider("http://127.0.0.1:22000"))
 w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+w3.middleware_onion.add(web3.middleware.http_retry_request_middleware)
 
 #accountProd = w3.eth.account.create()
 #accountTrasf = w3.eth.account.create()
@@ -43,8 +46,18 @@ w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 #print(Web3.toChecksumAddress(accountProd.address)+" è il produttore")
 #print(Web3.toChecksumAddress(accountTrasf.address)+" è il trasformatore")
 #print(Web3.toChecksumAddress(accountCons.address)+" è il consumatore")
-print(Web3.toChecksumAddress(w3.eth.accounts[0])+" è il produttore")
-print(Web3.toChecksumAddress(w3.eth.accounts[1])+" è il trasformatore")
+
+if len(w3.eth.accounts)<3:
+    w3.geth.personal.new_account('trasformatore')
+    w3.geth.personal.new_account('produttore')
+
+print(w3.geth.personal.list_accounts())
+
+
+print(Web3.toChecksumAddress(w3.eth.accounts[0])+" è il trasformatore")
+w3.geth.personal.unlock_account(w3.eth.accounts[0],'trasformatore')
+print(Web3.toChecksumAddress(w3.eth.accounts[1])+" è il produttore")
+w3.geth.personal.unlock_account(w3.eth.accounts[1],'produttore')
 print(Web3.toChecksumAddress(w3.eth.accounts[2])+" è il consumatore")
 
 
@@ -55,8 +68,8 @@ MagazzinoProdotti = w3.eth.contract(abi=abi, bytecode=bytecode)
 #prod=Web3.toChecksumAddress(accountProd.address)
 #trasf=Web3.toChecksumAddress(accountTrasf.address)
 #consum=Web3.toChecksumAddress(accountCons.address)
-prod=Web3.toChecksumAddress(w3.eth.accounts[0])
-trasf=Web3.toChecksumAddress(w3.eth.accounts[1])
+trasf=Web3.toChecksumAddress(w3.eth.accounts[0])
+prod=Web3.toChecksumAddress(w3.eth.accounts[1])
 consum=Web3.toChecksumAddress(w3.eth.accounts[2])
 #tx_hash = MagazzinoProdotti.constructor(prod, trasf, consum).transact({'from': admin})
 tx_hash = MagazzinoProdotti.constructor(prod, trasf, consum).transact({'from': prod})
