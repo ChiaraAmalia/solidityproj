@@ -47,17 +47,18 @@ w3.middleware_onion.add(web3.middleware.http_retry_request_middleware)
 #print(Web3.toChecksumAddress(accountTrasf.address)+" è il trasformatore")
 #print(Web3.toChecksumAddress(accountCons.address)+" è il consumatore")
 
-if len(w3.eth.accounts)<3:
+if len(w3.eth.accounts)<4:
     w3.geth.personal.new_account('trasformatore')
     w3.geth.personal.new_account('produttore')
+    w3.geth.personal.new_account(('consumatore'))
 
 print(w3.geth.personal.list_accounts())
 
 
 print(Web3.toChecksumAddress(w3.eth.accounts[0])+" è il trasformatore")
-w3.geth.personal.unlock_account(w3.eth.accounts[0],'trasformatore')
+#w3.geth.personal.unlock_account(w3.eth.accounts[0],'trasformatore')
 print(Web3.toChecksumAddress(w3.eth.accounts[1])+" è il produttore")
-w3.geth.personal.unlock_account(w3.eth.accounts[1],'produttore')
+#w3.geth.personal.unlock_account(w3.eth.accounts[1],'produttore')
 print(Web3.toChecksumAddress(w3.eth.accounts[2])+" è il consumatore")
 
 
@@ -71,10 +72,10 @@ MagazzinoProdotti = w3.eth.contract(abi=abi, bytecode=bytecode)
 trasf=Web3.toChecksumAddress(w3.eth.accounts[0])
 prod=Web3.toChecksumAddress(w3.eth.accounts[1])
 consum=Web3.toChecksumAddress(w3.eth.accounts[2])
+admin=Web3.toChecksumAddress(w3.eth.accounts[3])
 #tx_hash = MagazzinoProdotti.constructor(prod, trasf, consum).transact({'from': admin})
-tx_hash = MagazzinoProdotti.constructor(prod, trasf, consum).transact({'from': prod})
-
-# Wait for the transaction to be mined, and get the transaction receipt
+tx_hash = MagazzinoProdotti.constructor(prod, trasf, consum).transact({'from': admin})
+#Wait for the transaction to be mined, and get the transaction receipt
 tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
 magazzino = w3.eth.contract(

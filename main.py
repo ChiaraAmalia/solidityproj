@@ -5,16 +5,25 @@ import numpy
 
 import contract
 import os
-from web3 import exceptions
+from web3 import exceptions, Web3
 
 path = os.path.abspath(os.path.dirname(__file__)) #Salva nella variabile path il percorso globale della cartella in cui si trova il file .py in esecuzione
 os.chdir(path)  # Cambio della cartella attuale nella cartella in cui si trova il file .py
 impronta = os.path.join(path,'impronta.ico') #viene preso il file impronta.ico dalla cartella in cui si trovale il file .py in esecuzione
 nexttoggle = True #Toggle della finestra "Login" per disattivare/attivare dopo login/logout
+addr=contract.w3.geth.personal.list_accounts()
+acco=[addr[0]+' (trasformatore)',addr[1]+' (produttore)',addr[2]+' (consumatore)']
+acct=[addr[0],addr[1],addr[2]]
 file_list_column = [
     [
         sg.Text("Inserisci indirizzo di portafoglio:",background_color="#1d8c3b"),
-        sg.In(size=(58, 1), enable_events=True, key="PORTAFOGLIO",background_color="#8bd9a0"),
+        #sg.In(size=(58, 1), enable_events=True, key="PORTAFOGLIO",background_color="#8bd9a0"),
+        sg.Listbox(acco, size=(100, 3), key="PORTAFOGLIO", enable_events=True),
+
+    ],
+    [
+        sg.Text("Inserisci password di portafoglio:", background_color="#1d8c3b"),
+        sg.In(size=(58, 1), enable_events=True, key="PASSWORD", background_color="#8bd9a0", password_char='*'),
     ],
     [
         sg.Button("Entra",button_color="#013810",key="entra",bind_return_key=True)
@@ -618,14 +627,18 @@ if __name__ == '__main__':
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
         if event == "entra":
-            contract.current_user = values['PORTAFOGLIO']
+            contract.current_user = acct[windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]]
             toggle_login()
-            if values['PORTAFOGLIO'] == contract.trasf:
+            print(acct[windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]])
+            if acct[windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.trasf and values['PASSWORD'] == 'trasformatore':
+                contract.w3.geth.personal.unlock_account(contract.w3.eth.accounts[0], 'trasformatore')
                 window_trasformatore()
-            elif values['PORTAFOGLIO'] == contract.prod:
+            elif acct[windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.prod and values['PASSWORD'] == 'produttore':
+                contract.w3.geth.personal.unlock_account(contract.w3.eth.accounts[1], 'produttore')
                 window_produttore()
-            elif values['PORTAFOGLIO'] == contract.consum:
+            elif acct[windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.consum and values['PASSWORD'] == 'consumatore':
+                contract.w3.geth.personal.unlock_account(contract.w3.eth.accounts[2], 'consumatore')
                 window_consumatore()
-            else: sg.Popup('Non hai inserito un indirizzo valido', keep_on_top=True,background_color="#1d8c3b",icon = impronta), toggle_login()
+            else: sg.Popup('Non hai inserito un indirizzo o una password validi', keep_on_top=True,background_color="#1d8c3b",icon = impronta), toggle_login()
 
     windowLogin.close()
