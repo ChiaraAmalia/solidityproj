@@ -197,7 +197,7 @@ def window_trasformatore():
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
                 if event == "INF" and values['LOTTOMP']=='':
-                    sg.Popup("Non hai inserito una lotto",keep_on_top=True,background_color="#1d8c3b",icon=impronta)
+                    sg.Popup("Non hai inserito un lotto",keep_on_top=True,background_color="#1d8c3b",icon=impronta)
                 if event == "INF" and not values['LOTTOMP']=='':
                     try:
                         contract.info_MP_prod(values['LOTTOMP'])

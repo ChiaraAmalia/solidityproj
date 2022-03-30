@@ -144,7 +144,7 @@ pragma abicoder v2;
         uint arrayLength = _lottiMateriePrime.length;
 
         for (uint i=0; i<arrayLength;i++){
-            require(magazzinoTrasformatore[_lottiMateriePrime[i]].contenuto, string(abi.encodePacked(string(abi.encodePacked("il lotto", _lottiMateriePrime[i])), " e' inesistente")));
+            require(magazzinoTrasformatore[_lottiMateriePrime[i]].contenuto, string(abi.encodePacked(string(abi.encodePacked("il lotto ", _lottiMateriePrime[i])), " e' inesistente")));
             require(_quantMatPrUtil[i] <= magazzinoTrasformatore[_lottiMateriePrime[i]].quantitaMagazzino, string(abi.encodePacked(string(abi.encodePacked("la quantita' nel magazzino per il lotto ", magazzinoTrasformatore[_lottiMateriePrime[i]].lottoMateriaPrima)), " non e' sufficiente")));
             require(magazzinoTrasformatore[_lottiMateriePrime[i]].quantitaMagazzino > 0, string(abi.encodePacked(string(abi.encodePacked("le scorte per il lotto ", magazzinoTrasformatore[_lottiMateriePrime[i]].lottoMateriaPrima)), " sono finite")));
         }
@@ -191,7 +191,7 @@ pragma abicoder v2;
     //funzione che permette al consumatore di acquistare un prodotto finito
     function acquistaProdotto(string memory _lottoProdotto, uint256 _quantitaMagazzino) public payable {
         require(msg.sender == Consumatore, "solo il consumatore puo' acquistare un prodotto.");
-        require(_quantitaMagazzino > 0, "la qauntita' acquistata deve essere un valore positivo diverso da zero.");
+        require(_quantitaMagazzino > 0, "la quantita' acquistata deve essere un valore positivo diverso da zero.");
         require(elencoProdotti[_lottoProdotto].contenuto, "il lotto inserito e' insesistente.");
         require(elencoProdotti[_lottoProdotto].quantitaProdotta >= _quantitaMagazzino, "la quantita' inserita e' piu' grande della quantita' disponibile.");
 

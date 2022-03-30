@@ -1,8 +1,6 @@
 import time
 from unittest import result
-
 import os
-
 import requests
 import web3
 from web3 import Web3, geth
