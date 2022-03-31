@@ -11,21 +11,10 @@ Il nostro progetto consente di tenere traccia del footprint di un prodotto a par
 
 ## Tech
 
-Dillinger uses a number of open source projects to work properly:
+Il nostro progetto sfrutta le seguenti tecnologie:
 
-- [AngularJS] - HTML enhanced for web apps!
-- [Ace Editor] - awesome web-based text editor
-- [markdown-it] - Markdown parser done right. Fast and easy to extend.
-- [Twitter Bootstrap] - great UI boilerplate for modern web apps
-- [node.js] - evented I/O for the backend
-- [Express] - fast node.js network app framework [@tjholowaychuk]
-- [Gulp] - the streaming build system
-- [Breakdance](https://breakdance.github.io/breakdance/) - HTML
-to Markdown converter
-- [jQuery] - duh
+- [node.js] - per????
 
-And of course Dillinger itself is open source with a [public repository][dill]
- on GitHub.
 
 <!--## Installation
 
@@ -56,6 +45,8 @@ karma test
 ## Docker
 
 Il nostro **foot print calculator** è davvero facile da installare ed utilizzare. Sfrutta docker per la gestione in locale dei nodi della blockchain.
+
+Come prima cosa bisogna installare docker per fare ciò basta seguire le indicazioni riportate nel seguente link: [Come installare docker](https://docs.docker.com/desktop/windows/install/)  
 
 By default, the Docker will expose port 8080, so change this within the
 Dockerfile if necessary. When ready, simply use the Dockerfile to
