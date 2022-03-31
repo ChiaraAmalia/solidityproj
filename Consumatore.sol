@@ -11,9 +11,11 @@ pragma abicoder v2;
  contract Consumatore {
 
      address Consumatore; //colui che acquisterà il prodotto finito
+     address public Copy;
 
      constructor(address _consumatore) {
         Consumatore = _consumatore;
+        Copy = _consumatore;
     }
 
     //attributi magazzino del consumatore
@@ -42,7 +44,14 @@ pragma abicoder v2;
 
     }
 
+    function CheckAddressC(address indirizzo)public returns(bool){
+        if(indirizzo == Consumatore) return true;
+        else return false;
+    }
 
+    function GetAddress()public returns(address){
+        return Consumatore;
+    }
 
 // Funzione utilizzata per stampare le informazioni di un prodotto acquistato dal consumatore
     function StampaInforProdCons(string memory _lottoProdotto) public view returns(MagazzinoConsumatore memory){

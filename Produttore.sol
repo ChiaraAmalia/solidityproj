@@ -80,6 +80,9 @@ import "./Trasformatore.sol";
         require(elencoMateriePrime[_lottoMateriaPrima].contenuto,"la materia prima e' inesistente");
         require(elencoMateriePrime[_lottoMateriaPrima].quantitaMagazzino >= _quantitaMagazzino,"scorta non sufficente.");
         ContractT.TacquistaMateriaPrima(_lottoMateriaPrima, _quantitaMagazzino);
+        elencoMateriePrime[_lottoMateriaPrima].quantitaMagazzino -= _quantitaMagazzino;
+        elencoMateriePrime[_lottoMateriaPrima].quantitaMagazzino -= _quantitaMagazzino;
+        emit AcquistaMateriaPrima(_lottoMateriaPrima, elencoMateriePrime[_lottoMateriaPrima].nomeMateriaPrima, msg.sender, _quantitaMagazzino, elencoMateriePrime[_lottoMateriaPrima].footprintMateriaPrima);
     }
 
     
@@ -102,7 +105,7 @@ import "./Trasformatore.sol";
     //funzione che mi consente di vedere tutti i lotti delle materie prime
     function vediTuttiLottiMateriePrime() public view returns (string[] memory){
         
-        require(msg.sender == Trasformatore, "solo il Trasformatore puo' vedere tutti i lotti delle materie prime inserite dal produttore.");
+        require(ContractT.CheckAddress(msg.sender), "solo il Trasformatore puo' vedere tutti i lotti delle materie prime inserite dal produttore.");
         require(numMateriePrime>0,"Non sono presenti materie prime");
         string[] memory result= new string[](numMateriePrime);
         uint j = 0;
@@ -123,32 +126,28 @@ import "./Trasformatore.sol";
     /**
      * @dev Converts a `uint256` to its ASCII `string` decimal representation.
      */
-    function toString(uint256 value) internal pure returns (string memory) {
-        
-        if(value == 0) {
-            return "0";
-        }
-
-        uint256 temp = value;
-        uint256 digits;
-        while(temp !=0) {
-            digits++;
-            temp /= 10;
-        }
-        bytes memory buffer = new bytes(digits);
-        while(value != 0) {
-            digits -= 1;
-            buffer[digits] = bytes1(uint8(48 + uint256(value % 10)));
-            value /= 10;
-        }
-        return string(buffer);
-    }
 
     // Funzione utilizzata per stampare le informazioni di una materia prima inserita da un produttore
-    function StampaInforMatPrProd(string memory _lottoMateriaPrima,address _portafoglio) public view returns(MateriaPrima memory){
-        require(ContractT.CheckAddress(_portafoglio), "solo il trasformatore puo' vedere le informazioni relative ad un lotto di una materia prima inserito dal produttore.");
+    function StampaInforMatPrProd(string memory _lottoMateriaPrima) public view returns(MateriaPrima memory){
+        require(ContractT.CheckAddress(msg.sender), "solo il trasformatore puo' vedere le informazioni relative ad un lotto di una materia prima inserito dal produttore.");
         require(elencoMateriePrime[_lottoMateriaPrima].contenuto, "il lotto inserito e' inesistente.");
         return elencoMateriePrime[_lottoMateriaPrima];
+    }
+
+    function aggiungiProdotto(string memory _nomeProdotto, string[] memory _lottiMateriePrime, uint256[] memory _quantMatPrUtil, uint256 _quantitaMagazzino, uint256 _footprintProdottoFinito) public payable {
+        require(ContractT.CheckAddress(msg.sender), "solo il trasformatore puo' aggiungere un prodotto.");
+        require(_quantitaMagazzino > 0, "la quantita' prodotta deve essere un valore positivo e diverso da zero.");
+        require(_footprintProdottoFinito > 0, "il footprint del prodotto deve essere un valore positivo e diverso da zero.");
+        uint arrayLength = _lottiMateriePrime.length;
+        uint oldfootprint = 0;
+        for(uint i=0; i<arrayLength; i++){
+            oldfootprint += elencoMateriePrime[_lottiMateriePrime[i]].footprintMateriaPrima;
+        }
+
+        for(uint i=0; i<arrayLength; i++) {
+            magazzinoTrasformatore[_lottiMateriePrime[i]].quantitaMagazzino -= _quantMatPrUtil[i];
+        }
+        ContractT(_nomeProdotto, _lottiMateriePrime,_quantMatPrUtil,_quantitaMagazzino,_footprintProdottoFinito,oldfootprint); 
     }
 
  }
