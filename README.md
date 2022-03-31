@@ -49,7 +49,7 @@ Il nostro **foot print calculator** è davvero facile da installare ed utilizzar
 Come prima cosa bisogna installare docker per fare ciò basta seguire le indicazioni riportate nel seguente link: [Come installare docker](https://docs.docker.com/desktop/windows/install/)  
 
 ### NodeJS
-<https://nodejs.org/it/>
+Per prima cosa bisogna eseguire il download di NodeJS, cliccando sul seguente link:[Download NodeJS](https://nodejs.org/it/) e seguire poi le istruzioni dell'installer.
 
 ### Quorum-wizard
 
