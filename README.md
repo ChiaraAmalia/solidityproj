@@ -9,7 +9,7 @@ Il nostro progetto consente di tenere traccia del footprint di un prodotto a par
 
 ## Come installare il programma
 
-## Tech
+## Prerequisiti
 
 Il nostro progetto sfrutta le seguenti tecnologie:
 
@@ -42,7 +42,7 @@ karma test
 
 
 
-## Docker
+### Docker
 
 Il nostro **foot print calculator** è davvero facile da installare ed utilizzare. Sfrutta docker per la gestione in locale dei nodi della blockchain.
 
