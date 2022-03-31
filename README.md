@@ -48,6 +48,9 @@ Il nostro **foot print calculator** è davvero facile da installare ed utilizzar
 
 Come prima cosa bisogna installare docker per fare ciò basta seguire le indicazioni riportate nel seguente link: [Come installare docker](https://docs.docker.com/desktop/windows/install/)  
 
+### NodeJS
+<https://nodejs.org/it/>
+
 ### Quorum-wizard
 
 Per installare quorum-wizard basterà aprire il terminale di windows ed eseguire i seguenti comandi:
