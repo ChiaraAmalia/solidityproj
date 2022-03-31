@@ -8,7 +8,6 @@ Il nostro progetto consente di tenere traccia del footprint di un prodotto a par
  3. ...
 
 ## Come installare il programma
-### Prerequisiti
 
 ## Tech
 
@@ -90,6 +89,9 @@ your preferred browser.
 
 ## Autori
 :computer: Margherita Galeazzi
+
 :computer: Chiara Amalia Caporusso
+
 :computer: Simone Scalella
+
 :computer: Zhang Yihang
