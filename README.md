@@ -88,10 +88,10 @@ your preferred browser.
 ```
 
 ## Autori
-:computer: Margherita Galeazzi
+:computer: Margherita Galeazzi -> https://github.com/MargheritaGaleazzi
 
-:computer: Chiara Amalia Caporusso
+:computer: Chiara Amalia Caporusso -> https://github.com/ChiaraAmalia
 
-:computer: Simone Scalella
+:computer: Simone Scalella -> 
 
-:computer: Zhang Yihang
+:computer: Zhang Yihang -> 
