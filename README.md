@@ -48,15 +48,19 @@ Il nostro **foot print calculator** è davvero facile da installare ed utilizzar
 
 Come prima cosa bisogna installare docker per fare ciò basta seguire le indicazioni riportate nel seguente link: [Come installare docker](https://docs.docker.com/desktop/windows/install/)  
 
-By default, the Docker will expose port 8080, so change this within the
-Dockerfile if necessary. When ready, simply use the Dockerfile to
-build the image.
+### Quorum-wizard
+
+Per installare quorum-wizard basterà aprire il terminale di windows ed eseguire i seguenti comandi:
 
 ```sh
-cd dillinger
-docker build -t <youruser>/dillinger:${package.json.version} .
+npx quorum-wizard 
 ```
+E seguire le indicazioni, e quando viene richiesto di scegliere tra docker-compose e Kubernetes, scegliere **docker-compose**.
 
+```sh
+cd networks/<nome_network>/
+start.cmd
+```
 This will create the dillinger image and pull in the necessary dependencies.
 Be sure to swap out `${package.json.version}` with the actual
 version of Dillinger.
