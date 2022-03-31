@@ -13,7 +13,9 @@ Il nostro progetto consente di tenere traccia del footprint di un prodotto a par
 
 Il nostro progetto sfrutta le seguenti tecnologie:
 
-- [node.js] - per????
+- [node.js] 
+- Docker
+- quorum-wizard
 
 
 <!--## Installation
