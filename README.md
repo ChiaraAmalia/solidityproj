@@ -55,7 +55,7 @@ karma test
 
 ## Docker
 
-Dillinger is very easy to install and deploy in a Docker container.
+Il nostro **foot print calculator** è davvero facile da installare ed utilizzare. Sfrutta docker per la gestione in locale dei nodi della blockchain.
 
 By default, the Docker will expose port 8080, so change this within the
 Dockerfile if necessary. When ready, simply use the Dockerfile to
