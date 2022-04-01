@@ -29,7 +29,6 @@ pragma abicoder v2;
     mapping(string => MagazzinoConsumatore) magazzinoConsumatore; //contiene i prodotti acquistati dal consumatore
 
     function CacquistaProdotto(string memory _lottoProdotto, uint256 _quantitaMagazzino)public payable{
-        require(msg.sender == Consumatore, "solo il consumatore puo' acquistare un prodotto.");
         if(magazzinoConsumatore[_lottoProdotto].contenuto) {
             magazzinoConsumatore[_lottoProdotto].quantitaMagazzino += _quantitaMagazzino;
         }
@@ -44,14 +43,6 @@ pragma abicoder v2;
 
     }
 
-    function CheckAddressC(address indirizzo)public returns(bool){
-        if(indirizzo == Consumatore) return true;
-        else return false;
-    }
-
-    function GetAddress()public returns(address){
-        return Consumatore;
-    }
 
 // Funzione utilizzata per stampare le informazioni di un prodotto acquistato dal consumatore
     function StampaInforProdCons(string memory _lottoProdotto) public view returns(MagazzinoConsumatore memory){

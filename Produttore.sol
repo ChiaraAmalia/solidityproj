@@ -34,13 +34,14 @@ import "./Trasformatore.sol";
     mapping(string => MateriaPrima) elencoMateriePrime; //contiene le materie prime inserite dal produttore
     mapping(uint256 => MateriaPrima) nomiMateriePrime; //contiene le materie prime inserite dal produttore
 
-    constructor(address _produttore, address _consumatore,address _addressTrasformatore) {
+    constructor(address _produttore,address _addressTrasformatore) {
         Produttore = _produttore;
         numMateriePrime = 0;
         ContractT = Trasformatore(_addressTrasformatore);
     }
     
     event StampaMateriaPrima(string lottoMateriaPrima, string nomeMateriaPrima, address indirizzoProduttore, uint256 quantitaMagazzino, uint256 footprintMateriaPrima);
+    event AcquistaMateriaPrima(string lottoMateriaPrima, string nomeMateriaPrima, address indirizzoTrasformatore, uint256 quantitaMagazzino, uint256 footprintMateriaPrima);
 
     //funzione che consente l'inserimento di materie prime da parte del produttore
     function aggiungiMateriaPrima(string memory _nomeMateriaPrima, uint256 _quantitaMagazzino, uint256 _footprintMateriaPrima) public {
@@ -49,9 +50,9 @@ import "./Trasformatore.sol";
         require(_footprintMateriaPrima > 0, "il footprint deve essere maggiore di 0.");
 
         
-        elencoMateriePrime[string(abi.encodePacked(_nomeMateriaPrima, toString(numMateriePrime)))]=MateriaPrima({
+        elencoMateriePrime[string(abi.encodePacked(_nomeMateriaPrima, ContractT.toString(numMateriePrime)))]=MateriaPrima({
             id: numMateriePrime,
-            lottoMateriaPrima: string(abi.encodePacked(_nomeMateriaPrima,toString(numMateriePrime))),
+            lottoMateriaPrima: string(abi.encodePacked(_nomeMateriaPrima,ContractT.toString(numMateriePrime))),
             nomeMateriaPrima: _nomeMateriaPrima,
             indirizzoProduttore: Produttore,
             quantitaMagazzino: _quantitaMagazzino,
@@ -62,7 +63,7 @@ import "./Trasformatore.sol";
         
         nomiMateriePrime[numMateriePrime]=MateriaPrima({
             id: numMateriePrime,
-            lottoMateriaPrima: string(abi.encodePacked(_nomeMateriaPrima, toString(numMateriePrime))),
+            lottoMateriaPrima: string(abi.encodePacked(_nomeMateriaPrima, ContractT.toString(numMateriePrime))),
             nomeMateriaPrima: _nomeMateriaPrima,
             indirizzoProduttore: Produttore,
             quantitaMagazzino: _quantitaMagazzino,
@@ -71,11 +72,12 @@ import "./Trasformatore.sol";
         });
 
         numMateriePrime = numMateriePrime + 1;
-        emit StampaMateriaPrima(string(abi.encodePacked(_nomeMateriaPrima, toString(numMateriePrime))), _nomeMateriaPrima, msg.sender, _quantitaMagazzino, _footprintMateriaPrima);
+        emit StampaMateriaPrima(string(abi.encodePacked(_nomeMateriaPrima, ContractT.toString(numMateriePrime))), _nomeMateriaPrima, msg.sender, _quantitaMagazzino, _footprintMateriaPrima);
     }
 
     //funzione che permette al trasformatore di acquistare materia prima
     function acquistaMateriaPrima(string memory _lottoMateriaPrima, uint256 _quantitaMagazzino) public payable {
+        require(msg.sender == ContractT.Copy(),"solo il trasformatore puo' aquistare la materia prima.");
         require(_quantitaMagazzino > 0,"la quantita' deve essere maggiore di 0.");
         require(elencoMateriePrime[_lottoMateriaPrima].contenuto,"la materia prima e' inesistente");
         require(elencoMateriePrime[_lottoMateriaPrima].quantitaMagazzino >= _quantitaMagazzino,"scorta non sufficente.");
@@ -89,7 +91,7 @@ import "./Trasformatore.sol";
 
     //funzione che mi consente di vedere i lotti di un determinato materia prima
     function vediLottiMateriaPrima(string memory _nomeMateriaPrima)  public view returns (string[] memory){
-        require(msg.sender == Trasformatore, "solo il trasformatore puo' vedere tutti i lotti associati ad una materia prima");
+        require(msg.sender == ContractT.Copy(), "solo il trasformatore puo' vedere tutti i lotti associati ad una materia prima");
         string[] memory result = new string[](numMateriePrime);      
         uint j = 0;
 
@@ -105,7 +107,7 @@ import "./Trasformatore.sol";
     //funzione che mi consente di vedere tutti i lotti delle materie prime
     function vediTuttiLottiMateriePrime() public view returns (string[] memory){
         
-        require(ContractT.CheckAddress(msg.sender), "solo il Trasformatore puo' vedere tutti i lotti delle materie prime inserite dal produttore.");
+        require(msg.sender == ContractT.Copy(), "solo il Trasformatore puo' vedere tutti i lotti delle materie prime inserite dal produttore.");
         require(numMateriePrime>0,"Non sono presenti materie prime");
         string[] memory result= new string[](numMateriePrime);
         uint j = 0;
@@ -129,13 +131,13 @@ import "./Trasformatore.sol";
 
     // Funzione utilizzata per stampare le informazioni di una materia prima inserita da un produttore
     function StampaInforMatPrProd(string memory _lottoMateriaPrima) public view returns(MateriaPrima memory){
-        require(ContractT.CheckAddress(msg.sender), "solo il trasformatore puo' vedere le informazioni relative ad un lotto di una materia prima inserito dal produttore.");
+        require(msg.sender == ContractT.Copy(), "solo il trasformatore puo' vedere le informazioni relative ad un lotto di una materia prima inserito dal produttore.");
         require(elencoMateriePrime[_lottoMateriaPrima].contenuto, "il lotto inserito e' inesistente.");
         return elencoMateriePrime[_lottoMateriaPrima];
     }
 
     function aggiungiProdotto(string memory _nomeProdotto, string[] memory _lottiMateriePrime, uint256[] memory _quantMatPrUtil, uint256 _quantitaMagazzino, uint256 _footprintProdottoFinito) public payable {
-        require(ContractT.CheckAddress(msg.sender), "solo il trasformatore puo' aggiungere un prodotto.");
+        require(msg.sender == ContractT.Copy(), "solo il trasformatore puo' aggiungere un prodotto.");
         require(_quantitaMagazzino > 0, "la quantita' prodotta deve essere un valore positivo e diverso da zero.");
         require(_footprintProdottoFinito > 0, "il footprint del prodotto deve essere un valore positivo e diverso da zero.");
         uint arrayLength = _lottiMateriePrime.length;
@@ -143,11 +145,7 @@ import "./Trasformatore.sol";
         for(uint i=0; i<arrayLength; i++){
             oldfootprint += elencoMateriePrime[_lottiMateriePrime[i]].footprintMateriaPrima;
         }
-
-        for(uint i=0; i<arrayLength; i++) {
-            magazzinoTrasformatore[_lottiMateriePrime[i]].quantitaMagazzino -= _quantMatPrUtil[i];
-        }
-        ContractT(_nomeProdotto, _lottiMateriePrime,_quantMatPrUtil,_quantitaMagazzino,_footprintProdottoFinito,oldfootprint); 
+        ContractT.TaggiungiProdotto(_nomeProdotto, _lottiMateriePrime,_quantMatPrUtil,_quantitaMagazzino,_footprintProdottoFinito,oldfootprint,arrayLength); 
     }
 
  }

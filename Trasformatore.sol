@@ -12,11 +12,13 @@ import "./Consumatore.sol";
  contract Trasformatore {
 
      address Trasformatore; //colui che trasforma le materie prime in prodotti finiti
+     address public Copy;
      uint256 numProdotti;
      Consumatore ConsContract;
 
      constructor(address _trasformatore,address _ConsContract) {
         Trasformatore = _trasformatore;
+        Copy = _trasformatore;
         numProdotti = 0;
         ConsContract = Consumatore(_ConsContract);
     }
@@ -45,12 +47,10 @@ import "./Consumatore.sol";
     mapping(string => ProdottoFinito) elencoProdotti; //contiene i prodotti che vengono inseriti dal trasformatore
     mapping(uint256 => ProdottoFinito) nomiProdottiFiniti; //contiene i prodotti finiti inseriti dal trasformatore
 
-    event AcquistaMateriaPrima(string lottoMateriaPrima, string nomeMateriaPrima, address indirizzoTrasformatore, uint256 quantitaMagazzino, uint256 footprintMateriaPrima);
     event StampaProdotto(string lottoProdotto, string nomeProdotto, address indirizzoTrasformatore, string[] lottiMateriePrime, uint256 quantitaProdotta, uint256 footprintTrasformazione);
     event AcquistaProdotto(string lottoProdotto, string nomeProdotto, address indirizzoConsumatore, uint256 quantitaMagazzino, uint256 footprintProdotto);
 
     function TacquistaMateriaPrima(string memory _lottoMateriaPrima, uint256 _quantitaMagazzino) public payable {
-        require(msg.sender == Trasformatore,"solo il trasformatore puo' aquistare la materia prima.");
         if(magazzinoTrasformatore[_lottoMateriaPrima].contenuto){
             magazzinoTrasformatore[_lottoMateriaPrima].quantitaMagazzino += _quantitaMagazzino;
         }
@@ -61,14 +61,11 @@ import "./Consumatore.sol";
                 indirizzoTrasformatore: Trasformatore,
                 contenuto: true
             });
-        }
-
-
-        
+        } 
     }
 
     //funzione che permette l'inserimento di prodotti finiti da parte del trasformatore
-    function TaggiungiProdotto(string memory _nomeProdotto, string[] memory _lottiMateriePrime, uint256[] memory _quantMatPrUtil, uint256 _quantitaMagazzino, uint256 _footprintProdottoFinito,uint oldfootprint) public payable {
+    function TaggiungiProdotto(string memory _nomeProdotto, string[] memory _lottiMateriePrime, uint256[] memory _quantMatPrUtil, uint256 _quantitaMagazzino, uint256 _footprintProdottoFinito,uint oldfootprint,uint lunghezza) public payable {
 
         uint arrayLength = _lottiMateriePrime.length;
 
@@ -101,6 +98,9 @@ import "./Consumatore.sol";
             contenuto: true
         });
 
+        for(uint i=0; i<lunghezza; i++) {
+            magazzinoTrasformatore[_lottiMateriePrime[i]].quantitaMagazzino -= _quantMatPrUtil[i];
+        }    
         numProdotti = numProdotti + 1;
         emit StampaProdotto(string(abi.encodePacked(_nomeProdotto,toString(numProdotti))), _nomeProdotto, msg.sender, _lottiMateriePrime, _quantitaMagazzino, footprintTot);
     }
@@ -156,6 +156,7 @@ import "./Consumatore.sol";
 
     //funzione che permette al consumatore di acquistare un prodotto finito
     function acquistaProdotto(string memory _lottoProdotto, uint256 _quantitaMagazzino) public payable {
+        require(msg.sender == ConsContract.Copy(), "solo il consumatore puo' acquistare un prodotto.");
         require(_quantitaMagazzino > 0, "la quantita' acquistata deve essere un valore positivo diverso da zero.");
         require(elencoProdotti[_lottoProdotto].contenuto, "il lotto inserito e' insesistente.");
         require(elencoProdotti[_lottoProdotto].quantitaProdotta >= _quantitaMagazzino, "la quantita' inserita e' piu' grande della quantita' disponibile.");
@@ -174,12 +175,7 @@ import "./Consumatore.sol";
         else return "Tale lotto non e' presente in magazzino";
     }
 
-    function CheckAddress(address indirizzo)public payable returns(bool){
-        if(indirizzo == Trasformatore) return true;
-        else return false;
-    }
-
-    function toString(uint256 value) internal pure returns (string memory) {
+    function toString(uint256 value) public pure returns (string memory) {
         
         if(value == 0) {
             return "0";
