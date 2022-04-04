@@ -7,12 +7,24 @@ import web3
 from web3 import Web3, geth
 
 from web3.middleware import geth_poa_middleware
-abi_state_cons=open("abi_consum.bin",'rb')
-abi_state_trasf=open("abi_trasf.bin",'rb')
-abi_state_prod=open("abi_prod.bin",'rb')
+path = os.path.abspath(os.path.dirname(__file__)) #Salva nella variabile path il percorso globale della cartella in cui si trova il file .py in esecuzione
+os.chdir(path)  # Cambio della cartella attuale nella cartella in cui si trova il file .py
+#data_path = os.path.join(path,'Consumatore.sol') #viene preso il file magazzino.sol dalla cartella in cui si trovale il file .py in esecuzione
+cons = os.path.join(path,'abi_consum.bin')
+trasf = os.path.join(path,'abi_trasf.bin')
+prod = os.path.join(path,'abi_prod.bin')
+state = os.path.join(path,'address.bin')
+abi_state_cons=open(cons,'rb')
+abi_state_trasf=open(trasf,'rb')
+abi_state_prod=open(prod,'rb')
+address_state=open(state,'rb')
+
+#abi_state_cons=open("abi_consum.bin",'rb')
+#abi_state_trasf=open("abi_trasf.bin",'rb')
+#abi_state_prod=open("abi_prod.bin",'rb')
 #address_state=open("contractAddress.bin",'rb')
 #account_state=open("account.bin",'rb')
-address_state=open("address.bin",'rb')
+#address_state=open("address.bin",'rb')
 
 abi_cons=pickle.load(abi_state_cons)
 abi_trasf=pickle.load(abi_state_trasf)
