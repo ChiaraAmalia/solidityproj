@@ -13,7 +13,7 @@ class LoginWin():
         os.chdir(self.path)  # Cambio della cartella attuale nella cartella in cui si trova il file .py
         self.impronta = os.path.join(self.path,'impronta.ico') #viene preso il file impronta.ico dalla cartella in cui si trovale il file .py in esecuzione
 
-        self.addr=contract.w3.geth.personal.list_accounts()
+        self.addr=contract.account
         self.acco=[self.addr[0]+' (trasformatore)',self.addr[1]+' (produttore)',self.addr[2]+' (consumatore)']
         self.acct=[self.addr[0],self.addr[1],self.addr[2]]
         file_list_column = [
@@ -58,12 +58,12 @@ class LoginWin():
                 self.toggle_login()
                 print(self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]])
                 if self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.trasf and values['PASSWORD'] == 'trasformatore':
-                    contract.w3.geth.personal.unlock_account(contract.w3.eth.accounts[0], 'trasformatore')
+                    #contract.w3.geth.personal.unlock_account(contract.w3.eth.accounts[0], 'trasformatore')
                     TrasfWin(self.impronta,self)
                 elif self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.prod and values['PASSWORD'] == 'produttore':
-                    contract.w3.geth.personal.unlock_account(contract.w3.eth.accounts[1], 'produttore')
+                    #contract.w3.geth.personal.unlock_account(contract.w3.eth.accounts[1], 'produttore')
                     ProdWin(self.impronta,self)
                 elif self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.consum and values['PASSWORD'] == 'consumatore':
-                    contract.w3.geth.personal.unlock_account(contract.w3.eth.accounts[2], 'consumatore')
+                    #contract.w3.geth.personal.unlock_account(contract.w3.eth.accounts[2], 'consumatore')
                     ConsWin(self.impronta,self)
                 else: sg.Popup('Non hai inserito un indirizzo o una password validi', keep_on_top=True,background_color="#1d8c3b",icon = self.impronta), self.toggle_login()
