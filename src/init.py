@@ -31,6 +31,7 @@ bytecode = contract_interface['bin']
 
 # prende l'abi
 abi = contract_interface['abi']
+print(abi)
 
 
 # crea un istanza di web3.py
@@ -73,6 +74,9 @@ consumatore = w3.eth.contract(
 )
 print("codice per il consumatore \n")
 print(w3.eth.getCode(tx_receipt['contractAddress']).hex())
+print('ABI:')
+for el in consumatore.abi:
+    print(el)
 address=[trasf,prod,consum,admin, tx_receipt['contractAddress']]
 #account = trasf+" "+prod+" "+consum+" "+admin
 #address = trasf+" "+prod+" "+consum+" "+admin+" "+tx_receipt['contractAddress']

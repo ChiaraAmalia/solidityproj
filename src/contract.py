@@ -40,7 +40,7 @@ deploy_address_trasf=address_string[5]
 deploy_address_prod=address_string[6]
 
 
-w3 = Web3(web3.HTTPProvider("http://127.0.0.1:22001"))
+w3 = Web3(web3.HTTPProvider("http://127.0.0.1:22000"))
 w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 w3.middleware_onion.add(web3.middleware.http_retry_request_middleware)
 
@@ -72,22 +72,22 @@ def inserisci_Prod(nomeP,listaLottiMP,listaQuantMP,quantP,footprint):
     print(tx_receipt['status'])
 
 def acquista_Prod(lottoP,quantP):
-    tx_hash =produttore.functions.acquistaProdotto(lottoP,quantP).transact({'from': current_user})
+    tx_hash =trasformatore.functions.acquistaProdotto(lottoP,quantP).transact({'from': current_user})
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
     print(tx_receipt['status'])
 
 def footprint_Prod(lottoP):
     #tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
     #print(tx_receipt['status'])
-    return produttore.functions.vediFootprintProdottoFinito(lottoP).call({'from': current_user})
+    return trasformatore.functions.vediFootprintProdottoFinito(lottoP).call({'from': current_user})
 
 def lotti_Prod(nomeP):
     #tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
     #print(tx_receipt['status'])
-    return produttore.functions.vediLottiProdotto(nomeP).call({'from': current_user})
+    return trasformatore.functions.vediLottiProdotto(nomeP).call({'from': current_user})
 
 def tutti_Prod_lotti():
-    return produttore.functions.vediTuttiLottiProdotti().call({'from': current_user})
+    return trasformatore.functions.vediTuttiLottiProdotti().call({'from': current_user})
 
 def lotti_MP(nomeMP):
     #tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
@@ -100,7 +100,7 @@ def tutti_MP_lotti():
 def info_Prod_trasf(lottoP):
     #tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
     #print(tx_receipt['status'])
-    return produttore.functions.StampaInforProdTrasf(lottoP).call({'from': current_user})
+    return trasformatore.functions.StampaInforProdTrasf(lottoP).call({'from': current_user})
 
 def info_MP_prod(lottoMP):
     #tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
@@ -110,7 +110,7 @@ def info_MP_prod(lottoMP):
 def info_MP_acq(lottoMP):
     #tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
     #print(tx_receipt['status'])
-    return produttore.functions.StampaMatPrAcq(lottoMP).call({'from': current_user})
+    return trasformatore.functions.StampaMatPrAcq(lottoMP).call({'from': current_user})
 
 def info_Prod_acq(lottoP):
     #tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)

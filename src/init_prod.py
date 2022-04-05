@@ -24,15 +24,20 @@ os.chdir(path)  # Cambio della cartella attuale nella cartella in cui si trova i
 data_path = os.path.join(path,'Produttore.sol') #viene preso il file magazzino.sol dalla cartella in cui si trovale il file .py in esecuzione
 compiled_sol = compile_source_file(data_path)
 
-# recupera l'interfaccia del contratto
-contract_id, contract_interface = compiled_sol.popitem()
+
+print(compiled_sol)
+for k in compiled_sol.keys():
+    print(k)
 
 # prende il bytecode/bin
-bytecode = contract_interface['bin']
+bytecode = compiled_sol['<stdin>:Magazzino']['bin']
 
 # prende l'abi
-abi = contract_interface['abi']
-
+abi = compiled_sol['<stdin>:Magazzino']['abi']
+print('------------------------------------------------------------------------------------------')
+print(abi)
+print('--------------------------------------------------------------------------------------------------------')
+print(abi)
 
 # crea un istanza di web3.py
 #w3 = Web3(web3.HTTPProvider("http://127.0.0.1:22001"))
@@ -55,7 +60,7 @@ admin=account[3]
 consumC=init_trasf.init.address[4]
 trasfC=init_trasf.init.address[5]
 
-tx_hash = Produttore.constructor(prod,trasf).transact({'from': admin})
+tx_hash = Produttore.constructor(prod,trasfC).transact({'from': admin})
 #Wait for the transaction to be mined, and get the transaction receipt
 tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
@@ -65,6 +70,9 @@ produttore = w3.eth.contract(
 )
 print("codice per il produttore \n")
 print(w3.eth.getCode(tx_receipt['contractAddress']).hex())
+print('ABI:')
+for el in produttore.abi:
+    print(el)
 #account = trasf+" "+prod+" "+consum+" "+admin
 #address = address_string+" "+tx_receipt['contractAddress']
 init_trasf.init.address.append(tx_receipt['contractAddress'])

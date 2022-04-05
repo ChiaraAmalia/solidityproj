@@ -16,13 +16,6 @@ import "./Consumatore.sol";
      uint256 numProdotti;
      Consumatore ConsContract;
 
-     constructor(address _trasformatore,address _ConsContract) {
-        Trasformatore = _trasformatore;
-        Copy = _trasformatore;
-        numProdotti = 0;
-        ConsContract = Consumatore(_ConsContract);
-    }
-
     //attributi prodotto finito
     struct ProdottoFinito {
         uint256 id;
@@ -46,6 +39,13 @@ import "./Consumatore.sol";
     mapping(string => MagazzinoTrasformatore) magazzinoTrasformatore; //contiene le materie prime presenti nel magazzino del trasformatore
     mapping(string => ProdottoFinito) elencoProdotti; //contiene i prodotti che vengono inseriti dal trasformatore
     mapping(uint256 => ProdottoFinito) nomiProdottiFiniti; //contiene i prodotti finiti inseriti dal trasformatore
+
+    constructor(address _trasformatore,address _ConsContract) {
+        Trasformatore = _trasformatore;
+        Copy = _trasformatore;
+        numProdotti = 0;
+        ConsContract = Consumatore(_ConsContract);
+    }
 
     event StampaProdotto(string lottoProdotto, string nomeProdotto, address indirizzoTrasformatore, string[] lottiMateriePrime, uint256 quantitaProdotta, uint256 footprintTrasformazione);
     event AcquistaProdotto(string lottoProdotto, string nomeProdotto, address indirizzoConsumatore, uint256 quantitaMagazzino, uint256 footprintProdotto);
