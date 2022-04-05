@@ -83,7 +83,6 @@ import "./Trasformatore.sol";
         require(elencoMateriePrime[_lottoMateriaPrima].quantitaMagazzino >= _quantitaMagazzino,"scorta non sufficente.");
         ContractT.TacquistaMateriaPrima(_lottoMateriaPrima, _quantitaMagazzino);
         elencoMateriePrime[_lottoMateriaPrima].quantitaMagazzino -= _quantitaMagazzino;
-        elencoMateriePrime[_lottoMateriaPrima].quantitaMagazzino -= _quantitaMagazzino;
         emit AcquistaMateriaPrima(_lottoMateriaPrima, elencoMateriePrime[_lottoMateriaPrima].nomeMateriaPrima, msg.sender, _quantitaMagazzino, elencoMateriePrime[_lottoMateriaPrima].footprintMateriaPrima);
     }
 
