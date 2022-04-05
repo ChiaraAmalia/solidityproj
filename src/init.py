@@ -34,7 +34,7 @@ abi = contract_interface['abi']
 
 
 # crea un istanza di web3.py
-w3 = Web3(web3.HTTPProvider("http://127.0.0.1:22001"))
+w3 = Web3(web3.HTTPProvider("http://127.0.0.1:22000"))
 w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 w3.middleware_onion.add(web3.middleware.http_retry_request_middleware)
 
@@ -71,7 +71,8 @@ consumatore = w3.eth.contract(
     address=tx_receipt['contractAddress'],
     abi=abi
 )
-
+print("codice per il consumatore \n")
+print(w3.eth.getCode(tx_receipt['contractAddress']).hex())
 address=[trasf,prod,consum,admin, tx_receipt['contractAddress']]
 #account = trasf+" "+prod+" "+consum+" "+admin
 #address = trasf+" "+prod+" "+consum+" "+admin+" "+tx_receipt['contractAddress']

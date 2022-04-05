@@ -63,7 +63,8 @@ produttore = w3.eth.contract(
     address=tx_receipt['contractAddress'],
     abi=abi
 )
-
+print("codice per il produttore \n")
+print(w3.eth.getCode(tx_receipt['contractAddress']).hex())
 #account = trasf+" "+prod+" "+consum+" "+admin
 #address = address_string+" "+tx_receipt['contractAddress']
 init_trasf.init.address.append(tx_receipt['contractAddress'])
