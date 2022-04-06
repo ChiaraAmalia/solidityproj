@@ -53,7 +53,23 @@ Come prima cosa bisogna installare docker per fare ciò basta seguire le indicaz
 ### NodeJS
 Per prima cosa bisogna eseguire il download di NodeJS, cliccando sul seguente link:[Download NodeJS](https://nodejs.org/it/) e seguire poi le istruzioni dell'installer.
 
-### Quorum-wizard
+### Creazione ambiente virtuale con dipendenze
+```sh
+python venv <nome_ambiente>
+cd <nome_ambiente>/Scripts/activate
+pip install -r requirement.txt
+```
+
+### Far partire la BlockChain
+Nella cartella scaricata da GitHub aprire il prompt ed eseguire i seguenti comandi:
+```sh
+cd 3-nodes-footprintBlockchain
+start
+ ```
+
+### Eseguire il programma
+
+<!--### Quorum-wizard
 
 Per installare quorum-wizard basterà aprire il terminale di windows ed eseguire i seguenti comandi:
 
@@ -65,7 +81,7 @@ E seguire le indicazioni, e quando viene richiesto di scegliere tra docker-compo
 ```sh
 cd networks/<nome_network>/
 start.cmd
-```
+```-->
 
 ## Autori
 :computer: Margherita Galeazzi -> https://github.com/MargheritaGaleazzi
