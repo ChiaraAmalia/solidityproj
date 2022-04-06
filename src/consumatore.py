@@ -249,5 +249,6 @@ class ConsWin():
                                 if event == "Exit" or event == sg.WIN_CLOSED:
                                     break
                             wind.close()
-                win.close()                   
+                win.close()
+        contract.w3.geth.personal.lock_account(contract.account[3])
         self.window.close()

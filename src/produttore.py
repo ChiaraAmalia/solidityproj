@@ -73,4 +73,5 @@ class ProdWin():
                         win.Element('QUANTMP').update('')
                         win.Element('FPMP').update('')
                 win.close()
+        contract.w3.geth.personal.lock_account(contract.account[1])
         self.window.close() 

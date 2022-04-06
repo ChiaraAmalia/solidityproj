@@ -275,4 +275,5 @@ class TrasfWin():
                         except exceptions.SolidityError as error:
                             sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=icona_impronta)
                 win.close()
+        contract.w3.geth.personal.lock_account(contract.account[0])
         self.window.close()
