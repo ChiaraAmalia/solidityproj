@@ -1,0 +1,6 @@
+Account #0: {1f1d323fad0024ad11e56e7e609f7b6bf3d583da} keystore://C:\Users\mgale\network\3-nodes-quickstart\resources\key1\keystore\UTC--2022-03-22T10-00-35.437395500Z--1f1d323fad0024ad11e56e7e609f7b6bf3d583da
+pwd:account1
+Account #1: {5ed9b1da81ee28b26f3cd5aee57b043e75ca01b8} keystore://C:\Users\mgale\network\3-nodes-quickstart\resources\key1\keystore\UTC--2022-03-22T10-02-25.468075900Z--5ed9b1da81ee28b26f3cd5aee57b043e75ca01b8
+pwd:account2
+Account #2: {7a98e4ccf3e4ef00caed0abaade8f35bb71bb241} keystore://C:\Users\mgale\network\3-nodes-quickstart\resources\key1\keystore\UTC--2022-03-22T10-02-58.838016300Z--7a98e4ccf3e4ef00caed0abaade8f35bb71bb241
+pwd:account3
