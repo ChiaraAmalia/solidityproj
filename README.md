@@ -152,6 +152,10 @@ Dopo aver selezionato l'account con cui procedere, le operazioni possibili saran
 
 ### Aggiungi materia prima
 
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/inserimento_materia.jpg">
+</p>
+
 Scegliendo questa opzione, apparirà un'interfaccia nella quale si dovrà inserire:
 - nome della materia prima;
 - quantità (numero, maggiore di 0);
@@ -165,6 +169,10 @@ La quantita della materia prima ed il suo footprint devono essere maggiori di 0,
 
 ### Vedere lotti materie prime
 
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/tutti_lotti_materie.jpg">
+</p>
+
 Scegliendo questa opzione, apparirà una finestra contenente tutti i lotti delle materie prime disponibili.
 
 Visionare tutti i lotti delle materie prime è possibili solo per il trasformatore altrimenti, se colui che ne richiede la visione non è il traformatore questa non sarà consentita e si riceverà il seguente messaggio di errore: 
@@ -175,12 +183,20 @@ Se non ci sono materie prime nel magazzino del produttore, verrà segnalato il s
 
 ### Vedere lotti materia per nome
 
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/tutti_lotti_materia_nome.jpg">
+</p>
+
 Scegliendo questa opzione, apparirà una finestra contenente tutti i lotti della materia prima della quale dovrà inserire il nome.
 
 Visionare tutti i lotti delle materie prime è possibile solo per il trasformatore altrimenti, se colui che ne richiede la visione non è il traformatore questa non sarà consentita e si riceverà il seguente messaggio di errore: 
 > "solo il trasformatore puo' vedere tutti i lotti associati ad una materia prima"
 
 ### Vedere informazioni materia prima
+
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/vedi_info_materia.jpg">
+</p>
 
 Scegliendo questa opzione, il trasformatore potrà avere tutte le informazioni di una materia prima, presente nel magazzino del venditore, della quale dovrà inserire il lotto.
 
@@ -191,6 +207,10 @@ Se si inserisce un lotto che non esiste, si riceve il seguente messaggio:
 > "il lotto inserito e' inesistente."
 
 ### Acquistare materie prime
+
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/acquista_materia.jpg">
+</p>
 
 Scegliendo questa opzione, apparirà una finestra contenente tutte le materie prime disponibili (con le relative informazioni) nella quale si dovrà inserire:
 - la quantità da acquistare.
