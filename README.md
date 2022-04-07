@@ -5,43 +5,18 @@ Il nostro progetto consente di tenere traccia del footprint di un prodotto a par
  ## Indice
  1. Come installare il programma;
  2. A cosa serve il programma;
- 3. ...
 
 ## Come installare il programma
 
-## Prerequisiti
+### Prerequisiti
 
-Il nostro progetto sfrutta le seguenti tecnologie:
-
-- [node.js] 
+- node.js
 - Docker
-- quorum-wizard
+- python
 
 
-<!--## Installation
-
-Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
-
-Install the dependencies and devDependencies and start the server.
-
-```sh
-cd dillinger
-npm i
-node app
-```
-
-For production environments...
-
-```sh
-npm install --production
-NODE_ENV=production node app
-```
-
-
-```sh
-karma test
-```-->
-
+### NodeJS
+Per prima cosa bisogna eseguire il download di NodeJS, cliccando sul seguente link:[Download NodeJS](https://nodejs.org/it/) e seguire poi le istruzioni dell'installer.
 
 
 ### Docker
@@ -50,8 +25,10 @@ Il nostro **foot print calculator** è davvero facile da installare ed utilizzar
 
 Come prima cosa bisogna installare docker per fare ciò basta seguire le indicazioni riportate nel seguente link: [Come installare docker](https://docs.docker.com/desktop/windows/install/)  
 
-### NodeJS
-Per prima cosa bisogna eseguire il download di NodeJS, cliccando sul seguente link:[Download NodeJS](https://nodejs.org/it/) e seguire poi le istruzioni dell'installer.
+
+
+### Python
+Il programma per funzionare necessita di python, per istallarlo, seguire le istruzioni riportate nel seguente link: [download and install python](https://www.python.org/downloads/)
 
 ### Creazione ambiente virtuale con dipendenze
 ```sh
@@ -64,10 +41,14 @@ pip install -r requirement.txt
 Nella cartella scaricata da GitHub aprire il prompt ed eseguire i seguenti comandi:
 ```sh
 cd 3-nodes-footprintBlockchain
-start
+docker compose up
  ```
 
 ### Eseguire il programma
+```sh
+python path/to/file/init_prod.py 
+python main.py
+```
 
 <!--### Quorum-wizard
 
@@ -91,3 +72,4 @@ start.cmd
 :computer: Simone Scalella -> 
 
 :computer: Zhang Yihang -> 
+
