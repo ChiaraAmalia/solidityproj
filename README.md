@@ -65,7 +65,7 @@ docker compose up
 python path/to/file/init_prod.py 
 ```
 <p align="center">
-  <img width="520" height="300" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/gif_app.gif">
+  <img width="820" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/gif_app.gif">
 </p>
 
 ```sh
