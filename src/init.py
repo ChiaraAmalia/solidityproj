@@ -44,7 +44,7 @@ print(" | |    / _` | |/ __| | | | |/ _` | __/ _ \| '__|".center(101,'*'))
 print(" | |___| (_| | | (__| |_| | | (_| | || (_) | |   ".center(101,'*'))
 print("  \_____\__,_|_|\___|\__,_|_|\__,_|\__\___/|_|   ".center(101,'*'))
 print("\n")
-print("Ti chiediamo un attimo di pazienza il nostro programma sta deployando i contratti")
+print("Ti chiediamo un attimo di pazienza, il nostro programma sta effettuando il deploy dei contratti")
 #print(abi)
 
 
