@@ -54,16 +54,22 @@ class LoginWin():
             if event == "Exit" or event == sg.WIN_CLOSED:
                 break
             if event == "entra":
-                contract.current_user = self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]]
-                self.toggle_login()
-                print(self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]])
-                if self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.trasf and values['PASSWORD'] == 'trasformatore':
-                    contract.w3.geth.personal.unlock_account(contract.account[0], 'trasformatore')
-                    TrasfWin(self.impronta,self)
-                elif self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.prod and values['PASSWORD'] == 'produttore':
-                    contract.w3.geth.personal.unlock_account(contract.account[1], 'produttore')
-                    ProdWin(self.impronta,self)
-                elif self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.consum and values['PASSWORD'] == 'consumatore':
-                    contract.w3.geth.personal.unlock_account(contract.account[2], 'consumatore')
-                    ConsWin(self.impronta,self)
-                else: sg.Popup('Non hai inserito un indirizzo o una password validi', keep_on_top=True,background_color="#1d8c3b",icon = self.impronta), self.toggle_login()
+                try:
+                    contract.current_user = self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]]
+                    print(contract.current_user)
+                    self.toggle_login()
+                    print(self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]])
+                    if self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.trasf and values['PASSWORD'] == 'trasformatore':
+                        contract.w3.geth.personal.unlock_account(contract.account[0], 'trasformatore')
+                        TrasfWin(self.impronta,self)
+                    elif self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.prod and values['PASSWORD'] == 'produttore':
+                        contract.w3.geth.personal.unlock_account(contract.account[1], 'produttore')
+                        ProdWin(self.impronta,self)
+                    elif self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.consum and values['PASSWORD'] == 'consumatore':
+                        contract.w3.geth.personal.unlock_account(contract.account[2], 'consumatore')
+                        ConsWin(self.impronta,self)
+                    else: sg.Popup('Non hai inserito un indirizzo o una password validi', keep_on_top=True,background_color="#1d8c3b",icon = self.impronta), self.toggle_login()
+                
+                except:
+                    sg.Popup('Non hai selezionato alcun account', keep_on_top=True,background_color="#1d8c3b",icon = self.impronta)
+                   
