@@ -34,7 +34,7 @@ Il programma per funzionare necessita di python, per istallarlo, seguire le istr
 ```sh
 python venv <nome_ambiente>
 cd <nome_ambiente>/Scripts/activate
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 
 ### Far partire la BlockChain
