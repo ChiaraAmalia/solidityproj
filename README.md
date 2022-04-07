@@ -91,7 +91,7 @@ I ruoli sono 3:
 Dopo aver selezionato l'account con cui procedere, le operazioni possibili saranno differenti.
 
 - Il produttore potrà:
-  - [Aggiungere una materia prima](#aggiungi-materia-prima)
+  - [Aggiungere una materia prima](##-Aggiungi-materia-prima)
  - Il trasformatore potrà:
 	 - j
 
