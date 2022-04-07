@@ -93,10 +93,13 @@ Dopo aver selezionato l'account con cui procedere, le operazioni possibili saran
 - Il produttore potrà:
   - [Aggiungere una materia prima](#aggiungi-materia-prima)
  - Il trasformatore potrà:
-	 - j
+	 - [Vedere lotti materie prime](#vedere-lotti-materie-prime)
+	 - [Vedere lotti materia per nome](#vedere-lotti-materie-prime)
 
 
 ### Aggiungi materia prima
+### Vedere lotti materie prime
+### Vedere lotti materia per nome
 
 ## Autori
 :computer: Margherita Galeazzi -> https://github.com/MargheritaGaleazzi
