@@ -3,8 +3,8 @@
 Il nostro progetto consente di tenere traccia del footprint di un prodotto a partire dalla materia prima del quale e composto e considerando la lavorazione necessaria alla sua produzione.
 
  ## Indice
- 1. Come installare il programma;
- 2. A cosa serve il programma;
+ 1. [Come installare il programma;](#come-installare-il-programma)
+ 2. [Come utilizzare il programma;](#uso)
 
 ## Come installare il programma
 
