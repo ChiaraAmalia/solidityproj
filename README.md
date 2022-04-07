@@ -30,10 +30,21 @@ Come prima cosa bisogna installare docker per fare ciò basta seguire le indicaz
 ### Python
 Il programma per funzionare necessita di python, per istallarlo, seguire le istruzioni riportate nel seguente link: [download and install python](https://www.python.org/downloads/)
 
-### Creazione ambiente virtuale con dipendenze
+### Creazione ambiente virtuale con dipendenze metodo 1
 ```sh
 python venv <nome_ambiente>
 cd <nome_ambiente>/Scripts/activate
+activate
+cd../../
+pip install -r requirements.txt
+```
+
+### Creazione ambiente virtuale con dipendenze metodo 2
+```sh
+python -m venv <nome_ambiente>
+cd <nome_ambiente>/Scripts/
+activate
+cd../../
 pip install -r requirements.txt
 ```
 
