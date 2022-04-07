@@ -78,6 +78,23 @@ cd networks/<nome_network>/
 start.cmd
 ```-->
 
+## Uso
+
+All'avvio del programma viene mostrata una schermata di login. In questa si può scegliere tra i 3 account quello di interesse. Tra le parentesi è scritto il ruolo che tale account ha.
+Ogni account ha un solo ruolo per garantire la separazione dei privilegi.
+I ruoli sono 3:
+
+ 1. **Consumatore**
+ 2. **Trasformatore** (trasforma la materia prima in prodotto finito)
+ 3. **Produttore** (produce la materia prima)
+
+Dopo aver selezionato l'account con cui procedere, le operazioni possibili saranno differenti.
+
+- Il produttore potrà:
+  - [Aggiungere una materia prima](#aggiungi-materia-prima)
+ - Il trasformatore potrà:
+	 - j
+
 ## Autori
 :computer: Margherita Galeazzi -> https://github.com/MargheritaGaleazzi
 
