@@ -106,7 +106,7 @@ Dopo aver selezionato l'account con cui procedere, le operazioni possibili saran
 
 :computer: Chiara Amalia Caporusso -> https://github.com/ChiaraAmalia
 
-:computer: Simone Scalella -> 
+:computer: Simone Scalella -> https://github.com/Simone-Scalella
 
-:computer: Zhang Yihang ->  https://github.com/Accout-Persona
+:computer: Zhang Yihang ->  https://github.com/Accout-Personal
 
