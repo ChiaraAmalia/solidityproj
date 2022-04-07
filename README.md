@@ -114,11 +114,15 @@ I ruoli sono 3:
  1. **Consumatore**
  2. **Trasformatore** (trasforma la materia prima in prodotto finito)
  3. **Produttore** (produce la materia prima)
+ 
 
 Dopo aver selezionato l'account con cui procedere, le operazioni possibili saranno differenti.
 
 - Il produttore potrà:
   - [Aggiungere una materia prima](#aggiungi-materia-prima)
+ <p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/produttore.jpg">
+</p>
  - Il trasformatore potrà:
 	 - [Vedere lotti materie prime](#vedere-lotti-materie-prime)
 	 - [Vedere lotti materia per nome](#vedere-lotti-materia-per-nome)
@@ -126,6 +130,9 @@ Dopo aver selezionato l'account con cui procedere, le operazioni possibili saran
 	 - [Acquistare una materia prima](#acquistare-materie-prime)
 	 - [Vedere dettagli materia acquistata](#vedere-dettagli-materia-acquistata)
 	 - [Aggiungere prodotto finito](#aggiungere-prodotto-finito)
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/trasformatore.jpg">
+</p>
  - Il consumatore potrà:
  	- [Vedere i lotti dei prodotti](#vedere-lotti-prodotti)
 	 - [Vedere lotti prodotto per nome](#vedere-lotti-prodotto-per-nome)
@@ -133,7 +140,9 @@ Dopo aver selezionato l'account con cui procedere, le operazioni possibili saran
 	 - [Vedere informazioni di una materia per nome](#vedere-informazioni-prodotto)
 	 - [Acquistare un prodotto](#acquistare-prodotti)
 	 - [Vedere dettagli prodotto acquistato](#vedere-dettagli-prodotto-acquistato)
-
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/consumatore.jpg">
+</p>
 
 
 ### Aggiungi materia prima
