@@ -105,12 +105,35 @@ Dopo aver selezionato l'account con cui procedere, le operazioni possibili saran
   - [Aggiungere una materia prima](#aggiungi-materia-prima)
  - Il trasformatore potrà:
 	 - [Vedere lotti materie prime](#vedere-lotti-materie-prime)
-	 - [Vedere lotti materia per nome](#vedere-lotti-materie-prime)
+	 - [Vedere lotti materia per nome](#vedere-lotti-materia-per-nome)
+	 - [Vedere informazioni di una materia per nome](#vedere-informazioni-materia-prima)
+	 - [Acquistare una materia prima](#acquistare-materie-prime)
+	 - [Vedere dettagli materia acquistata](#vedere-dettagli-materia-acquistata)
+	 - [Aggiungere prodotto finito](#aggiungere-prodotto-finito)
+ - Il consumatore potrà:
+ 	- [Vedere i lotti dei prodotti](#vedere-lotti-prodotti)
+	 - [Vedere lotti prodotto per nome](#vedere-lotti-prodotto-per-nome)
+	 - [Vedere footprint di un prodotto](#vedere-footprint-prodotto)
+	 - [Vedere informazioni di una materia per nome](#vedere-informazioni-prodotto)
+	 - [Acquistare un prodotto](#acquistare-prodotti)
+	 - [Vedere dettagli prodotto acquistato](#vedere-dettagli-prodotto-acquistato)
+
 
 
 ### Aggiungi materia prima
 ### Vedere lotti materie prime
 ### Vedere lotti materia per nome
+### Vedere informazioni materia prima
+### Acquistare materie prime
+### Vedere dettagli materia acquistata
+### Aggiungere prodotto finito
+
+### Vedere lotti prodotti
+### Vedere lotti prodotto per nome
+### Vedere footprint prodotto
+### Vedere informazioni prodotto
+### Acquistare prodotti
+### Vedere dettagli prodotto acquistato
 
 ## Autori
 :computer: Margherita Galeazzi -> https://github.com/MargheritaGaleazzi
