@@ -50,7 +50,7 @@ pip install -r requirements.txt
 Se usi terminale di vscode riavvia il terminale dopo l'esecuzione di activate
 
 ### Far partire la BlockChain
-Nella cartella scaricata da GitHub aprire il prompt ed eseguire i seguenti comandi:
+Nella cartella scaricata da GitHub aprire il prompt ed eseguire i seguenti comandi, per creare la BlockChain:
 ```sh
 cd 3-nodes-footprintBlockchain
 docker compose up
@@ -60,6 +60,11 @@ docker compose up
   <img width="1020" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/gif_docker.gif">
 </p>
  
+In seguito si può chiudere il terminale, riaprirlo, ed attivare la BlockChain con i comandi:
+```sh
+cd 3-nodes-footprintBlockchain
+start.cmd
+ ```
 
 ### Eseguire il programma
 ```sh
@@ -100,6 +105,9 @@ start.cmd
 ## Uso
 
 All'avvio del programma viene mostrata una schermata di login. In questa si può scegliere tra i 3 account quello di interesse. Tra le parentesi è scritto il ruolo che tale account ha.
+<p align="center">
+  <img width="700" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/login.jpg">
+</p>
 Ogni account ha un solo ruolo per garantire la separazione dei privilegi.
 I ruoli sono 3:
 
