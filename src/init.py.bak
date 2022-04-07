@@ -11,6 +11,8 @@ import pickle
 
 install_solc(version='latest')
 
+import logging
+logging.disable(20)
 
 def compile_source_file(file_path):
     with open(file_path, 'r') as f:

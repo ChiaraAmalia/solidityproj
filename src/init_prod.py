@@ -10,6 +10,9 @@ from web3.middleware import geth_poa_middleware
 import pickle
 
 import init_trasf
+
+
+
 install_solc(version='latest')
 
 
@@ -25,24 +28,22 @@ data_path = os.path.join(path,'Produttore.sol') #viene preso il file magazzino.s
 compiled_sol = compile_source_file(data_path)
 
 
-print(compiled_sol)
-for k in compiled_sol.keys():
-    print(k)
+
+#print(compiled_sol)
+#for k in compiled_sol.keys():
+#    print(k)
 
 # prende il bytecode/bin
 bytecode = compiled_sol['<stdin>:Magazzino']['bin']
 
 # prende l'abi
 abi = compiled_sol['<stdin>:Magazzino']['abi']
-print('------------------------------------------------------------------------------------------')
-print(abi)
-print('--------------------------------------------------------------------------------------------------------')
-print(abi)
+#print('------------------------------------------------------------------------------------------')
+#print(abi)
+#print('--------------------------------------------------------------------------------------------------------')
+#print(abi)
 
 # crea un istanza di web3.py
-#w3 = Web3(web3.HTTPProvider("http://127.0.0.1:22001"))
-#w3.middleware_onion.inject(geth_poa_middleware, layer=0)
-#w3.middleware_onion.add(web3.middleware.http_retry_request_middleware)
 w3=init_trasf.init.w3
 
 
@@ -50,8 +51,6 @@ w3=init_trasf.init.w3
 Produttore = w3.eth.contract(abi=abi, bytecode=bytecode)
 
 # Invia la transazione che fa il deploy del contratto
-#address_state=open("address.bin",'rb')
-#address_string=pickle.load(address_state)
 account=init_trasf.init.address[0:4]
 trasf=account[0]
 prod=account[1]
@@ -68,27 +67,31 @@ produttore = w3.eth.contract(
     address=tx_receipt['contractAddress'],
     abi=abi
 )
-print("codice per il produttore \n")
-print(w3.eth.getCode(tx_receipt['contractAddress']).hex())
-print('ABI:')
-for el in produttore.abi:
-    print(el)
-#account = trasf+" "+prod+" "+consum+" "+admin
-#address = address_string+" "+tx_receipt['contractAddress']
+#print("codice per il produttore \n")
+#print(w3.eth.getCode(tx_receipt['contractAddress']).hex())
+#print('ABI:')
+#for el in produttore.abi:
+#    print(el)
+
 init_trasf.init.address.append(tx_receipt['contractAddress'])
 address=init_trasf.init.address
-#account_state=open("account.bin",'wb')
-#cont_state=open("contractAddress.bin",'wb')
+
 abi_state=open("abi_prod.bin",'wb')
 address_state=open("address.bin",'wb')
-#pickle.dump(tx_receipt['contractAddress'],cont_state)
+
 pickle.dump(abi,abi_state)
 pickle.dump(address,address_state)
 init_trasf.init.w3.geth.personal.lock_account(account[0])
 init_trasf.init.w3.geth.personal.lock_account(account[1])
 init_trasf.init.w3.geth.personal.lock_account(account[2])
-print(init_trasf.init.w3.eth.getCode(init_trasf.init.consumatore.address).hex())
-print("****************************************")
-print(init_trasf.init.w3.eth.getCode(init_trasf.trasformatore.address).hex())
-print("****************************************")
-print(init_trasf.init.w3.eth.getCode(produttore.address).hex())
+
+print("")
+print("Fatto: 3/3")
+print("Il contratto del produttore è pronto!")
+print("Finito!\nOra puoi eseguire il programma!")
+print("Per farlo basta scrivere:\npython \path\\to\\file\main.py")
+#print(init_trasf.init.w3.eth.getCode(init_trasf.init.consumatore.address).hex())
+#print("****************************************")
+#print(init_trasf.init.w3.eth.getCode(init_trasf.trasformatore.address).hex())
+#print("****************************************")
+#print(init_trasf.init.w3.eth.getCode(produttore.address).hex())

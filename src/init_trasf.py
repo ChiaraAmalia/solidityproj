@@ -44,19 +44,17 @@ trasformatore = w3.eth.contract(
     address=tx_receipt['contractAddress'],
     abi=abi
 )
-print("codice per il trasformatore\n")
-print(w3.eth.getCode(tx_receipt['contractAddress']).hex())
-print('ABI:')
-for el in trasformatore.abi:
-    print(el)
-#account = trasf+" "+prod+" "+consum+" "+admin
-#address = address_string+" "+tx_receipt['contractAddress']
+#print("codice per il trasformatore\n")
+#print(w3.eth.getCode(tx_receipt['contractAddress']).hex())
+#print('ABI:')
+#for el in trasformatore.abi:
+#    print(el)
+
 init.address.append(tx_receipt['contractAddress'])
-#account_state=open("account.bin",'wb')
-#cont_state=open("contractAddress.bin",'wb')
+
 abi_state=open("abi_trasf.bin",'wb')
-#address_state=open("address.bin",'wb')
-#pickle.dump(tx_receipt['contractAddress'],cont_state)
+
 pickle.dump(abi,abi_state)
-#pickle.dump(address,address_state)
-#pickle.dump(account,account_state)
+print("")
+print("Fatto: 2/3")
+print("Il contratto del trasformatore è pronto!")
