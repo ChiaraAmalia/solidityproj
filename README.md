@@ -54,14 +54,14 @@ docker compose up
 python path/to/file/init_prod.py 
 ```
 <p align="center">
-  <img width="460" height="300" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/gif_main.gif">
+  <img width="460" height="300" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/gif_app.gif">
 </p>
 
 ```sh
 python path/to/file/main.py 
 ```
 <p align="center">
-  <img width="460" height="300" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/gif_app.gif">
+  <img width="460" height="300" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/gif_main.gif">
 </p>
 
 <!--### Quorum-wizard
