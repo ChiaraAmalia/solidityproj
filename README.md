@@ -43,12 +43,26 @@ Nella cartella scaricata da GitHub aprire il prompt ed eseguire i seguenti coman
 cd 3-nodes-footprintBlockchain
 docker compose up
  ```
+ 
+<p align="center">
+  <img width="460" height="300" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/gif_docker.gif">
+</p>
+ 
 
 ### Eseguire il programma
 ```sh
 python path/to/file/init_prod.py 
-python main.py
 ```
+<p align="center">
+  <img width="460" height="300" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/gif_main.gif">
+</p>
+
+```sh
+python path/to/file/main.py 
+```
+<p align="center">
+  <img width="460" height="300" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/gif_app.gif">
+</p>
 
 <!--### Quorum-wizard
 
