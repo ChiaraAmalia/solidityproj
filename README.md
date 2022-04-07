@@ -39,7 +39,7 @@ cd../../
 pip install -r requirements.txt
 ```
 
-### Creazione ambiente virtuale con dipendenze metodo 2 (Anaconda3)
+### Creazione ambiente virtuale con dipendenze se hai Anaconda3
 ```sh
 python -m venv <nome_ambiente>
 cd <nome_ambiente>/Scripts/
@@ -47,7 +47,7 @@ activate
 cd../../
 pip install -r requirements.txt
 ```
-se usi terminale di vscode riavvia il terminale dopo l'esecuzione di activate
+Se usi terminale di vscode riavvia il terminale dopo l'esecuzione di activate
 
 ### Far partire la BlockChain
 Nella cartella scaricata da GitHub aprire il prompt ed eseguire i seguenti comandi:
