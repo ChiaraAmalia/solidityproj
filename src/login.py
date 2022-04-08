@@ -74,5 +74,10 @@ class LoginWin():
                 except:
                     self.windowLogin['entra'].update(disabled=False)
                     self.windowLogin['PORTAFOGLIO'].update(disabled=False)
-                    sg.Popup('non hai selezionato alcun account', keep_on_top=True,background_color="#1d8c3b",icon = self.impronta)
+                    if not self.windowLogin.Element('PORTAFOGLIO').Widget.curselection():
+                        print("non hai selezionato alcun account")
+                        sg.Popup('non hai selezionato alcun account', keep_on_top=True,background_color="#1d8c3b",icon = self.impronta)
+                    else:
+                        print("Tempo scaduto! La sessione è terminata")
+                        sg.Popup('Tempo scaduto! La sessione è terminata', keep_on_top=True, background_color="#1d8c3b", icon=self.impronta)
 
