@@ -28,9 +28,8 @@ class ConsWin():
         ]
         self.window = sg.Window("Consumatore", layout, modal=True,background_color="#1d8c3b",icon= self.icona_impronta)
         self.choice = None
-        self.EventListening()
 
-    def EventListening(self):
+    def ListenEvent(self):
         while True:
             event, values = self.window.read()
             if event == "Exit" or event == sg.WIN_CLOSED:
