@@ -1,3 +1,4 @@
+from contextlib import nullcontext
 import PySimpleGUI as sg
 import contract
 import os
@@ -63,13 +64,15 @@ class LoginWin():
                         contract.w3.geth.personal.unlock_account(contract.account[0], 'trasformatore')
                         TrasfWin(self.impronta,self)
                     elif self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.prod and values['PASSWORD'] == 'produttore':
-                        contract.w3.geth.personal.unlock_account(contract.account[1], 'produttore')
+                        contract.w3.geth.personal.unlock_account(contract.account[1], 'produttore',15)
                         ProdWin(self.impronta,self)
                     elif self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.consum and values['PASSWORD'] == 'consumatore':
                         contract.w3.geth.personal.unlock_account(contract.account[2], 'consumatore')
                         ConsWin(self.impronta,self)
-                    else: sg.Popup('Non hai inserito un indirizzo o una password validi', keep_on_top=True,background_color="#1d8c3b",icon = self.impronta), self.toggle_login()
+                    else: sg.Popup('Non hai inserito un indirizzo o una password validi', keep_on_top=True,background_color="#1d8c3b",icon = self.impronta), 
                 
                 except:
-                    sg.Popup('Non hai selezionato alcun account', keep_on_top=True,background_color="#1d8c3b",icon = self.impronta)
-                   
+                    self.windowLogin['entra'].update(disabled=False)
+                    self.windowLogin['PORTAFOGLIO'].update(disabled=False)
+                    sg.Popup('non hai selezionato alcun account', keep_on_top=True,background_color="#1d8c3b",icon = self.impronta)
+
