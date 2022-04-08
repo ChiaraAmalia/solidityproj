@@ -1,5 +1,6 @@
 from contextlib import nullcontext
 import PySimpleGUI as sg
+from numpy import prod
 import contract
 import os
 
@@ -10,8 +11,11 @@ from consumatore import ConsWin
 
 class LoginWin():
     # account_attuale = 'appoggio'
-
+    
     def __init__(self):
+
+        
+
         self.path = os.path.abspath(os.path.dirname(
             __file__))  # Salva nella variabile path il percorso globale della cartella in cui si trova il file .py in esecuzione
         os.chdir(self.path)  # Cambio della cartella attuale nella cartella in cui si trova il file .py
@@ -60,6 +64,7 @@ class LoginWin():
                                       icon=self.impronta)
         self.nexttoggle = True  # Toggle della finestra "Login" per disattivare/attivare dopo login/logout
         self.WinTrasformatore = 0
+        
         self.EventListener()
 
     def toggle_login(self):
@@ -99,7 +104,7 @@ class LoginWin():
                         # account_attuale = 'consumatore'
                     else:
                         sg.Popup('Non hai inserito un indirizzo o una password validi', keep_on_top=True,
-                                 background_color="#1d8c3b", icon=self.impronta),
+                                 background_color="#1d8c3b", icon=self.impronta), self.toggle_login()
 
                 except:
                     self.windowLogin['entra'].update(disabled=False)
@@ -125,17 +130,19 @@ class LoginWin():
                                         values2['PASSWORD_RIENTA'] == 'trasformatore':
                                     contract.w3.geth.personal.unlock_account(contract.account[0], 'trasformatore')
                                     self.windowRentry.close()
-                                elif appo == 1 and values2[
-                                    'PASSWORD_RIENTRA'] == 'produttore':
+                                elif appo == 1 and values2['PASSWORD_RIENTRA'] == 'produttore':
                                     contract.w3.geth.personal.unlock_account(contract.account[1], 'produttore')
                                     self.windowRentry.close()
+                                    ProdWin(self.impronta,self)
+                                    #self.ProdWin(self.impronta,self).win.close()
+                                    #ProdWin(self.impronta,self)
                                     #ProdWin(self.impronta,self)
                                 elif appo == 2 and values2['PASSWORD_RIENTRA'] == 'consumatore':
                                     contract.w3.geth.personal.unlock_account(contract.account[2], 'consumatore')
                                     self.windowRentry.close()
                                 else:
                                     sg.Popup('Non hai inserito un indirizzo o una password validi', keep_on_top=True,
-                                             background_color="#1d8c3b", icon=self.impronta),
+                                             background_color="#1d8c3b", icon=self.impronta)
 
 
 

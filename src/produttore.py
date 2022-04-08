@@ -74,5 +74,5 @@ class ProdWin():
                         win.Element('FPMP').update('')
                         #win.close()
                 win.close()
-        contract.w3.geth.personal.lock_account(contract.account[1])
+        #contract.w3.geth.personal.lock_account(contract.account[1])
         self.window.close()
