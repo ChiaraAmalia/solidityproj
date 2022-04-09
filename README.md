@@ -112,13 +112,11 @@ Ogni account ha un solo ruolo per garantire la separazione dei privilegi.
 I ruoli sono 3:
 
  1. **Consumatore** <p align="center"><img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/consumatore.jpg"></p>
- 2. **Trasformator** (trasforma la materia prima in prodotto finito) <p align="center"><img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/trasformatore.jpg"></p>
- 3. **Produttore** (produce la materia prima)
+ 2. **Trasformatore** (trasforma la materia prima in prodotto finito) <p align="center"><img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/trasformatore.jpg"></p>
+ 3. **Produttore** (produce la materia prima) <p align="center"><img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/produttore.jpg"></p>
  
 
-<p align="center">
-  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/produttore.jpg">
-</p>
+
 Inoltre per rendere più sicuro il programma, abbiamo impostato delle "sessioni", ovvero dopo un certo periodo di tempo (25 minuti) che si è effettuato il login, l'indirizzo di portafolgio che si è scelto viene nuovamente bloccato.
 
 Dopo aver selezionato l'account con cui procedere, le operazioni possibili saranno differenti.
