@@ -115,6 +115,7 @@ I ruoli sono 3:
  2. **Trasformatore** (trasforma la materia prima in prodotto finito)
  3. **Produttore** (produce la materia prima)
  
+Inoltre per rendere più sicuro il programma, abbiamo impostato delle "sessioni", ovvero dopo un certo periodo di tempo che si è effettuato il login, l'indirizzo di portafolgio che si è scelto viene nuovamente bloccato.
 
 Dopo aver selezionato l'account con cui procedere, le operazioni possibili saranno differenti.
 
@@ -128,7 +129,7 @@ Dopo aver selezionato l'account con cui procedere, le operazioni possibili saran
  - Il trasformatore potrà:
 	 - [Vedere lotti materie prime](#vedere-lotti-materie-prime)
 	 - [Vedere lotti materia per nome](#vedere-lotti-materia-per-nome)
-	 - [Vedere informazioni di una materia per nome](#vedere-informazioni-materia-prima)
+	 - [Vedere informazioni di una materia](#vedere-informazioni-materia-prima)
 	 - [Acquistare una materia prima](#acquistare-materie-prime)
 	 - [Vedere dettagli materia acquistata](#vedere-dettagli-materia-acquistata)
 	 - [Aggiungere prodotto finito](#aggiungere-prodotto-finito)
