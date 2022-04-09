@@ -268,6 +268,10 @@ Le materie prime che si utilizzano per la produzione di un prodotto devono esser
 
 ### Vedere lotti prodotti
 
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/tutti_lotti_prodotti.jpg">
+</p>
+
 Scegliendo questa opzione, apparirà una finestra contenente tutti i lotti dei prodotti disponibili.
 
 Visionare tutti i lotti dei prodotti è possibile solo per il consumatore altrimenti, se colui che ne richiede la visione non è il consumatore questa non sarà consentita e si riceverà il seguente messaggio di errore: 
@@ -278,12 +282,20 @@ Se non ci sono prodotti nel magazzino del trasformatore, verrà segnalato il seg
 
 ### Vedere lotti prodotto per nome
 
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/tutti_lotti_prodotti_nome.jpg">
+</p>
+
 Scegliendo questa opzione, apparirà una finestra contenente tutti i lotti del prodotto del quale si dovrà inserire il nome.
 
 Visionare tutti i lotti dei prodotti è possibile solo per il trasformatore altrimenti, se colui che ne richiede la visione non è il traformatore questa non sarà consentita e si riceverà il seguente messaggio di errore: 
 > "solo il consumatore puo' vedere tutti i lotti associati ad un prodotto."
 
 ### Vedere footprint prodotto
+
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/vedi_footprint.jpg">
+</p>
 
 Scegliendo questa opzione, apparirà una finestra per l'inserimento del lotto del quale si vuole conoscere il footprint, una volta inserito si potrà visionare il footprint.
 
@@ -295,6 +307,10 @@ Se il lotto non fosse presente nel magazzino del trasformatore si riceverà il s
 
 ### Vedere informazioni prodotto
 
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/info_prod.jpg">
+</p>
+
 Scegliendo questa opzione, il consumatore potrà avere tutte le informazioni di un prodotto, presente nel magazzino del trasformatore, del quale dovrà inserire il lotto.
 
 Visionare le informazioni di unprodotto è possibile solo per il consumatore altrimenti, se colui che ne richiede la visione non è il consumatore questa non sarà consentita e si riceverà il seguente messaggio di errore: 
@@ -304,6 +320,10 @@ Se si inserisce un lotto che non esiste, si riceve il seguente messaggio:
 > "il lotto inserito e' inesistente."
 
 ### Acquistare prodotti
+
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/acquista_prodotto.jpg">
+</p>
 
 Scegliendo questa opzione, apparirà una finestra contenente tutti i prodotti disponibili (con le relative informazioni) nella quale si dovrà inserire:
 - la quantità da acquistare.
