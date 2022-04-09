@@ -88,21 +88,21 @@ class LoginWin():
                     print(self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]])
                     if self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.trasf and \
                             values['PASSWORD'] == 'trasformatore':
-                        contract.w3.geth.personal.unlock_account(contract.account[0], 'trasformatore')
+                        contract.w3.geth.personal.unlock_account(contract.account[0], 'trasformatore',1500)
                         self.ProdTrasf = TrasfWin(self.impronta, self)
                         self.ProdTrasf.ListenEvent()
                         # account_attuale='trasformatore'
                     elif self.acct[
                         self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.prod and values[
                         'PASSWORD'] == 'produttore':
-                        contract.w3.geth.personal.unlock_account(contract.account[1], 'produttore', 15)
+                        contract.w3.geth.personal.unlock_account(contract.account[1], 'produttore', 1500)
                         self.ProdWin = ProdWin(self.impronta, self)
                         self.ProdWin.ListenEvent()
                         # account_attuale = 'produttore'
                     elif self.acct[
                         self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.consum and values[
                         'PASSWORD'] == 'consumatore':
-                        contract.w3.geth.personal.unlock_account(contract.account[2], 'consumatore')
+                        contract.w3.geth.personal.unlock_account(contract.account[2], 'consumatore',1500)
                         self.ConsWin = ConsWin(self.impronta, self)
                         self.ConsWin.ListenEvent()
                         # account_attuale = 'consumatore'
@@ -120,44 +120,16 @@ class LoginWin():
                     else:
                         traceback.print_exc()
                         print("Tempo scaduto! La sessione è terminata")
-                        sg.Popup('Tempo scaduto! La sessione è terminata', keep_on_top=True, background_color="#1d8c3b",
+                        sg.Popup('Tempo scaduto! La sessione è terminata, per favore accedi nuovamente', keep_on_top=True, background_color="#1d8c3b",
                                  icon=self.impronta)
-
-                        self.windowRentry()
-                        while True:
-                            event2, values2 = self.windowRentry.read()
-                            if event2 == "Exit" or event2 == sg.WIN_CLOSED:
-                                break
-                            if event2 == "ENTRA_RETRY":
-                                appo = self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]
-                                print(appo)
-                                if appo == 0 and \
-                                        values2['PASSWORD_RIENTA'] == 'trasformatore':
-                                    contract.w3.geth.personal.unlock_account(contract.account[0], 'trasformatore')
-                                    self.windowRentry.close()
-
-                                    self.ProdTrasf.CloseWindow()
-                                    self.ProdTrasf = TrasfWin(self.impronta,self)
-                                    self.ProdTrasf.ListenEvent()
-                                elif appo == 1 and values2['PASSWORD_RIENTRA'] == 'produttore':
-                                    contract.w3.geth.personal.unlock_account(contract.account[1], 'produttore')
-                                    self.windowRentry.close()
-                                    self.ProdWin.CloseWindow()
-                                    self.ProdWin = ProdWin(self.impronta,self)
-                                    self.ProdWin.ListenEvent()
-                                    #self.ProdWin(self.impronta,self).win.close()
-                                    #ProdWin(self.impronta,self)
-                                    #ProdWin(self.impronta,self)
-                                elif appo == 2 and values2['PASSWORD_RIENTRA'] == 'consumatore':
-                                    contract.w3.geth.personal.unlock_account(contract.account[2], 'consumatore')
-                                    self.windowRentry.close()
-
-                                    self.ConsWin.CloseWindow()
-                                    self.ConsWin = ConsWin(self.impronta,self)
-                                    self.ConsWin.ListenEvent()
-                                else:
-                                    sg.Popup('Non hai inserito un indirizzo o una password validi', keep_on_top=True,
-                                             background_color="#1d8c3b", icon=self.impronta)
+                        appo = self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]
+                        print(appo)
+                        if appo == 0:
+                            self.ProdTrasf.CloseWindow()
+                        elif appo == 1:
+                            self.ProdWin.CloseWindow()
+                        else:
+                            self.ConsWin.CloseWindow()
 
 
 
