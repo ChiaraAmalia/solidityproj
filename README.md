@@ -142,7 +142,7 @@ Dopo aver selezionato l'account con cui procedere, le operazioni possibili saran
  	- [Vedere i lotti dei prodotti](#vedere-lotti-prodotti)
 	 - [Vedere lotti prodotto per nome](#vedere-lotti-prodotto-per-nome)
 	 - [Vedere footprint di un prodotto](#vedere-footprint-prodotto)
-	 - [Vedere informazioni di una materia per nome](#vedere-informazioni-prodotto)
+	 - [Vedere informazioni di un prodotto per nome](#vedere-informazioni-prodotto)
 	 - [Acquistare un prodotto](#acquistare-prodotti)
 	 - [Vedere dettagli prodotto acquistato](#vedere-dettagli-prodotto-acquistato)
 
@@ -230,6 +230,10 @@ La quantità di materia prima da acquistare deve essere minore di quella present
 
 ### Vedere dettagli materia acquistata
 
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/info_mat_acq.jpg">
+</p>
+
 Scegliendo questa opzione, il trasformatore potrà avere tutte le informazioni di una materia prima, che ha acquistato, della quale dovrà inserire il lotto.
 
 Visionare le informazioni di una materia prima è possibile solo per il trasformatore altrimenti, se colui che ne richiede la visione non è il traformatore questa non sarà consentita e si riceverà il seguente messaggio di errore: 
@@ -239,6 +243,10 @@ Se si inserisce un lotto che non esiste, si riceve il seguente messaggio:
 > "il lotto inserito e' inesistente."
 
 ### Aggiungere prodotto finito
+
+<p align="center">
+  <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/inserimento_p_finito.jpg">
+</p>
 
 Scegliendo questa opzione, apparirà un'interfaccia nella quale si dovrà inserire:
 - nome della prodotto;
