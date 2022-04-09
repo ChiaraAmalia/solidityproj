@@ -115,12 +115,12 @@ I ruoli sono 3:
  <p align="center">
   <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/consumatore.jpg">
 </p>
- 2. **Trasformatore** (trasforma la materia prima in prodotto finito)
+ 2. __Trasformator__ (trasforma la materia prima in prodotto finito)
  
  <p align="center">
   <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/trasformatore.jpg">
 </p>
- 3. **Produttore** (produce la materia prima)
+ 3. __Produttore__ (produce la materia prima)
 
  <p align="center">
   <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/produttore.jpg">
