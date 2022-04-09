@@ -111,18 +111,13 @@ All'avvio del programma viene mostrata una schermata di login. In questa si può
 Ogni account ha un solo ruolo per garantire la separazione dei privilegi.
 I ruoli sono 3:
 
- 1. **Consumatore**
- <p align="center">
+ 1. **Consumatore**<p align="center">
   <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/consumatore.jpg">
 </p>
- 2. __Trasformator__ (trasforma la materia prima in prodotto finito)
- 
- <p align="center">
+ 2. __Trasformator__ (trasforma la materia prima in prodotto finito)<p align="center">
   <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/trasformatore.jpg">
 </p>
- 3. __Produttore__ (produce la materia prima)
-
- <p align="center">
+ 3. __Produttore__ (produce la materia prima)<p align="center">
   <img src="https://github.com/Accout-Personal/solidityproj/blob/master/img/produttore.jpg">
 </p>
  
