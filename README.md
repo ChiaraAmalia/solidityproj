@@ -142,7 +142,7 @@ Dopo aver selezionato l'account con cui procedere, le operazioni possibili saran
  	- [Vedere i lotti dei prodotti](#vedere-lotti-prodotti)
 	 - [Vedere lotti prodotto per nome](#vedere-lotti-prodotto-per-nome)
 	 - [Vedere footprint di un prodotto](#vedere-footprint-prodotto)
-	 - [Vedere informazioni di una materia per nome](#vedere-informazioni-prodotto)
+	 - [Vedere informazioni di un prodotto per nome](#vedere-informazioni-prodotto)
 	 - [Acquistare un prodotto](#acquistare-prodotti)
 	 - [Vedere dettagli prodotto acquistato](#vedere-dettagli-prodotto-acquistato)
 
