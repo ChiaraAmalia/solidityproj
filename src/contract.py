@@ -59,6 +59,7 @@ def inserisci_MP(nomeMP,quantMP,footprint):
     tx_hash = produttore.functions.aggiungiMateriaPrima(nomeMP, quantMP, footprint).transact({'from': current_user})
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
     print(tx_receipt['status'])
+    return(tx_receipt['status'])
 
 def acquista_MP(lottoMP,quantMP):
     print(current_user)
