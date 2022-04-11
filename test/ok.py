@@ -1,5 +1,6 @@
 from SeederP import Seeder_produttore
 from SeederT import Seeder_trasformatore
+from SeederC import Seeder_consumatore
 import sys
 
 sys.path.insert(0, 'C:/Users/pc/Desktop/Università/SoftwareCyberSecurity/Solidity/src')
