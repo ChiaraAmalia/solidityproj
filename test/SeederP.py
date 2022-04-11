@@ -1,5 +1,5 @@
 import sys
-from web3 import exceptions, Web3
+from web3 import exceptions
 
 sys.path.insert(0, 'C:/Users/pc/Desktop/Università/SoftwareCyberSecurity/Solidity/src')
 
@@ -33,9 +33,10 @@ class Seeder_produttore:
         except exceptions.SolidityError as error:
             self.__materiaPrima04 =0
         try:
-            self.__materiaPrima05 = contratto.inserisci_MP(mat05,5,10)
+            self.__materiaPrima05 = contratto.inserisci_MP(mat05,10,1)
         except exceptions.SolidityError as error:
             self.__materiaPrima05 =0
+
 
     def getMateria01(self):
         return self.__materiaPrima01

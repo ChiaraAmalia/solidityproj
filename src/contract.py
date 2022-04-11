@@ -66,11 +66,13 @@ def acquista_MP(lottoMP,quantMP):
     tx_hash = produttore.functions.acquistaMateriaPrima(lottoMP,quantMP).transact({'from': current_user})
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
     print(tx_receipt['status'])
+    return(tx_receipt['status'])
 
 def inserisci_Prod(nomeP,listaLottiMP,listaQuantMP,quantP,footprint):
     tx_hash =produttore.functions.aggiungiProdotto(nomeP,listaLottiMP,listaQuantMP, quantP, footprint).transact({'from': current_user})
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
     print(tx_receipt['status'])
+    return(tx_receipt['status'])
 
 def acquista_Prod(lottoP,quantP):
     tx_hash =trasformatore.functions.acquistaProdotto(lottoP,quantP).transact({'from': current_user})
