@@ -5,6 +5,10 @@ import sys
 sys.path.insert(0, 'C:/Users/pc/Desktop/Università/SoftwareCyberSecurity/Solidity/src')
 import contract as contratto
 
+# In questa classe andiamo a chiamare direttamente i metodi dello smart contract, in questo caso non facciamo
+# operazioni di inserimento o acquisto, ma andiamo a controllare tutti i metodi che restituiscono delle informazioni
+#  sullo stato dello smart contract
+
 class Test_info(unittest.TestCase):
 
     def testInfoAllMP(self):

@@ -1,6 +1,9 @@
 import unittest
 from SeederC import Seeder_consumatore
 
+# In questa classe andiamo a creare una istanza del consumatore, chiamando i metodi GET possiamo verificare se le chiamate
+# allo smart contract sono andate a buon fine
+
 class Test_seederC(unittest.TestCase):
 
     def testSeederC(self):

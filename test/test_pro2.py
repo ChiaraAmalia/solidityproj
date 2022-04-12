@@ -1,6 +1,8 @@
 import unittest
 from SeederT import Seeder_trasformatore
 
+# In questa classe andiamo a creare una istanza del trasformatore, chiamando i metodi GET possiamo verificare se le chiamate
+# allo smart contract sono andate a buon fine
 
 class Test_seederT(unittest.TestCase):
 

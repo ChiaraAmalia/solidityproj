@@ -1,7 +1,8 @@
 import unittest
 from SeederP import Seeder_produttore
 
-
+# In questa classe andiamo a creare una istanza del produttore, chiamando i metodi GET possiamo verificare se le chiamate
+# allo smart contract sono andate a buon fine
 
 class Test_seederP(unittest.TestCase):
 

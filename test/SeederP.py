@@ -5,6 +5,8 @@ sys.path.insert(0, 'C:/Users/pc/Desktop/Università/SoftwareCyberSecurity/Solidi
 
 import contract as contratto
 
+# Classe usata per eseguire i test sul produttore
+
 class Seeder_produttore:
 
     contratto.current_user = contratto.prod
@@ -14,6 +16,8 @@ class Seeder_produttore:
     __materiaPrima03: int
     __materiaPrima04: int
     __materiaPrima05: int
+
+    # Qui vengono chiamati i metodi del contratto che andranno a valorizzare gli attributi della classe
 
     def __init__(self,mat01,mat02,mat03,mat04,mat05):
         try:
@@ -29,7 +33,7 @@ class Seeder_produttore:
         except exceptions.SolidityError as error:
             self.__materiaPrima03 =0
         try:
-            self.__materiaPrima04 = contratto.inserisci_MP(mat04,8,0)
+            self.__materiaPrima04 = contratto.inserisci_MP(mat04,8,0) # input non valido, verrà generata un'eccezione 
         except exceptions.SolidityError as error:
             self.__materiaPrima04 =0
         try:

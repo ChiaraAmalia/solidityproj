@@ -7,6 +7,8 @@ sys.path.insert(0, 'C:/Users/pc/Desktop/Università/SoftwareCyberSecurity/Solidi
 
 import contract as contratto
 
+# Classe usata per eseguire i test sul trasformatore
+
 class Seeder_trasformatore:
 
     contratto.current_user = contratto.trasf
@@ -18,6 +20,8 @@ class Seeder_trasformatore:
     __acquisto02: int
     __acquisto03: int
     __acquisto04: int
+
+    # Qui vengono chiamati i metodi del contratto che andranno a valorizzare gli attributi della classe
 
     def __init__(self,prod01,prod02,prod03,listaP,listaQ,singleP,singleQ):
         try:
@@ -36,7 +40,7 @@ class Seeder_trasformatore:
             self.__acquisto03 =0
 
         try:
-            self.__acquisto04 = contratto.acquista_MP('materia043',5)
+            self.__acquisto04 = contratto.acquista_MP('materia043',5) # input non valido, verrà generata un'eccezione 
         except exceptions.SolidityError as error:
             self.__acquisto04 =0
 
@@ -52,7 +56,7 @@ class Seeder_trasformatore:
             
         try:
             singleQ[0] = 100
-            self.__prodotto03 = contratto.inserisci_Prod(prod03, singleP,singleQ,10,5)
+            self.__prodotto03 = contratto.inserisci_Prod(prod03, singleP,singleQ,10,5)  # input non valido, verrà generata un'eccezione 
         except exceptions.SolidityError as error:
             self.__prodotto03 = 0
 
