@@ -37,18 +37,13 @@ admin=account[3]
 consumC=init.address[4]
 
 tx_hash = Trasformatore.constructor(trasf,consumC).transact({'from': admin})
-#Wait for the transaction to be mined, and get the transaction receipt
+#Aspetta che la transazione avvenga e prende la ricevuta della transazione
 tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
 trasformatore = w3.eth.contract(
     address=tx_receipt['contractAddress'],
     abi=abi
 )
-#print("codice per il trasformatore\n")
-#print(w3.eth.getCode(tx_receipt['contractAddress']).hex())
-#print('ABI:')
-#for el in trasformatore.abi:
-#    print(el)
 
 init.address.append(tx_receipt['contractAddress'])
 

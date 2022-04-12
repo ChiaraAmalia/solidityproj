@@ -71,9 +71,7 @@ class ProdWin():
                         self.winAggiungeMat.Element('NOMEMP').update('')
                         self.winAggiungeMat.Element('QUANTMP').update('')
                         self.winAggiungeMat.Element('FPMP').update('')
-                        # self.winAggiungeMat.close()
                 self.winAggiungeMat.close()
-        #contract.w3.geth.personal.lock_account(contract.account[1])
         self.window.close()
     
     def CloseWindow(self):

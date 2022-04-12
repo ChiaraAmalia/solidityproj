@@ -45,8 +45,6 @@ print(" | |___| (_| | | (__| |_| | | (_| | || (_) | |   ".center(101,'*'))
 print("  \_____\__,_|_|\___|\__,_|_|\__,_|\__\___/|_|   ".center(101,'*'))
 print("\n")
 print("Ti chiediamo un attimo di pazienza, il nostro programma sta effettuando il deploy dei contratti")
-#print(abi)
-
 
 
 # crea un istanza di web3.py
@@ -54,14 +52,13 @@ w3 = Web3(web3.HTTPProvider("http://127.0.0.1:22000"))
 w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 w3.middleware_onion.add(web3.middleware.http_retry_request_middleware)
 
-#print(w3.geth.personal.list_accounts())
-
 print(Web3.toChecksumAddress(w3.eth.accounts[0])+" è il consumatore")
 print(Web3.toChecksumAddress(w3.eth.accounts[1])+" è il produttore")
 print(Web3.toChecksumAddress(w3.eth.accounts[2])+" è il trasformatore")
 
 print("Sto lavorando...")
 
+#Esegue il deploy dello Smart Contract riguardante il consumatore
 Consumatore = w3.eth.contract(abi=abi, bytecode=bytecode)
 
 # Invia la transazione che fa il deploy del contratto
@@ -75,18 +72,13 @@ admin=Web3.toChecksumAddress(w3.eth.accounts[3])
 w3.geth.personal.unlock_account(w3.eth.accounts[3], '')
 
 tx_hash = Consumatore.constructor(consum).transact({'from': admin})
-#Wait for the transaction to be mined, and get the transaction receipt
+#Aspetta che la transazione avvenga e prende la ricevuta della transazione
 tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
 consumatore = w3.eth.contract(
     address=tx_receipt['contractAddress'],
     abi=abi
 )
-#print("codice per il consumatore \n")
-#print(w3.eth.getCode(tx_receipt['contractAddress']).hex())
-#print('ABI:')
-#for el in consumatore.abi:
-#    print(el)
 
 address=[trasf,prod,consum,admin, tx_receipt['contractAddress']]
 
