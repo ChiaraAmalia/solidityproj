@@ -337,6 +337,15 @@ La quantità di prodotto da acquistare deve essere minore di quella presente in 
 
 <!--### Vedere dettagli prodotto acquistato-->
 
+### Eseguire i test
+
+Per eseguire i test sull'applicazione bisogna:
+
+Istanziare lo smart contract, non bisogna eseguire altre operazioni, non bisogna modificarne lo stato.
+Successivamente bisogna eseguire i test in maniera sequenziale, dal test_pro1 al test_pro5.
+Quando si avvia il primo test bisogna attendere la fine della sua esecuzione, poi si continua con i successivi, sempre aspettando il termine dell'esecuzione.
+Controllare l'esito dei test.
+
 ## Autori
 :computer: Margherita Galeazzi -> https://github.com/MargheritaGaleazzi
 
