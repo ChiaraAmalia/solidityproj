@@ -343,8 +343,8 @@ Per eseguire i test sull'applicazione bisogna:
 
 Istanziare lo smart contract, non bisogna eseguire altre operazioni, non bisogna modificarne lo stato. <br>
 Successivamente bisogna eseguire i test in maniera sequenziale, dal test_pro1 al test_pro5. <br>
-Quando si avvia il primo test bisogna attendere la fine della sua esecuzione, poi si continua con i successivi, sempre aspettando il termine dell'esecuzione.
-Controllare l'esito dei test.
+Quando si avvia il primo test bisogna attendere la fine della sua esecuzione, poi si continua con i successivi, sempre aspettando il termine dell'esecuzione. <br>
+Al termine di ogni esecuzione, controllare l'esito del test.
 
 ## Autori
 :computer: Margherita Galeazzi -> https://github.com/MargheritaGaleazzi
