@@ -75,6 +75,7 @@ class ProdWin():
                         self.winAggiungeMat.Element('QUANTMP').update('')
                         self.winAggiungeMat.Element('FPMP').update('')
                 self.winAggiungeMat.close()
+        contract.w3.geth.personal.lock_account(contract.account[1])
         self.window.close()
     
     #funzione utilizzata per chiudere tutte le finestre del produttore
