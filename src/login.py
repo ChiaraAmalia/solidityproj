@@ -85,21 +85,21 @@ class LoginWin():
                     if self.acct[self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.trasf and \
                             values['PASSWORD'] == 'trasformatore':
                         self.windowLogin.Element('PASSWORD').update('')    
-                        contract.w3.geth.personal.unlock_account(contract.account[0], 'trasformatore',1500)
+                        contract.w3.geth.personal.unlock_account(contract.account[0], 'trasformatore',660)
                         self.ProdTrasf = TrasfWin(self.impronta, self)
                         self.ProdTrasf.ListenEvent()
                     elif self.acct[
                         self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.prod and values[
                         'PASSWORD'] == 'produttore':
                         self.windowLogin.Element('PASSWORD').update('')
-                        contract.w3.geth.personal.unlock_account(contract.account[1], 'produttore', 1500)
+                        contract.w3.geth.personal.unlock_account(contract.account[1], 'produttore', 660)
                         self.ProdWin = ProdWin(self.impronta, self)
                         self.ProdWin.ListenEvent()
                     elif self.acct[
                         self.windowLogin.Element('PORTAFOGLIO').Widget.curselection()[0]] == contract.consum and values[
                         'PASSWORD'] == 'consumatore':
                         self.windowLogin.Element('PASSWORD').update('')
-                        contract.w3.geth.personal.unlock_account(contract.account[2], 'consumatore',1500)
+                        contract.w3.geth.personal.unlock_account(contract.account[2], 'consumatore',660)
                         self.ConsWin = ConsWin(self.impronta, self)
                         self.ConsWin.ListenEvent()
                     else:

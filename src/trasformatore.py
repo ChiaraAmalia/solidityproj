@@ -31,6 +31,13 @@ class TrasfWin():
         ]
         self.window = sg.Window("Trasformatore", layout, modal=True,background_color="#1d8c3b", icon =self.icona)
         choice = None
+        self.TutteMPWin = False
+        self.LottiMPwin = False
+        self.infoMPWin = False
+        self.AcquistaWin = False
+        self.DettagliMPWin = False
+        self.AggProdWin = False
+        
 
     #funzione utilizzata per visualizzare tutti i lotti di tutte le materie prime
     def tutteMP(self):
@@ -223,7 +230,9 @@ class TrasfWin():
                     [sg.Text("Lotti Materie Prime:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTIMP",background_color="#8bd9a0")],
                     [sg.Text("Quantità Materie Prime Utilizzate:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="QMP",background_color="#8bd9a0")],
                     [sg.Text("Quantità Prodotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="QP",background_color="#8bd9a0")],
+                    [sg.Text('',background_color="#1d8c3b",key='-Alert-')],
                     [sg.Text("FootPrint Prodotto :    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="FOOTP",background_color="#8bd9a0")],
+                    [sg.Text('',background_color="#1d8c3b",key='-Alert_1-')],
                     [sg.Button("Inserisci Prodotto",button_color="#013810", key="INS")]
                 ]
         laytot = [
@@ -237,7 +246,26 @@ class TrasfWin():
             event, values = self.AggProdWin.read()
             if event == "Exit" or event == sg.WIN_CLOSED:
                 break
-            if event == "INS":
+
+            if not values['QP'].isdigit():
+                             self.AggProdWin.Element('-Alert-').update("non è un numero")
+
+            if values['QP']=="":
+                             self.AggProdWin.Element('-Alert-').update("")
+
+            if values['QP'].isdigit():
+                        self.AggProdWin.Element('-Alert-').update("")
+
+            if not values['FOOTP'].isdigit():
+                        self.AggProdWin.Element('-Alert_1-').update("non è un numero")
+
+            if values['FOOTP']=="":
+                        self.AggProdWin.Element('-Alert_1-').update("")
+
+            if values['FOOTP'].isdigit():
+                        self.AggProdWin.Element('-Alert_1-').update("")
+
+            if event == "INS" and values['QP'].isdigit() and values['FOOTP'].isdigit():
                 try:                        
                     array_lotti = values['LOTTIMP']
                     array_lotti = array_lotti.split(",") #la stringa relativa ai lotti viene splittata in una lista che prende ciascun lotto inserito

@@ -31,6 +31,15 @@ class ConsWin():
         ]
         self.window = sg.Window("Consumatore", layout, modal=True,background_color="#1d8c3b",icon= self.icona_impronta)
         self.choice = None
+        self.VediPWin = False
+        self.vediLPWin  = False
+        self.vediLPWin2 = False
+        self.vediFPWin = False
+        self.vediFPWin2 = False
+        self.infoPWin1 = False
+        self.acqPWin = False
+        self.infoAPWin = False
+        self.infoAPWin2 = False
 
     #funzione utilizzata per chiudere le relative finestre aperte quando scade la sessione di autenticazione
     def CloseWindow(self):
