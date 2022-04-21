@@ -28,6 +28,9 @@ pragma abicoder v2;
 
     mapping(string => MagazzinoConsumatore) magazzinoConsumatore; //contiene i prodotti acquistati dal consumatore
 
+    //questa funzione viene richiamata all'interno del contratto del trasformatore per effettuare l'acquisto del prodotto
+    //da parte del consumatore. Il prodotto acquistato con relativa quantità viene quindi registrato nel magazzino del consumatore.
+    //Se esistente, ne viene semplicemente incrementata la quantità disponibile
     function CacquistaProdotto(string memory _lottoProdotto, uint256 _quantitaMagazzino)public payable{
         if(magazzinoConsumatore[_lottoProdotto].contenuto) {
             magazzinoConsumatore[_lottoProdotto].quantitaMagazzino += _quantitaMagazzino;

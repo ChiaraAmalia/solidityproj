@@ -40,7 +40,10 @@ import "./Trasformatore.sol";
         ContractT = Trasformatore(_addressTrasformatore);
     }
     
+    //evento che viene utilizzato per registrare l'inserimento di una nuova materia prima nel magazzino del produttore
     event StampaMateriaPrima(string lottoMateriaPrima, string nomeMateriaPrima, address indirizzoProduttore, uint256 quantitaMagazzino, uint256 footprintMateriaPrima);
+    
+    //evento che viene utilizzato per registrare l'acquisto di una nuova materia prima da parte del trasformatore
     event AcquistaMateriaPrima(string lottoMateriaPrima, string nomeMateriaPrima, address indirizzoTrasformatore, uint256 quantitaMagazzino, uint256 footprintMateriaPrima);
 
     //funzione che consente l'inserimento di materie prime da parte del produttore
@@ -76,6 +79,7 @@ import "./Trasformatore.sol";
     }
 
     //funzione che permette al trasformatore di acquistare materia prima
+    //viene qui richiamata la funzione che è stata istanziata nel contratto del trasformatore
     function acquistaMateriaPrima(string memory _lottoMateriaPrima, uint256 _quantitaMagazzino) public payable {
         require(msg.sender == ContractT.Copy(),"solo il trasformatore puo' aquistare la materia prima.");
         require(_quantitaMagazzino > 0,"la quantita' deve essere maggiore di 0.");
@@ -118,7 +122,7 @@ import "./Trasformatore.sol";
         return result;
     }
 
-
+    //funzione che ritorna il numero totale di materie prime
     function numeroMateriePrime() view public returns (uint256){
         return numMateriePrime;
     }
@@ -135,6 +139,8 @@ import "./Trasformatore.sol";
         return elencoMateriePrime[_lottoMateriaPrima];
     }
 
+    //funzione che viene utilizzata per aggiungere un nuovo prodotto all'interno del magazzino del trasformatore nella struttura dei prodotti finiti
+    //viene richiamata la funzione istanziata nel contratto del trasformatore
     function aggiungiProdotto(string memory _nomeProdotto, string[] memory _lottiMateriePrime, uint256[] memory _quantMatPrUtil, uint256 _quantitaMagazzino, uint256 _footprintProdottoFinito) public payable {
         require(msg.sender == ContractT.Copy(), "solo il trasformatore puo' aggiungere un prodotto.");
         require(_quantitaMagazzino > 0, "la quantita' prodotta deve essere un valore positivo e diverso da zero.");

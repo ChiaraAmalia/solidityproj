@@ -47,9 +47,15 @@ import "./Consumatore.sol";
         ConsContract = Consumatore(_ConsContract);
     }
 
+    //evento che viene utilizzato per registrare l'inserimento di un nuovo prodotto nel magazzino del trasformatore relativo ai prodotti finiti
     event StampaProdotto(string lottoProdotto, string nomeProdotto, address indirizzoTrasformatore, string[] lottiMateriePrime, uint256 quantitaProdotta, uint256 footprintTrasformazione);
+    
+    //evento che viene utilizzato per registrare l'acquisto di un nuovo prodotto da parte del consumatore
     event AcquistaProdotto(string lottoProdotto, string nomeProdotto, address indirizzoConsumatore, uint256 quantitaMagazzino, uint256 footprintProdotto);
 
+    //funzione che viene richiamata all'interno del contratto del produttore per effettuare l'acquisto della materia prima
+    //da parte del trasformatore. La materia prima acquistata con relativa quantità viene quindi registrata nel magazzino del trasformatore.
+    //Se esistente, ne viene semplicemente incrementata la quantità disponibile
     function TacquistaMateriaPrima(string memory _lottoMateriaPrima, uint256 _quantitaMagazzino) public payable {
         if(magazzinoTrasformatore[_lottoMateriaPrima].contenuto){
             magazzinoTrasformatore[_lottoMateriaPrima].quantitaMagazzino += _quantitaMagazzino;
@@ -64,7 +70,9 @@ import "./Consumatore.sol";
         } 
     }
 
-    //funzione che permette l'inserimento di prodotti finiti da parte del trasformatore
+    //funzione che viene richiamata all'interno del contratto del produttore per effettuare l'inserimento di un nuovo prodotto
+    //da parte del trasformatore. Il nuovo prodotto con relativa quantità e footprint totale viene registrata nella struttura
+    //dei prodotti finiti, nel contratto del trasformatore.
     function TaggiungiProdotto(string memory _nomeProdotto, string[] memory _lottiMateriePrime, uint256[] memory _quantMatPrUtil, uint256 _quantitaMagazzino, uint256 _footprintProdottoFinito,uint oldfootprint,uint lunghezza) public payable {
 
         uint arrayLength = _lottiMateriePrime.length;
@@ -163,9 +171,9 @@ import "./Consumatore.sol";
         ConsContract.CacquistaProdotto(_lottoProdotto,_quantitaMagazzino);
         elencoProdotti[_lottoProdotto].quantitaProdotta -= _quantitaMagazzino;
         emit AcquistaProdotto(_lottoProdotto, elencoProdotti[_lottoProdotto].nomeProdotto, msg.sender, _quantitaMagazzino, elencoProdotti[_lottoProdotto].footprintTrasformazione);
- }
+    }
 
- //funzione che ci consente di vedere il footprint di un dato prodotto finito
+     //funzione che ci consente di vedere il footprint di un dato prodotto finito
     function vediFootprintProdottoFinito(string memory _lottoProdotto) public view returns (string memory) {
         require(msg.sender == ConsContract.Copy(), "solo il consumatore puo' vedere il footprint del prodotto finito.");
         if(elencoProdotti[_lottoProdotto].contenuto){
@@ -175,6 +183,7 @@ import "./Consumatore.sol";
         else return "Tale lotto non e' presente in magazzino";
     }
 
+    //funzione che converte un numero in una stringa
     function toString(uint256 value) public pure returns (string memory) {
         
         if(value == 0) {
