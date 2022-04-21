@@ -117,7 +117,7 @@ I ruoli sono 3:
  
 
 
-Inoltre per rendere più sicuro il programma, abbiamo impostato delle "sessioni", ovvero dopo un certo periodo di tempo (25 minuti) che si è effettuato il login, l'indirizzo di portafolgio che si è scelto viene nuovamente bloccato.
+Inoltre per rendere più sicuro il programma, abbiamo impostato delle "sessioni", ovvero dopo un certo periodo di tempo (11 minuti) che si è effettuato il login, l'indirizzo di portafolgio che si è scelto viene nuovamente bloccato.
 
 Dopo aver selezionato l'account con cui procedere, le operazioni possibili saranno differenti.
 
