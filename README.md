@@ -337,7 +337,7 @@ La quantità di prodotto da acquistare deve essere minore di quella presente in 
 
 <!--### Vedere dettagli prodotto acquistato-->
 
-### Eseguire i test
+## Eseguire i test
 
 Per eseguire i test sull'applicazione bisogna:
 
