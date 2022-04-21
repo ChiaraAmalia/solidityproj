@@ -3,7 +3,11 @@ import contract
 import os
 from web3 import exceptions, Web3
 
+# in questa classe viene gestita la finestra relativa al trasformatore
+
 class TrasfWin():
+
+    #funzione utilizzata per inizializzare la finestra del trasformatore con i relativi accessi alle funzionalità
     def __init__(self,icona_impronta,LoginWin):
         self.LoginWin = LoginWin
         self.icona = icona_impronta
@@ -28,6 +32,7 @@ class TrasfWin():
         self.window = sg.Window("Trasformatore", layout, modal=True,background_color="#1d8c3b", icon =self.icona)
         choice = None
 
+    #funzione utilizzata per visualizzare tutti i lotti di tutte le materie prime
     def tutteMP(self):
         try:
             mat_prim = contract.tutti_MP_lotti()
@@ -50,6 +55,7 @@ class TrasfWin():
         except exceptions.SolidityError as error:
             sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=self.icona)
 
+    #funzione utilizzata per vedere tutti i lotti associati a una materia prima
     def lottiMP(self):
         self.LottiMPwin=sg.Window("Inserisci Nome Materia Prima",[[sg.Text("Inserisci nome:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOMEMP",background_color="#8bd9a0")],
                                                               [sg.Button("Vedi Lotti",button_color="#013810", key="LOTTI")]],modal=True,background_color="#1d8c3b",icon=self.icona)
@@ -79,14 +85,15 @@ class TrasfWin():
                                 if event == "Exit" or event == sg.WIN_CLOSED:
                                     break
                             wind.close()
-                        if(mat_prim[0] == ""):
+                        if(mat_prim[0] == ""): #se la materia prima non viene trovata ma sono presenti altri lotti di altre materie prime
                             sg.Popup('Tale materia prima è inesistente',keep_on_top=True,background_color="#1d8c3b",icon=self.icona) 
-                    if (mat_prim == []):
+                    if (mat_prim == []): #se la materia prima non viene trovata ma non sono presenti altri lotti di altre materie prime
                         sg.Popup('Materia prima inesistente',keep_on_top=True,background_color="#1d8c3b",icon=self.icona)   
                 except exceptions.SolidityError as error:
                     sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=self.icona)
         self.LottiMPwin.close()
 
+    #funzione utilizzata per visualizzare le informazioni relative a una materia prima
     def infoMP(self):
         self.infoMPWin=sg.Window("Inserisci Lotto Materia Prima",[[sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOMP",background_color="#8bd9a0")],
                                                               [sg.Button("Vedi informazioni",button_color="#013810", key="INF")]],modal=True,background_color="#1d8c3b",icon=self.icona)
@@ -126,6 +133,7 @@ class TrasfWin():
                     wind.close()
         self.infoMPWin.close()
     
+    #funzione utilizzata per acquistare una materia prima
     def Acquista(self):
         try:
             mat_prim = contract.tutti_MP_lotti()
@@ -171,6 +179,7 @@ class TrasfWin():
                         sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=self.icona)
             self.AcquistaWin.close()
 
+    #funzione utilizzata per visualizzare le informazioni relative a una materia prima acquistata
     def DettagliMP(self):
         self.DettagliMPWin=sg.Window("Inserisci Lotto Materia Prima Acquistata",[
                     [sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOMP",background_color="#8bd9a0")],
@@ -207,6 +216,7 @@ class TrasfWin():
                     wind.close()
         self.DettagliMPWin.close()
 
+    #funzione utilizzata per inserire un nuovo prodotto finito
     def AggProd(self):
         file_list_column = [
                     [sg.Text("Nome Prodotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOME",background_color="#8bd9a0")],
@@ -230,9 +240,9 @@ class TrasfWin():
             if event == "INS":
                 try:                        
                     array_lotti = values['LOTTIMP']
-                    array_lotti = array_lotti.split(",")
+                    array_lotti = array_lotti.split(",") #la stringa relativa ai lotti viene splittata in una lista che prende ciascun lotto inserito
                     array_quant = values['QMP']
-                    array_quant = array_quant.split(",")
+                    array_quant = array_quant.split(",") #la stringa relativa alle quantità viene splittata in una lista che prende ciascuna quantità inserita
                     len_lotti = len(array_lotti)
                     len_quant = len(array_quant)
                     if (len_lotti < len_quant): 
@@ -241,10 +251,11 @@ class TrasfWin():
                         sg.Popup('ad ogni quantità deve essere associato un solo lotto', keep_on_top=True, background_color="#1d8c3b",icon=self.icona)
                     if (len_lotti == len_quant):
                     
-                        res = all(ele.isdigit() for ele in array_quant)
+                        
+                        res = all(ele.isdigit() for ele in array_quant) #si controlla se tutti gli elementi presenti nell'array contente le quantità sono dei numeri
                         if res:
                             for i in range(0,len(array_quant)):
-                                    array_quant[i] = int(array_quant[i])            
+                                    array_quant[i] = int(array_quant[i]) #l'array contenente le quantità sotto forma di stringa viene convertito in un array di interi   
                             contract.inserisci_Prod(values['NOME'],array_lotti,array_quant,int(values['QP']),int(values['FOOTP']))
                             sg.Popup('Inserimento Prodotto Completato', keep_on_top=True, background_color="#1d8c3b",icon=self.icona)
                             self.AggProdWin.Element('NOME').update('')
@@ -258,6 +269,8 @@ class TrasfWin():
                     sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=self.icona)
         self.AggProdWin.close()
 
+    #questa funzione viene utilizzata per gestire l'apertura delle finestre richieste dal trasformatore
+    #quando l'utente chiude la finestra iniziale del trasformatore, viene terminata la sessione e bloccato l'account
     def ListenEvent(self):
         while True:
             event, values = self.window.read()
@@ -279,6 +292,7 @@ class TrasfWin():
         contract.w3.geth.personal.lock_account(contract.account[0])
         self.window.close()
 
+    #funzione utilizzata per chiudere le relative finestre aperte quando scade la sessione di autenticazione
     def CloseWindow(self):
         if(getattr(self,'TutteMPWin')):
             self.TutteMPWin.close()

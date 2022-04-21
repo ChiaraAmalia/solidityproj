@@ -3,8 +3,11 @@ import contract
 import os
 from web3 import exceptions, Web3
 
+# in questa classe viene gestita la finestra relativa al consumatore
+
 class ConsWin():
 
+    #funzione utilizzata per inizializzare la finestra del consumatore con i relativi accessi alle funzionalità
     def __init__(self,icona_impronta,LoginWin):
         self.icona_impronta = icona_impronta
         self.LoginWin = LoginWin
@@ -29,6 +32,7 @@ class ConsWin():
         self.window = sg.Window("Consumatore", layout, modal=True,background_color="#1d8c3b",icon= self.icona_impronta)
         self.choice = None
 
+    #funzione utilizzata per chiudere le relative finestre aperte quando scade la sessione di autenticazione
     def CloseWindow(self):
         if(getattr(self,'VediPWin')):
             self.VediPWin.close()
@@ -58,6 +62,7 @@ class ConsWin():
 
         self.window.close()
 
+    #funzione utilizzata per vedere tutti i prodotti
     def VediP(self):
         try:
             mat_prim = contract.tutti_Prod_lotti()
@@ -80,6 +85,7 @@ class ConsWin():
         except exceptions.SolidityError as error:
             sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=self.icona_impronta)           
 
+    #funzione utilizzata per vedere tutti i lotti di un prodotto
     def vediLP(self):
         self.vediLPWin=sg.Window("Inserisci Nome Prodotto",[[sg.Text("Inserisci nome:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="NOMEP",background_color="#8bd9a0")],
                                                               [sg.Button("Vedi Lotti",button_color="#013810", key="LOTTI")]],modal=True,background_color="#1d8c3b",icon=self.icona_impronta)
@@ -109,14 +115,15 @@ class ConsWin():
                                 if event == "Exit" or event == sg.WIN_CLOSED:
                                     break
                             self.vediLPWin2.close()
-                        if(prod[0] == ""):
+                        if(prod[0] == ""): #se il prodotto non viene trovato ma sono presenti altri lotti di altri prodotti
                             sg.Popup('Tale prodotto è inesistente',keep_on_top=True,background_color="#1d8c3b",icon=self.icona_impronta) 
-                    if (prod == []):
+                    if (prod == []): #se il prodotto non viene trovato e non sono presenti lotti
                         sg.Popup('Prodotto inesistente',keep_on_top=True,background_color="#1d8c3b",icon=self.icona_impronta)   
                 except exceptions.SolidityError as error:
                     sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'),keep_on_top=True,background_color="#1d8c3b",icon=self.icona_impronta)
         self.vediLPWin.close()
 
+    #funzione per vedere il footprint totale di un prodotto finito
     def vediFP(self):
         self.vediFPWin=sg.Window("Inserisci Lotto Prodotto",[[sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOP",background_color="#8bd9a0")],
                                                             [sg.Button("Vedi FootPrint",button_color="#013810", key="FP")]],modal=True,background_color="#1d8c3b",icon=self.icona_impronta)
@@ -148,6 +155,7 @@ class ConsWin():
                     self.vediFPWin2.close()
         self.vediFPWin.close()
 
+    #funzione per vedere le informazioni associate a un relativo prodotto
     def infoP(self):
         self.infoPWin=sg.Window("Inserisci Lotto Prodotto",[
                     [sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOP",background_color="#8bd9a0")],
@@ -188,6 +196,7 @@ class ConsWin():
                     self.infoPWin1.close()
         self.infoPWin.close()
 
+    #funzione utilizzata per acquistare un prodotto
     def acqP(self):
         try:
             prod = contract.tutti_Prod_lotti()
@@ -233,6 +242,7 @@ class ConsWin():
                         sg.Popup(str(error).replace('execution reverted:','Si è cerificato il seguente errore:'), keep_on_top=True, background_color="#1d8c3b",icon=self.icona_impronta)
             self.acqPWin.close()
     
+    #funzione utilizzata per visualizzare le informazioni relative ad un prodotto acquistato
     def infoAP(self):
         self.infoAPWin=sg.Window("Inserisci Lotto Prodotto Acquistato",[
                 [sg.Text("Inserisci lotto:    ",background_color="#1d8c3b"),sg.In(size=(30, 1), enable_events=True, key="LOTTOP",background_color="#8bd9a0")],
@@ -269,6 +279,8 @@ class ConsWin():
                     self.infoAPWin2.close()
         self.infoAPWin.close()
 
+    #questa funzione viene utilizzata per gestire l'apertura delle finestre richieste dal consumatore
+    #quando l'utente chiude la finestra iniziale del consumatore, viene terminata la sessione e bloccato l'account
     def ListenEvent(self):
         while True:
             event, values = self.window.read()

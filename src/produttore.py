@@ -3,8 +3,11 @@ import contract
 import os
 from web3 import exceptions, Web3
 
+# in questa classe viene gestita la finestra relativa al produttore
+
 class ProdWin():
 
+    #funzione utilizzata per inizializzare la finestra del produttore con i relativi accessi alle funzionalità
     def __init__(self,icona_impronta,LoginWin):
         self.impronta=icona_impronta
         self.LoginWin = LoginWin
@@ -24,7 +27,7 @@ class ProdWin():
         self.window = sg.Window("Produttore", layout,background_color="#1d8c3b", icon = icona_impronta)
         choice = None     
 
-    
+    #funzione che consente l'inserimento di una materia prima da parte del produttore
     def ListenEvent(self):
         while True:
             event, values = self.window.read()
@@ -74,6 +77,7 @@ class ProdWin():
                 self.winAggiungeMat.close()
         self.window.close()
     
+    #funzione utilizzata per chiudere tutte le finestre del produttore
     def CloseWindow(self):
         if(getattr(self,'winAggiungeMat')):
             self.winAggiungeMat.close()
