@@ -11,7 +11,7 @@ from consumatore import ConsWin
 #Definisce la finestra che sarà utilizzata per effettuare il login
 class LoginWin():
 
-    #E' il costruttore della classe. Il parametro self si riferisce all'istana dell'oggetto (come this in C++)
+    #E' il costruttore della classe. Il parametro self si riferisce all'istanza dell'oggetto (come this in C++)
     def __init__(self):
 
         # Salva nella variabile path il percorso globale della cartella in cui si trova il file .py in esecuzione
