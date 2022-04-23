@@ -142,6 +142,7 @@ class TrasfWin():
     
     #funzione utilizzata per acquistare una materia prima
     def Acquista(self):
+        check = False
         try:
             mat_prim = contract.tutti_MP_lotti()
         except exceptions.SolidityError as error:
@@ -168,17 +169,18 @@ class TrasfWin():
                 event, values = self.AcquistaWin.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
-                if not values['-IN-'].isdigit():
+                if not values['-IN-'].isdigit() or len(values['-IN-'])>9:
                     self.AcquistaWin.Element('-Alert-').update("non è un numero")
                 if values['-IN-']=="":
                     self.AcquistaWin.Element('-Alert-').update("")
-                if values['-IN-'].isdigit():
+                if values['-IN-'].isdigit() and len(values['-IN-'])<= 9:
                     self.AcquistaWin.Element('-Alert-').update("")
                 if event == '-LIST-' and len(values['-LIST-']):
+                    check = True
                     self.AcquistaWin.Element('-Nome-').update(contract.info_MP_prod(mat_prim[self.AcquistaWin.Element('-LIST-').Widget.curselection()[0]])[2])
                     self.AcquistaWin.Element('-QuantDisp-').update(contract.info_MP_prod(mat_prim[self.AcquistaWin.Element('-LIST-').Widget.curselection()[0]])[4])
                     self.AcquistaWin.Element('-FootPrint-').update(contract.info_MP_prod(mat_prim[self.AcquistaWin.Element('-LIST-').Widget.curselection()[0]])[5])
-                if event == "ACQUISTA" and values['-IN-'].isdigit():
+                if event == "ACQUISTA" and values['-IN-'].isdigit() and len(values['-IN-'])<= 9 and check:
                     try:
                         contract.acquista_MP(mat_prim[self.AcquistaWin.Element('-LIST-').Widget.curselection()[0]],int(values['-IN-']))
                         sg.Popup('Acquisto Completato', keep_on_top=True, background_color="#1d8c3b",icon=self.icona)
@@ -247,25 +249,25 @@ class TrasfWin():
             if event == "Exit" or event == sg.WIN_CLOSED:
                 break
 
-            if not values['QP'].isdigit():
+            if not values['QP'].isdigit() or len(values['QP']) > 9:
                              self.AggProdWin.Element('-Alert-').update("non è un numero")
 
             if values['QP']=="":
                              self.AggProdWin.Element('-Alert-').update("")
 
-            if values['QP'].isdigit():
+            if values['QP'].isdigit() and len(values['QP']) <= 9:
                         self.AggProdWin.Element('-Alert-').update("")
 
-            if not values['FOOTP'].isdigit():
+            if not values['FOOTP'].isdigit() or len(values['FOOTP']) > 9:
                         self.AggProdWin.Element('-Alert_1-').update("non è un numero")
 
             if values['FOOTP']=="":
                         self.AggProdWin.Element('-Alert_1-').update("")
 
-            if values['FOOTP'].isdigit():
+            if values['FOOTP'].isdigit() and len(values['FOOTP']) <= 9:
                         self.AggProdWin.Element('-Alert_1-').update("")
 
-            if event == "INS" and values['QP'].isdigit() and values['FOOTP'].isdigit():
+            if event == "INS" and values['QP'].isdigit() and len(values['QP']) <= 9 and values['FOOTP'].isdigit() and len(values['FOOTP']) <= 9 and not values['NOME']=="":
                 try:                        
                     array_lotti = values['LOTTIMP']
                     array_lotti = array_lotti.split(",") #la stringa relativa ai lotti viene splittata in una lista che prende ciascun lotto inserito

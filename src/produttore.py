@@ -47,24 +47,24 @@ class ProdWin():
                     event, values =  self.winAggiungeMat.read()
                     if event == "Exit" or event == sg.WIN_CLOSED:
                         break
-                    if not values['QUANTMP'].isdigit():
+                    if not values['QUANTMP'].isdigit() or len(values['QUANTMP']) > 9:
                              self.winAggiungeMat.Element('-Alert-').update("non è un numero")
 
                     if values['QUANTMP']=="":
                              self.winAggiungeMat.Element('-Alert-').update("")
 
-                    if values['QUANTMP'].isdigit():
+                    if values['QUANTMP'].isdigit() and len(values['QUANTMP']) <= 9:
                              self.winAggiungeMat.Element('-Alert-').update("")
 
-                    if not values['FPMP'].isdigit():
+                    if not values['FPMP'].isdigit() or len(values['FPMP']) > 9:
                              self.winAggiungeMat.Element('-Alert_1-').update("non è un numero")
 
                     if values['FPMP']=="":
                              self.winAggiungeMat.Element('-Alert_1-').update("")
 
-                    if values['FPMP'].isdigit():
+                    if values['FPMP'].isdigit() and len(values['FPMP']) <= 9:
                              self.winAggiungeMat.Element('-Alert_1-').update("")
-                    if event == "INSERISCI" and not values['NOMEMP']=='' and values['QUANTMP'].isdigit() and values['FPMP'].isdigit():
+                    if event == "INSERISCI" and not values['NOMEMP']=='' and values['QUANTMP'].isdigit() and len(values['QUANTMP']) <= 9 and values['FPMP'].isdigit() and len(values['FPMP']) <= 9:
                         try:
                             contract.inserisci_MP(values['NOMEMP'],int(values['QUANTMP']),int(values['FPMP']))
                         except exceptions.SolidityError as error:

@@ -207,6 +207,7 @@ class ConsWin():
 
     #funzione utilizzata per acquistare un prodotto
     def acqP(self):
+        check = False
         try:
             prod = contract.tutti_Prod_lotti()
         except exceptions.SolidityError as error:
@@ -233,17 +234,18 @@ class ConsWin():
                 event, values = self.acqPWin.read()
                 if event == "Exit" or event == sg.WIN_CLOSED:
                     break
-                if not values['-IN-'].isdigit():
+                if not values['-IN-'].isdigit() or len(values['-IN-']) > 9:
                     self.acqPWin.Element('-Alert-').update("non è un numero")
                 if values['-IN-']=="":
                     self.acqPWin.Element('-Alert-').update("")
-                if values['-IN-'].isdigit():
+                if values['-IN-'].isdigit() and len(values['-IN-']) <= 9:
                     self.acqPWin.Element('-Alert-').update("")
                 if event == '-LIST-' and len(values['-LIST-']):
+                    check = True
                     self.acqPWin.Element('-Nome-').update(contract.info_Prod_trasf(prod[self.acqPWin.Element('-LIST-').Widget.curselection()[0]])[2])
                     self.acqPWin.Element('-QuantDisp-').update(contract.info_Prod_trasf(prod[self.acqPWin.Element('-LIST-').Widget.curselection()[0]])[5])
                     self.acqPWin.Element('-FootPrint-').update(contract.info_Prod_trasf(prod[self.acqPWin.Element('-LIST-').Widget.curselection()[0]])[6])
-                if event == "ACQUISTA" and values['-IN-'].isdigit():
+                if event == "ACQUISTA" and values['-IN-'].isdigit() and len(values['-IN-']) <= 9 and check:
                     try:
                         contract.acquista_Prod(prod[self.acqPWin.Element('-LIST-').Widget.curselection()[0]],int(values['-IN-']))
                         sg.Popup('Acquisto Completato', keep_on_top=True, background_color="#1d8c3b",icon=self.icona_impronta)
