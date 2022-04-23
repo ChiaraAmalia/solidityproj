@@ -78,6 +78,7 @@ import "./Consumatore.sol";
         uint arrayLength = _lottiMateriePrime.length;
 
         for (uint i=0; i<arrayLength;i++){
+            require(_quantMatPrUtil[i] > 0, "Non puoi fare un prodotto senza materie prime");
             require(magazzinoTrasformatore[_lottiMateriePrime[i]].contenuto, string(abi.encodePacked(string(abi.encodePacked("il lotto ", _lottiMateriePrime[i])), " e' inesistente")));
             require(_quantMatPrUtil[i] <= magazzinoTrasformatore[_lottiMateriePrime[i]].quantitaMagazzino, string(abi.encodePacked(string(abi.encodePacked("la quantita' nel magazzino per il lotto ", magazzinoTrasformatore[_lottiMateriePrime[i]].lottoMateriaPrima)), " non e' sufficiente")));
             require(magazzinoTrasformatore[_lottiMateriePrime[i]].quantitaMagazzino > 0, string(abi.encodePacked(string(abi.encodePacked("le scorte per il lotto ", magazzinoTrasformatore[_lottiMateriePrime[i]].lottoMateriaPrima)), " sono finite")));
