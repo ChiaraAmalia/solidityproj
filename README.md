@@ -104,7 +104,7 @@ start.cmd
 
 ## Uso
 
-All'avvio del programma viene mostrata una schermata di login. In questa si può scegliere tra i 3 account quello di interesse. Tra le parentesi è scritto il ruolo che tale account ha.
+All'avvio del programma viene mostrata una schermata di login. In questa si può scegliere tra i 3 account quello di interesse. Tra le parentesi è scritto il ruolo che tale account ha e la relativa password.
 <p align="center">
   <img width="700" src="https://github.com/Accout-Personal/solidityproj/blob/master/img/login.jpg">
 </p>
